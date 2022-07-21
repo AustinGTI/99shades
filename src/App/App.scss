@@ -1,7 +1,152 @@
-div.main {
+div.appBg {
   position: absolute;
   background-color: red;
 
   width: 100%;
   height: 100%;
+
+  div.logoBox {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100px;
+    height: 100px;
+
+    background-color: green;
+  }
+
+  div.appBox {
+    position: absolute;
+    top: 3vh;
+    right: 0;
+    left: 0;
+
+    margin: 0 auto;
+
+    width: 80%;
+    height: 95vh;
+
+    background-color: pink;
+
+    div.paletteBox {
+      position: relative;
+
+      width: 80%;
+      height: 65%;
+
+      margin: 0 auto;
+
+      background-color: blue;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      align-items: center;
+
+      div.btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+
+        z-index: 2;
+
+        &.addBtn {
+          top: 0;
+          bottom: 0;
+          margin: auto 0;
+
+          &.addRightBtn {
+            right: 0;
+          }
+
+          &.addLeftBtn {
+            left: 0;
+          }
+
+          background-color: cornflowerblue;
+        }
+
+        &.downloadBtn {
+          bottom: 0;
+          right: 0;
+
+          background-color: greenyellow;
+        }
+      }
+
+      div.colorBox {
+        position: relative;
+
+        flex-basis: 10vw;
+        flex-grow: 1;
+
+        height: 95%;
+
+        margin: auto 3px;
+
+        background-color: magenta;
+
+        div.colorDetailsBox {
+          position: absolute;
+
+          width: 80%;
+          height: 90%;
+
+          text-align: center;
+
+          margin: 0 auto;
+          bottom: 0;
+          right: 0;
+          left: 0;
+
+          background-color: coral;
+        }
+      }
+    }
+    div.tunersBox {
+      position: relative;
+
+      width: 100%;
+      height: 35%;
+
+      background-color: slateblue;
+
+      div.hexBox {
+        position: relative;
+
+        width: 20%;
+        height: 15%;
+
+        margin: 0 auto;
+
+        background-color: chartreuse;
+      }
+      div.slidersBox {
+        position: relative;
+
+        width: 90%;
+        height: 85%;
+
+        margin: 0 auto;
+
+        background-color: yellow;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+
+        div.formatBox {
+          height: 95%;
+          width: 23%;
+
+          margin: 0 1% 3px;
+
+          background-color: orange;
+        }
+      }
+    }
+  }
 }
