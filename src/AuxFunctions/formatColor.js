@@ -1,3 +1,14 @@
+import cols from "../Data/Colors/tempCols.json";
+
+//helper functions
+function colorVec(hexA, hexB) {
+  let rgbB = hexToRGB(hexB);
+  let diff = hexToRGB(hexA).map((v, vi) => Math.abs(v - rgbB[vi]));
+  return diff.reduce((t, v) => t + v, 0) / 3;
+}
+
+//...............
+
 //converts hex codes to the rgb color format
 export function hexToRGB(hex) {
   let rgb = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)];
@@ -85,4 +96,12 @@ export function hexToHSV(hex) {
     if (h > 1) h -= 1;
   }
   return [parseInt(h * 360), parseInt(s * 100), parseInt(max * 100)];
+}
+
+//converting a random hexcode to a color name
+export function hexToName(hex) {
+  let closestCol = cols.sort(
+    (a, b) => colorVec(a.hexcode, hex) - colorVec(b.hexcode, hex)
+  )[0];
+  return closestCol.title;
 }

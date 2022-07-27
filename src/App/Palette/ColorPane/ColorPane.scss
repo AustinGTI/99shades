@@ -1,0 +1,28 @@
+div.colorBox {
+  position: relative;
+
+  flex-basis: 10vw;
+  flex-grow: 1;
+
+  height: 95%;
+
+  margin: auto 3px;
+
+  background-color: magenta;
+
+  div.colorDetailsBox {
+    position: absolute;
+
+    width: 80%;
+    height: 90%;
+
+    text-align: center;
+
+    margin: 0 auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    //background-color: coral;
+  }
+}
