@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import "./App.scss";
 import Palette from "./Palette/Palette";
 import cols from "../Data/Colors/tempCols.json";
+import HexTuner from "./Easel/HexTuner";
 
 class ColorPane {
   constructor(id, position) {
@@ -62,31 +63,72 @@ function setAppColorData(data, options) {
       break;
 
     //when removing a pane, requires nothing
-    case "dropPane":
-      if (colordata.colorPanes.length() === 1) {
+    case "deletePane":
+      if (colordata.colorPanes.length === 1) {
+        console.log("cannot delete the only pane");
         break;
       }
-      let isLast = true;
+      let drpPane = getPane(colordata.colorPanes, options.id);
       colordata.colorPanes.forEach((v) => {
-        if (v.panePosition > activePane.panePosition) {
+        if (v.panePosition > drpPane.panePosition) {
           v.panePosition -= 1;
-          isLast = false;
         }
       });
-      if (!isLast) {
-        colordata.colorPanes.forEach((v) =>
-          v.panePosition === activePane.panePosition
-            ? (colordata.activePaneIdx = v.paneId)
-            : null
+      if (drpPane.paneId === colordata.activePaneIdx) {
+        console.log("resetting stuff vals");
+
+        let newActive = colordata.colorPanes.find(
+          (v) =>
+            v.panePosition === drpPane.panePosition &&
+            v.paneId !== drpPane.paneId
         );
-      } else {
-        colordata.colorPanes.activePaneIdx--;
+        if (!newActive) {
+          newActive = colordata.colorPanes.find(
+            (v) =>
+              v.panePosition === drpPane.panePosition - 1 &&
+              v.paneId !== drpPane.paneId
+          );
+        }
+
+        colordata.activePaneIdx = newActive.paneId;
+        console.log(
+          colordata.colorPanes.find(
+            (v) =>
+              v.panePosition === drpPane.panePosition &&
+              v.paneId !== drpPane.paneId
+          )
+        );
       }
-      let activeIdx = colordata.colorPanes.reduce(
-        (t, v, vi) => (v.paneId === activePane.paneId ? vi : t),
+
+      let dropIdx = colordata.colorPanes.reduce(
+        (t, v, vi) => (v.paneId === drpPane.paneId ? vi : t),
         undefined
       );
-      colordata.colorPanes.splice(activeIdx, 1);
+      colordata.colorPanes.splice(dropIdx, 1);
+      console.log(colordata.activePaneIdx);
+      break;
+
+    //undo the pane color
+    case "undoPaneColor":
+      let undoPane = getPane(colordata.colorPanes, options.id);
+      if (undoPane.colorStack.length <= undoPane.colorStackPointer + 1) {
+        console.log("cannot undo further back");
+        break;
+      }
+      undoPane.colorStackPointer++;
+      break;
+
+    //redo the pane color
+    case "redoPaneColor":
+      let redoPane = getPane(colordata.colorPanes, options.id);
+      if (redoPane.colorStackPointer === 0) {
+        console.log("cannot redo, nothing ahead");
+        break;
+      }
+      if (redoPane.colorStackPointer < 0) {
+        throw Error("This should not be happening.. Fix it");
+      }
+      redoPane.colorStackPointer--;
       break;
 
     //when changing the color of the pane, requires the new color
@@ -94,7 +136,7 @@ function setAppColorData(data, options) {
       let { color } = options;
 
       if (activePane.colorInFlux) {
-        activePane.colorStack[0] = color;
+        activePane.colorStack[activePane.colorStack.length - 1] = color;
         clearTimeout(activePane.fluxTimeoutId);
       } else {
         if (activePane.colorStackPointer !== 0) {
@@ -117,9 +159,10 @@ function setAppColorData(data, options) {
       break;
 
     //change the position of the active pane.. requires the new position
-    case "changePanePosition":
+    case "movePane":
       let { nposition } = options;
-      let currPosition = activePane.panePosition;
+      let mvPane = getPane(colordata.colorPanes, options.id);
+      let currPosition = mvPane.panePosition;
 
       if (nposition === currPosition) {
         break;
@@ -127,14 +170,15 @@ function setAppColorData(data, options) {
 
       if (nposition > currPosition) {
         for (let p = currPosition + 1; p <= nposition; p++) {
-          colordata.colorStack.find((v) => v.panePosition === p).panePosition--;
+          colordata.colorPanes.find((v) => v.panePosition === p).panePosition--;
         }
       } else if (nposition < currPosition) {
         for (let p = nposition; p < currPosition; p++) {
-          colordata.colorStack.find((v) => v.panePosition === p).panePosition++;
+          colordata.colorPanes.find((v) => v.panePosition === p).panePosition++;
         }
       }
-      activePane.panePosition = nposition;
+      mvPane.panePosition = nposition;
+      // colordata.activePaneIdx = mvPane.paneid;
       break;
 
     //lock/unlock active colorpane
@@ -172,7 +216,7 @@ function App() {
           <div className="appBox">
             <Palette />
             <div className="tunersBox">
-              <div className="hexBox"></div>
+              <HexTuner />
               <div className="slidersBox">
                 {Array.from(Array(5).keys()).map((v, vi) => (
                   <div

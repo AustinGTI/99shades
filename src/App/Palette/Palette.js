@@ -10,6 +10,7 @@ export default function Palette() {
   useEffect(() => {
     const addLeftBtn = document.querySelector(".addLeftBtn");
     const addRightBtn = document.querySelector(".addRightBtn");
+    const panes = document.querySelectorAll("div.colorBox");
 
     //add Pane function
     const addPaneLeft = () => {
@@ -28,7 +29,7 @@ export default function Palette() {
       addLeftBtn.removeEventListener("click", addPaneLeft);
       addRightBtn.removeEventListener("click", addPaneRight);
     };
-  }, []);
+  }, [appData, setAppData]);
   return (
     <div className="paletteBox">
       <div className="addRightBtn addBtn btn"></div>
