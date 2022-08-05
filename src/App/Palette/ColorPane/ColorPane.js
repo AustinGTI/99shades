@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import ColorDetails from "./ColorDetails";
 import "./ColorPane.scss";
-import useAppContext from "../../../AuxFunctions/useAppContext";
+import useAppContext, {
+  getPaneColor,
+} from "../../../AuxFunctions/useAppContext";
 
 export default function ColorPane({ pane, isActive }) {
   const setter = useAppContext()[1];
@@ -103,7 +105,7 @@ export default function ColorPane({ pane, isActive }) {
     <div
       className={`colorBox pid${pane.paneId}`}
       style={{
-        backgroundColor: pane.colorStack[pane.colorStackPointer],
+        backgroundColor: getPaneColor(pane),
         border: `${isActive ? "5px" : "0px"} solid black`,
       }}
     >

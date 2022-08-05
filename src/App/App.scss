@@ -28,53 +28,5 @@ div.appBg {
     height: 95vh;
 
     background-color: pink;
-
-    div.tunersBox {
-      position: relative;
-
-      width: 100%;
-      height: 35%;
-
-      background-color: slateblue;
-
-      div.hexBox {
-        position: relative;
-
-        width: 20%;
-        height: 15%;
-
-        margin: 0 auto;
-
-        background-color: chartreuse;
-      }
-      div.slidersBox {
-        position: relative;
-
-        width: 100%;
-        height: 85%;
-
-        margin: 0 auto;
-
-        background-color: yellow;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-end;
-
-        div.formatBox {
-          height: 95%;
-          width: 23%;
-
-          margin: 0 2px 3px;
-
-          background-color: orange;
-
-          &.colorListBox {
-            width: 30%;
-          }
-        }
-      }
-    }
   }
 }

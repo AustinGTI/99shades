@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import "./ColorDetails.scss";
-import useAppContext from "../../../AuxFunctions/useAppContext";
+import useAppContext, {
+  getPaneColor,
+} from "../../../AuxFunctions/useAppContext";
 import formatColor from "../../../AuxFunctions/formatColor";
 
 function cleanFormats(format, value) {
@@ -11,7 +13,7 @@ function cleanFormats(format, value) {
 }
 
 export default function ColorDetails({ pane, isActive }) {
-  let formats = formatColor(pane.colorStack[pane.colorStackPointer]);
+  let formats = formatColor(getPaneColor(pane));
   let formatKeys = Object.keys(formats);
   let emphasis = isActive ? 40 : 20;
   let fontColor =

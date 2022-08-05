@@ -2,7 +2,8 @@ import React, { useEffect, useReducer } from "react";
 import "./App.scss";
 import Palette from "./Palette/Palette";
 import cols from "../Data/Colors/tempCols.json";
-import HexTuner from "./Easel/HexTuner";
+import HexTuner from "./Easel/Hex/HexTuner";
+import Easel from "./Easel/Easel";
 
 class ColorPane {
   constructor(id, position) {
@@ -215,17 +216,7 @@ function App() {
         >
           <div className="appBox">
             <Palette />
-            <div className="tunersBox">
-              <HexTuner />
-              <div className="slidersBox">
-                {Array.from(Array(5).keys()).map((v, vi) => (
-                  <div
-                    key={vi}
-                    className={`formatBox${vi === 2 ? " colorListBox" : ""}`}
-                  ></div>
-                ))}
-              </div>
-            </div>
+            <Easel />
           </div>
         </AppContext.Provider>
       </div>
