@@ -44,7 +44,7 @@ export default function HexTuner({ pane, setter }) {
     return () => {
       inputBox.removeEventListener("keyup", changeColor);
     };
-  }, [pane]);
+  });
   return (
     <div className="hexBox">
       <input type={"text"} value={color} onChange={certifyColorChange}></input>

@@ -4,6 +4,8 @@ import "./Easel.scss";
 import FormatSlider from "./FormatSlider/FormatSlider";
 import HexTuner from "./Hex/HexTuner";
 
+const FORMATS = ["hsv", "rgb", "NULL", "cmyk", "hsl"];
+
 export default function () {
   const [getter, setter, pane] = useAppContext();
   return (
@@ -11,7 +13,13 @@ export default function () {
       <HexTuner pane={pane} setter={setter} />
       <div className="slidersBox">
         {Array.from(Array(5).keys()).map((v, vi) => (
-          <FormatSlider key={vi} idx={vi} />
+          <FormatSlider
+            key={vi}
+            idx={vi}
+            format={FORMATS[vi]}
+            pane={pane}
+            setter={setter}
+          />
         ))}
       </div>
     </div>
