@@ -135,6 +135,8 @@ function setAppColorData(data, options) {
     //when changing the color of the pane, requires the new color
     case "changePaneColor":
       let { color } = options;
+      activePane.colorStack[activePane.colorStack.length - 1] = color;
+      break;
 
       if (activePane.colorInFlux) {
         activePane.colorStack[activePane.colorStack.length - 1] = color;
@@ -146,10 +148,13 @@ function setAppColorData(data, options) {
             activePane.colorStack.length - activePane.colorStackPointer
           );
           activePane.colorStackPointer = 0;
-          activePane.colorInFlux = true;
         }
+
+        activePane.colorInFlux = true;
         activePane.colorStack.push(color);
+        console.log(activePane.colorStack.length);
       }
+
       activePane.fluxTimeoutId = setTimeout(
         (pane) => {
           pane.colorInFlux = false;

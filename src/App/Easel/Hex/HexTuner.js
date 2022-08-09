@@ -6,7 +6,10 @@ import "./HexTuner.scss";
 
 const hexChars = "0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F".split(",");
 
-export default function HexTuner({ pane, setter }) {
+export default function HexTuner() {
+  const [_, setter, pane] = useAppContext();
+  const paneColor = getPaneColor(pane);
+
   const [color, setColor] = useState(getPaneColor(pane));
   // const colorPane = getter.colorPanes.find(v => v.paneId === getter.activePaneIdx);
   //change colorvalue
@@ -21,13 +24,13 @@ export default function HexTuner({ pane, setter }) {
       console.log("Those are too many characters for a hex code..");
       return;
     }
-    console.log(nChar);
+
     setColor(inputVal.toUpperCase());
   }
 
   useEffect(() => {
     const inputBox = document.querySelector(".hexBox > input");
-    setColor(getPaneColor(pane));
+    setColor(paneColor);
 
     //function that permanently changes color
     const changeColor = (e) => {
@@ -44,7 +47,7 @@ export default function HexTuner({ pane, setter }) {
     return () => {
       inputBox.removeEventListener("keyup", changeColor);
     };
-  });
+  }, [paneColor]);
   return (
     <div className="hexBox">
       <input type={"text"} value={color} onChange={certifyColorChange}></input>

@@ -7,17 +7,41 @@ function colorVec(hexA, hexB) {
   return diff.reduce((t, v) => t + v, 0) / 3;
 }
 
+function hueToRGB(v1, v2, h) {
+  if (h < 0) h++;
+  else if (h > 1) h--;
+
+  if (6 * h < 1) return v1 + (v2 - v1) * 6 * h;
+  if (2 * h < 1) return v2;
+  if (3 * h < 2) return v1 + (v2 - v1) * (2 / 3 - h) * 6;
+  return v1;
+}
 //...............
 
 //converts hex codes to the rgb color format
-export function hexToRGB(hex) {
-  let rgb = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)];
+export function hexToRGB(val, reverse = false) {
+  if (reverse) {
+    return `#${val
+      .reduce(
+        (t, v) =>
+          t + Math.min(255, Math.round(v)).toString(16).padStart(2, "0"),
+        ""
+      )
+      .toUpperCase()}`;
+  }
+  let rgb = [val.slice(1, 3), val.slice(3, 5), val.slice(5, 7)];
   return rgb.map((v) => parseInt(v, 16));
 }
 
 //converts hex codes to the cmyk color format
-export function hexToCMYK(hex) {
-  let rgb = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)];
+export function hexToCMYK(val, reverse = false) {
+  if (reverse) {
+    let [c, m, y, k] = val.map((v) => v / 100);
+    let kinv = 1 - k;
+    let rgb = [c, m, y].map((v) => kinv * (1 - v) * 255);
+    return hexToRGB(rgb, true);
+  }
+  let rgb = [val.slice(1, 3), val.slice(3, 5), val.slice(5, 7)];
   let [r, g, b] = rgb.map((v) => parseInt(v, 16) / 255);
 
   let kinv = Math.max(r, g, b);
@@ -29,8 +53,28 @@ export function hexToCMYK(hex) {
 }
 
 //converts hex codes to the hsl color format
-export function hexToHSL(hex) {
-  let rgb = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)];
+export function hexToHSL(val, reverse = false) {
+  if (reverse) {
+    let [h, s, l] = val.map((v, vi) => (vi === 0 ? v / 360 : v / 100));
+    let r, g, b, v1, v2;
+    if (s === 0) {
+      r = l * 255;
+      g = l * 255;
+      b = l * 255;
+    } else {
+      if (l < 0.5) {
+        v2 = l * (1 + s);
+      } else {
+        v2 = l + s - s * l;
+      }
+      v1 = 2 * l - v2;
+      r = 255 * hueToRGB(v1, v2, h + 1 / 3);
+      g = 255 * hueToRGB(v1, v2, h);
+      b = 255 * hueToRGB(v1, v2, h - 1 / 3);
+    }
+    return hexToRGB([r, g, b], true);
+  }
+  let rgb = [val.slice(1, 3), val.slice(3, 5), val.slice(5, 7)];
   let [r, g, b] = rgb.map((v) => parseInt(v, 16) / 255);
 
   // Find greatest and smallest channel values
@@ -68,8 +112,53 @@ export function hexToHSL(hex) {
 }
 
 //converting hex codes to the hsv/hsb color format
-export function hexToHSV(hex) {
-  let rgb = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)];
+export function hexToHSV(val, reverse = false) {
+  if (reverse) {
+    let [h, s, v] = val.map((v, vi) => (vi === 0 ? v / 360 : v / 100));
+    let r, g, b;
+    if (s === 0) {
+      r = v * 255;
+      g = v * 255;
+      b = v * 255;
+    } else {
+      let var_h, var_i, var_1, var_2, var_3, var_r, var_g, var_b;
+      var_h = h * 6;
+      if (var_h === 6) var_h = 0;
+      var_i = Math.floor(var_h); //Or ... var_i = floor( var_h )
+      var_1 = v * (1 - s);
+      var_2 = v * (1 - s * (var_h - var_i));
+      var_3 = v * (1 - s * (1 - (var_h - var_i)));
+
+      if (var_i == 0) {
+        var_r = v;
+        var_g = var_3;
+        var_b = var_1;
+      } else if (var_i == 1) {
+        var_r = var_2;
+        var_g = v;
+        var_b = var_1;
+      } else if (var_i == 2) {
+        var_r = var_1;
+        var_g = v;
+        var_b = var_3;
+      } else if (var_i == 3) {
+        var_r = var_1;
+        var_g = var_2;
+        var_b = v;
+      } else if (var_i == 4) {
+        var_r = var_3;
+        var_g = var_1;
+        var_b = v;
+      } else {
+        var_r = v;
+        var_g = var_1;
+        var_b = var_2;
+      }
+      [r, g, b] = [var_r, var_g, var_b].map((v) => v * 255);
+    }
+    return hexToRGB([r, g, b], true);
+  }
+  let rgb = [val.slice(1, 3), val.slice(3, 5), val.slice(5, 7)];
   let [r, g, b] = rgb.map((v) => parseInt(v, 16) / 255);
 
   let min = Math.min(r, g, b);
