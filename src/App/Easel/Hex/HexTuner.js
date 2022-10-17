@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { buildNewColor } from "../../../AuxFunctions/formatColor";
 import useAppContext, {
   getPaneColor,
 } from "../../../AuxFunctions/useAppContext";
@@ -10,13 +11,21 @@ export default function HexTuner() {
   const [_, setter, pane] = useAppContext();
   const paneColor = getPaneColor(pane);
 
-  const [color, setColor] = useState(getPaneColor(pane));
+  const [color, setColor] = useState(paneColor.hex);
   // const colorPane = getter.colorPanes.find(v => v.paneId === getter.activePaneIdx);
   //change colorvalue
   function certifyColorChange(e) {
     const inputVal = e.target.value;
+    if (inputVal.length === 0) {
+      console.log("You cannot delete any more characters");
+      return;
+    }
+
     const nChar = inputVal[inputVal.length - 1].toUpperCase();
-    if (!hexChars.includes(nChar)) {
+    if (
+      !hexChars.includes(nChar) &&
+      !(nChar === "#" && inputVal.length === 1)
+    ) {
       console.log("That is not a valid hex character");
       return;
     }
@@ -30,7 +39,7 @@ export default function HexTuner() {
 
   useEffect(() => {
     const inputBox = document.querySelector(".hexBox > input");
-    setColor(paneColor);
+    setColor(paneColor.hex);
 
     //function that permanently changes color
     const changeColor = (e) => {
@@ -38,8 +47,16 @@ export default function HexTuner() {
         return;
       }
       let col = e.target.value;
+      if (col.length > 7) {
+        return;
+      } else if (col.length < 7) {
+        col += "0".repeat(7 - col.length);
+      }
       //checking if value is consistent
-      setter({ command: "changePaneColor", color: col });
+      setter({
+        command: "changePaneColor",
+        color: buildNewColor("hex", col, paneColor),
+      });
     };
 
     inputBox.addEventListener("keyup", changeColor);
@@ -47,7 +64,7 @@ export default function HexTuner() {
     return () => {
       inputBox.removeEventListener("keyup", changeColor);
     };
-  }, [paneColor]);
+  }, [paneColor.hex]);
   return (
     <div className="hexBox">
       <input type={"text"} value={color} onChange={certifyColorChange}></input>

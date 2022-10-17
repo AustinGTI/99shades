@@ -4,11 +4,17 @@ import Palette from "./Palette/Palette";
 import cols from "../Data/Colors/tempCols.json";
 import HexTuner from "./Easel/Hex/HexTuner";
 import Easel from "./Easel/Easel";
+import { buildNewColor } from "../AuxFunctions/formatColor";
 
 class ColorPane {
   constructor(id, position) {
     this.paneId = id; //the id that will identify a color pane
-    this.colorStack = [cols[Math.floor(Math.random() * cols.length)].hexcode]; //this will refer to the history of the colors that have been set on this pane
+    this.colorStack = [
+      buildNewColor(
+        "hex",
+        cols[Math.floor(Math.random() * cols.length)].hexcode
+      ),
+    ]; //this will refer to the history of the colors that have been set on this pane
     this.colorStackPointer = 0; //this will refer to the current color on the pane by pointing to an index on the colorstack array [-1,-2]
     this.paneLocked = false; //this will indicate if the color is uneditable or not
     this.colorDetailVisible = true; //this will indicate if the color details can be seen (may not be necessary)
@@ -135,15 +141,13 @@ function setAppColorData(data, options) {
     //when changing the color of the pane, requires the new color
     case "changePaneColor":
       let { color } = options;
-      activePane.colorStack[activePane.colorStack.length - 1] = color;
-      break;
 
       if (activePane.colorInFlux) {
-        activePane.colorStack[activePane.colorStack.length - 1] = color;
+        activePane.colorStack[activePane.colorStack.length - 1] = { ...color };
         clearTimeout(activePane.fluxTimeoutId);
       } else {
         if (activePane.colorStackPointer !== 0) {
-          activePane.colorStack.slice(
+          activePane.colorStack = activePane.colorStack.slice(
             0,
             activePane.colorStack.length - activePane.colorStackPointer
           );
@@ -151,7 +155,7 @@ function setAppColorData(data, options) {
         }
 
         activePane.colorInFlux = true;
-        activePane.colorStack.push(color);
+        activePane.colorStack.push({ ...color });
         console.log(activePane.colorStack.length);
       }
 

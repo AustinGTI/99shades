@@ -13,7 +13,7 @@ function cleanFormats(format, value) {
 }
 
 export default function ColorDetails({ pane, isActive }) {
-  let formats = formatColor(getPaneColor(pane));
+  let formats = getPaneColor(pane);
   let formatKeys = Object.keys(formats);
   let emphasis = isActive ? 40 : 20;
   let fontColor =

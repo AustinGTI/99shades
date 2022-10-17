@@ -45,11 +45,14 @@ export function hexToCMYK(val, reverse = false) {
   let [r, g, b] = rgb.map((v) => parseInt(v, 16) / 255);
 
   let kinv = Math.max(r, g, b);
-  let c = 1 - r / kinv;
-  let m = 1 - g / kinv;
-  let y = 1 - b / kinv;
+  let c = 1 - (kinv === 0 ? 1 : r / kinv);
+  let m = 1 - (kinv === 0 ? 1 : g / kinv);
+  let y = 1 - (kinv === 0 ? 1 : b / kinv);
   let k = 1 - kinv;
-  return [c, m, y, k].map((v) => parseInt(v * 100));
+  if (c === NaN) {
+    debugger;
+  }
+  return [c, m, y, k].map((v) => Math.round(v * 100));
 }
 
 //converts hex codes to the hsl color format
@@ -204,4 +207,35 @@ export default function formatColor(hex) {
     colName: hexToName(hex),
   };
   return ret;
+}
+
+//.. Calculate color transform
+const FORMATS = ["hex", "hsv", "rgb", "cmyk", "hsl", "col"];
+const FUNCTIONS = {
+  rgb: hexToRGB,
+  cmyk: hexToCMYK,
+  hsl: hexToHSL,
+  hsv: hexToHSV,
+  col: hexToName,
+};
+
+export function buildNewColor(cformat, value, currCols = undefined) {
+  currCols =
+    currCols ||
+    FORMATS.reduce((t, v) => {
+      t[v] = undefined;
+      return t;
+    }, {});
+  const hexVal = cformat === "hex" ? value : FUNCTIONS[cformat](value, true);
+  for (let [key, val] of Object.entries(currCols)) {
+    if (val && (key === "hex" ? val : FUNCTIONS[key](val, true)) === hexVal) {
+      continue;
+    }
+    if (key === "hex") {
+      currCols[key] = hexVal;
+      continue;
+    }
+    currCols[key] = key === cformat ? value : FUNCTIONS[key](hexVal);
+  }
+  return currCols;
 }

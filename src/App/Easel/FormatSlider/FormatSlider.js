@@ -8,6 +8,7 @@ import {
 import useAppContext, {
   getPaneColor,
 } from "../../../AuxFunctions/useAppContext";
+import ColorTree from "../ColorTree/ColorTree";
 import "./FormatSlider.scss";
 
 const FORMATS = {
@@ -41,7 +42,7 @@ let dragTimeout = undefined;
 let canDrag = true;
 
 function sliderFuncs(data) {
-  const { format, idx, col, setter, mySlide, mySlider } = data;
+  const { format, idx, col: currCol, colVal, mySlide, mySlider } = data;
   const range = FORMATS[format][1][idx];
 
   //function to change color value
@@ -61,25 +62,29 @@ function sliderFuncs(data) {
     // }
 
     const bounds = mySlide.getBoundingClientRect();
+    const slideWidth = mySlide.getBoundingClientRect().width;
+    const sliderWidth = mySlider.getBoundingClientRect().width;
     const [l, r] = [bounds.left, bounds.right];
 
-    if (
-      l <= e.clientX &&
-      e.clientX <= r - mySlider.getBoundingClientRect().width
-    ) {
-      mySlider.style.left = `${parseInt(e.clientX - l)}px`;
+    const [lp, rp] = [
+      Math.floor(bounds.left + sliderWidth / 2),
+      Math.floor(bounds.right - sliderWidth / 2),
+    ];
+
+    if (lp <= e.clientX && e.clientX <= rp) {
+      mySlider.style.left = `${parseInt(e.clientX - lp)}px`;
       //calculating the new color
-      col[idx] = parseInt(
-        ((e.clientX - l) /
-          (mySlide.getBoundingClientRect().width -
-            mySlider.getBoundingClientRect().width)) *
-          range
+      currCol[idx] = Math.round(
+        ((e.clientX - lp) / (slideWidth - sliderWidth)) * range
       );
 
-      setter({
-        command: "changePaneColor",
-        color: FORMATS[format][2](col, true),
-      });
+      colVal.color.col = [...currCol];
+      colVal.color.format = format;
+      //debugger;
+      // setter({
+      //   command: "changePaneColor",
+      //   color: FORMATS[format][2](col, true),
+      // });
     }
 
     // canDrag = false;
@@ -97,7 +102,7 @@ function sliderFuncs(data) {
   return [pickSlider, dragSlider, dropSlider];
 }
 
-function Slider({ format, col, idx, setter }) {
+function Slider({ format, col, idx, colVal }) {
   const label = FORMATS[format][0][idx];
   const key = label.toLowerCase().split("/")[0];
 
@@ -122,7 +127,7 @@ function Slider({ format, col, idx, setter }) {
       format,
       idx,
       col,
-      setter,
+      colVal,
       mySlide: slide,
       mySlider,
     });
@@ -148,8 +153,8 @@ function Slider({ format, col, idx, setter }) {
   );
 }
 
-export default function FormatSlider({ idx, format }) {
-  const [_, setter, pane] = useAppContext();
+export default function FormatSlider({ idx, format, colVal }) {
+  const [_, st, pane] = useAppContext();
   const paneColor = getPaneColor(pane);
 
   return (
@@ -158,14 +163,15 @@ export default function FormatSlider({ idx, format }) {
         FORMATS[format][0].map((v, vi) => (
           <Slider
             format={format}
-            col={FORMATS[format][2](paneColor)}
+            col={paneColor[format]}
             key={vi}
             idx={vi}
-            setter={setter}
+            //setter={setter}
+            colVal={colVal}
           />
         ))
       ) : (
-        <div></div>
+        <ColorTree />
       )}
     </div>
   );

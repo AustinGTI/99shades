@@ -105,7 +105,7 @@ export default function ColorPane({ pane, isActive }) {
     <div
       className={`colorBox pid${pane.paneId}`}
       style={{
-        backgroundColor: getPaneColor(pane),
+        backgroundColor: getPaneColor(pane).hex,
         border: `${isActive ? "5px" : "0px"} solid black`,
       }}
     >
