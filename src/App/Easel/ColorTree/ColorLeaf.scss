@@ -1,0 +1,21 @@
+.leaf {
+  display: flex;
+  border-radius: 10px;
+  flex-direction: row;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 3px 0;
+  padding: 0 20px;
+
+  background-color: #ddd;
+
+  > div {
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+  }
+  > p {
+  }
+}

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./ColorTree.scss";
 import cols from "../../../Data/Colors/tempColsv2.json";
-import formatColor, { hexToHSL } from "../../../AuxFunctions/formatColor";
+import ColorBranch from "./ColorBranch";
 
 function createColorTree() {
   const tree = {};
@@ -22,5 +22,11 @@ function createColorTree() {
 
 export default function ColorTree() {
   let tree = createColorTree();
-  return <div id="tree">{cols.black}</div>;
+  return (
+    <div id="tree">
+      {Object.keys(tree).map((v, vi) => (
+        <ColorBranch key={vi} branch={tree[v]} branchName={v} depth={0} />
+      ))}
+    </div>
+  );
 }
