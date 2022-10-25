@@ -24,7 +24,12 @@ export default function ColorLeaf(params) {
     };
   }, [paneColor]);
   return (
-    <div className={`leaf ${paneColor.hex == hex ? "active" : ""}`} ref={leaf}>
+    <div
+      className={`leaf ${title.toLowerCase().replaceAll(" ", "_")} ${
+        paneColor.col == title ? "active" : ""
+      }`}
+      ref={leaf}
+    >
       <div style={{ backgroundColor: hex }}></div>
       <p>{title}</p>
     </div>
