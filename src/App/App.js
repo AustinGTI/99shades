@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import "./App.scss";
 import Palette from "./Palette/Palette";
-import cols from "../Data/Colors/tempCols.json";
+import cols from "../Data/Colors/tempColsv2.json";
 import HexTuner from "./Easel/Hex/HexTuner";
 import Easel from "./Easel/Easel";
 import { buildNewColor } from "../AuxFunctions/formatColor";

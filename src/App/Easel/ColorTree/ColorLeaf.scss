@@ -18,4 +18,8 @@
   }
   > p {
   }
+
+  &.active {
+    border: 3px solid black;
+  }
 }

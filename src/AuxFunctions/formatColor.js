@@ -1,4 +1,4 @@
-import cols from "../Data/Colors/tempCols.json";
+import cols from "../Data/Colors/tempColsv2.json";
 
 //helper functions
 function colorVec(hexA, hexB) {
@@ -191,10 +191,17 @@ export function hexToHSV(val, reverse = false) {
 
 //converting a random hexcode to a color name
 export function hexToName(hex) {
-  let closestCol = cols.sort(
+  let closestCol = [...cols].sort(
     (a, b) => colorVec(a.hexcode, hex) - colorVec(b.hexcode, hex)
   )[0];
   return closestCol.title;
+}
+
+export function hexToClassification(hex) {
+  let closestCol = [...cols].sort(
+    (a, b) => colorVec(a.hexcode, hex) - colorVec(b.hexcode, hex)
+  )[0];
+  return closestCol.classification;
 }
 
 export default function formatColor(hex) {
@@ -210,13 +217,14 @@ export default function formatColor(hex) {
 }
 
 //.. Calculate color transform
-const FORMATS = ["hex", "hsv", "rgb", "cmyk", "hsl", "col"];
+const FORMATS = ["hex", "hsv", "rgb", "cmyk", "hsl", "col", "cls"];
 const FUNCTIONS = {
   rgb: hexToRGB,
   cmyk: hexToCMYK,
   hsl: hexToHSL,
   hsv: hexToHSV,
   col: hexToName,
+  cls: hexToClassification,
 };
 
 export function buildNewColor(cformat, value, currCols = undefined) {

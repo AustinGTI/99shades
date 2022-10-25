@@ -1,18 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ColorBranch.scss";
 
 import ColorLeaf from "./ColorLeaf";
 
 export default function ColorBranch(params) {
-  const { branch, branchName, depth } = params;
+  const { branch, branchName, depth, rootName } = params;
   const [inBloom, setBloom] = useState(false);
+  const branchContainer = useRef(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const branchLeaves =
+      branchContainer.current.querySelector("div.branchLeaves");
+    const dropDownBtn = branchContainer.current.querySelector(
+      "div.branchRoot > button.dropdown"
+    );
+
+    dropDownBtn.addEventListener("click", (e) => setBloom(!inBloom));
+    branchLeaves.classList.remove(inBloom ? "invisible" : "visible");
+    branchLeaves.classList.add(inBloom ? "visible" : "invisible");
+  }, [inBloom]);
 
   return (
-    <div className="branchContainer" style={{ marginLeft: `${depth * 10}px` }}>
+    <div
+      className={`branchContainer ${branchName} ${rootName}`}
+      ref={branchContainer}
+      style={{ marginLeft: `${depth * 10}px` }}
+    >
       <div className="branchRoot">
-        <p>{branchName}</p>
+        <p>
+          {branchName} {rootName}
+        </p>
         <button className="dropdown">&gt;</button>
       </div>
       <div className="branchLeaves">
@@ -23,6 +40,7 @@ export default function ColorBranch(params) {
                 branch={branch[v]}
                 branchName={v}
                 depth={depth + 1}
+                rootName={branchName + " " + rootName}
               />
             ))
           : branch.map(({ title, hexcode }, vi) => (
