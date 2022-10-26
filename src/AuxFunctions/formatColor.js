@@ -234,16 +234,17 @@ export function buildNewColor(cformat, value, currCols = undefined) {
       t[v] = undefined;
       return t;
     }, {});
+  let tempCols = { ...currCols };
   const hexVal = cformat === "hex" ? value : FUNCTIONS[cformat](value, true);
-  for (let [key, val] of Object.entries(currCols)) {
+  for (let [key, val] of Object.entries(tempCols)) {
     if (val && (key === "hex" ? val : FUNCTIONS[key](val, true)) === hexVal) {
       continue;
     }
     if (key === "hex") {
-      currCols[key] = hexVal;
+      tempCols[key] = hexVal;
       continue;
     }
-    currCols[key] = key === cformat ? value : FUNCTIONS[key](hexVal);
+    tempCols[key] = key === cformat ? value : FUNCTIONS[key](hexVal);
   }
-  return currCols;
+  return tempCols;
 }

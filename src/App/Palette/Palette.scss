@@ -1,12 +1,12 @@
 div.paletteBox {
   position: relative;
 
-  width: 90%;
+  width: 95%;
   height: 65%;
 
   margin: 0 auto;
 
-  background-color: blue;
+  background-color: #fdd;
 
   display: flex;
   flex-direction: row;
@@ -34,14 +34,14 @@ div.paletteBox {
         left: 0;
       }
 
-      background-color: cornflowerblue;
+      //background-color: cornflowerblue;
     }
 
     &.downloadBtn {
       bottom: 0;
       right: 0;
 
-      background-color: greenyellow;
+      //background-color: greenyellow;
     }
   }
 }

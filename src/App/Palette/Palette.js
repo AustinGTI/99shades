@@ -2,6 +2,9 @@ import React, { useEffect, useReducer } from "react";
 import useAppContext from "../../AuxFunctions/useAppContext";
 import ColorPane from "./ColorPane/ColorPane";
 
+import { ReactComponent as AddBtn } from "../../Data/Icons/Buttons/addBtn.svg";
+import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/downloadBtn.svg";
+
 import "./Palette.scss";
 
 export default function Palette() {
@@ -32,9 +35,15 @@ export default function Palette() {
   }, [appData, setAppData]);
   return (
     <div className="paletteBox">
-      <div className="addRightBtn addBtn btn"></div>
-      <div className="addLeftBtn addBtn btn"></div>
-      <div className="downloadBtn btn"></div>
+      <div className="addRightBtn addBtn btn">
+        <AddBtn />
+      </div>
+      <div className="addLeftBtn addBtn btn">
+        <AddBtn />
+      </div>
+      <div className="downloadBtn btn">
+        <DownloadBtn />
+      </div>
       {appData.colorPanes
         .sort((a, b) => a.panePosition - b.panePosition)
         .map((v, vi) => (

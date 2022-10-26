@@ -6,6 +6,7 @@ import HexTuner from "./Easel/Hex/HexTuner";
 import Easel from "./Easel/Easel";
 import { buildNewColor } from "../AuxFunctions/formatColor";
 import ColorTree from "./Easel/ColorTree/ColorTree";
+import { ReactComponent as Logo } from "../Data/Icons/Logos/logoV1.svg";
 
 class ColorPane {
   constructor(id, position) {
@@ -142,7 +143,6 @@ function setAppColorData(data, options) {
     //when changing the color of the pane, requires the new color
     case "changePaneColor":
       let { color } = options;
-
       if (activePane.colorInFlux) {
         activePane.colorStack[activePane.colorStack.length - 1] = { ...color };
         clearTimeout(activePane.fluxTimeoutId);
@@ -217,7 +217,9 @@ function App() {
   return (
     <React.StrictMode>
       <div className="appBg">
-        <div className="logoBox"></div>
+        <div className="logoBox">
+          <Logo />
+        </div>
         <AppContext.Provider
           value={{
             getter: appState,

@@ -1,8 +1,11 @@
 div.colorDetailsBox {
+  --primary-color: black;
+  --secondary-color: white;
+
   position: absolute;
 
   width: 80%;
-  height: 80%;
+  height: 75%;
 
   text-align: center;
 
@@ -10,6 +13,8 @@ div.colorDetailsBox {
   bottom: 0;
   right: 0;
   left: 0;
+
+  color: var(--secondary-color);
 
   display: flex;
   flex-direction: column;
@@ -29,9 +34,7 @@ div.colorDetailsBox {
     width: 100%;
     height: 15%;
 
-    bottom: 3%;
-
-    background-color: green;
+    bottom: 2%;
 
     display: flex;
     flex-direction: row;
@@ -40,21 +43,49 @@ div.colorDetailsBox {
 
     div.btn {
       position: relative;
-      background-color: red;
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
 
       margin: 0 5px;
+
+      svg {
+        overflow: visible;
+        path,
+        circle {
+          stroke-width: 15px;
+          fill: var(--primary-color);
+          stroke: var(--secondary-color);
+        }
+      }
+    }
+    div.btn:hover {
+      svg {
+        path,
+        circle {
+          fill: var(--secondary-color);
+          stroke: var(--secondary-color);
+        }
+      }
     }
   }
 
-  div.btn.panelBtn.moveBtn {
+  div.btn.panelBtn {
     position: absolute;
     width: 100%;
     height: 22%;
 
-    top: -24%;
-
-    background-color: magenta;
+    top: -30%;
+    svg {
+      circle {
+        fill: var(--primary-color);
+      }
+      rect {
+        fill: var(--primary-color);
+        filter: brightness(0.8);
+      }
+    }
+    &:hover {
+      filter: brightness(1.25);
+    }
   }
 }

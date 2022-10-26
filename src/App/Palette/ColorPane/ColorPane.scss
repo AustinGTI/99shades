@@ -1,12 +1,14 @@
 div.colorBox {
   position: relative;
 
-  flex-basis: 10vw;
-  flex-grow: 1;
+  width: 300px;
+  flex-grow: 0;
+  flex-shrink: 1;
 
   height: 95%;
 
   margin: auto 3px;
 
   background-color: magenta;
+  border-radius: 20px;
 }
