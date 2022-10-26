@@ -5,7 +5,7 @@ import "./Easel.scss";
 import FormatSlider from "./FormatSlider/FormatSlider";
 import HexTuner from "./Hex/HexTuner";
 
-const FORMATS = ["hsv", "rgb", "NULL", "cmyk", "hsl"];
+const FORMATS = ["hsv", "rgb", "cmyk", "hsl"];
 const CURR_COLOR_VALUE = {
   precolor: { col: undefined, format: undefined },
   color: { col: undefined, format: undefined },
@@ -42,7 +42,7 @@ export default function () {
     <div className="tunersBox">
       <HexTuner />
       <div className="slidersBox">
-        {Array.from(Array(5).keys()).map((v, vi) => (
+        {Array.from(Array(FORMATS.length).keys()).map((v, vi) => (
           <FormatSlider
             key={vi}
             idx={vi}

@@ -5,6 +5,7 @@ import cols from "../Data/Colors/tempColsv2.json";
 import HexTuner from "./Easel/Hex/HexTuner";
 import Easel from "./Easel/Easel";
 import { buildNewColor } from "../AuxFunctions/formatColor";
+import ColorTree from "./Easel/ColorTree/ColorTree";
 
 class ColorPane {
   constructor(id, position) {
@@ -224,8 +225,13 @@ function App() {
           }}
         >
           <div className="appBox">
-            <Palette />
-            <Easel />
+            <div className="mainBox">
+              <Palette />
+              <Easel />
+            </div>
+            <div className="treeBox">
+              <ColorTree />
+            </div>
           </div>
         </AppContext.Provider>
       </div>

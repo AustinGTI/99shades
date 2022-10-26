@@ -156,23 +156,19 @@ function Slider({ format, col, idx, colVal }) {
 export default function FormatSlider({ idx, format, colVal }) {
   const [_, st, pane] = useAppContext();
   const paneColor = getPaneColor(pane);
-
+  //${idx === 2 ? " colorListBox" : ""}
   return (
-    <div className={`formatBox${idx === 2 ? " colorListBox" : ""}`}>
-      {idx !== 2 ? (
-        FORMATS[format][0].map((v, vi) => (
-          <Slider
-            format={format}
-            col={paneColor[format]}
-            key={vi}
-            idx={vi}
-            //setter={setter}
-            colVal={colVal}
-          />
-        ))
-      ) : (
-        <ColorTree />
-      )}
+    <div className={`formatBox`}>
+      {FORMATS[format][0].map((v, vi) => (
+        <Slider
+          format={format}
+          col={paneColor[format]}
+          key={vi}
+          idx={vi}
+          //setter={setter}
+          colVal={colVal}
+        />
+      ))}
     </div>
   );
 }
