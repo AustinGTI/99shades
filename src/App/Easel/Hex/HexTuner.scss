@@ -1,19 +1,25 @@
 .hexBox {
   position: relative;
 
-  width: 20%;
+  width: 10%;
   height: 15%;
 
   margin: 0 auto;
+  border-radius: 10px;
+  border: 5px solid var(--secondary-active-color);
+  background-color: var(--primary-active-color);
 
-  background-color: chartreuse;
+  display: flex;
+  align-items: center;
+
   input {
     position: inherit;
     width: 90%;
     background-color: inherit;
     text-align: center;
     border: none;
-    color: black;
+    color: var(--secondary-active-color);
+    font-size: 20px;
 
     &:focus {
       outline: none;

@@ -34,6 +34,16 @@ export default function ColorDetails({ pane, isActive }) {
         ];
   const colDetailsBox = useRef(null);
   useEffect(() => {
+    const appBox = document.querySelector(".appBg > .appBox");
+
+    if (isActive) {
+      appBox.style.setProperty("--primary-active-color", formats.hex);
+      appBox.style.setProperty(
+        "--secondary-active-color",
+        `hsl(${fontColor.join(",")})`
+      );
+    }
+
     colDetailsBox.current.parentElement.style.setProperty(
       "--primary-color",
       formats.hex
@@ -42,7 +52,7 @@ export default function ColorDetails({ pane, isActive }) {
       "--secondary-color",
       `hsl(${fontColor.join(",")})`
     );
-  }, [isActive, formats]);
+  }, [isActive, formats, colDetailsBox]);
 
   return (
     <>

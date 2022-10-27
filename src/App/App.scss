@@ -26,6 +26,8 @@ div.appBg {
     z-index: 10;
   }
   div.appBox {
+    --primary-active-color: black;
+    --secondary-active-color: white;
     display: flex;
     width: 100%;
     height: 95%;
@@ -43,7 +45,7 @@ div.appBg {
 
       margin-left: 1%;
 
-      background-color: #ddd;
+      background-color: #fdd;
       border-radius: 20px;
     }
 
