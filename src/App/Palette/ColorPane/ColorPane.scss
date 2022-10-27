@@ -1,4 +1,6 @@
 div.colorBox {
+  --primary-color: black;
+  --secondary-color: white;
   position: relative;
 
   width: 300px;
@@ -11,4 +13,47 @@ div.colorBox {
 
   background-color: magenta;
   border-radius: 20px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+
+  div.bracer {
+    width: 5%;
+    height: 60%;
+    display: flex;
+    padding-top: 35%;
+    flex-direction: column;
+    &.right {
+      justify-content: flex-end;
+    }
+    &.left {
+      justify-content: flex-start;
+    }
+
+    div.indicator {
+      height: 5%;
+      width: 100%;
+      border-radius: 10px;
+      background-color: var(--secondary-color);
+    }
+    &.active {
+      div.indicator {
+        height: 90%;
+      }
+    }
+  }
+  &:hover {
+    div.bracer {
+      div.indicator {
+        height: 10%;
+      }
+      &.active {
+        div.indicator {
+          height: 100%;
+        }
+      }
+    }
+  }
 }

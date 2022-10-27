@@ -34,34 +34,46 @@ export default function ColorDetails({ pane, isActive }) {
         ];
   const colDetailsBox = useRef(null);
   useEffect(() => {
-    colDetailsBox.current.style.setProperty("--primary-color", formats.hex);
-    colDetailsBox.current.style.setProperty(
+    colDetailsBox.current.parentElement.style.setProperty(
+      "--primary-color",
+      formats.hex
+    );
+    colDetailsBox.current.parentElement.style.setProperty(
       "--secondary-color",
       `hsl(${fontColor.join(",")})`
     );
-  }, [formats]);
+  }, [isActive, formats]);
 
   return (
-    <div className="colorDetailsBox" ref={colDetailsBox}>
-      <div className="btn panelBtn moveBtn">
-        <MoveBtn />
+    <>
+      <div className={`bracer left ${isActive ? "active" : ""}`}>
+        {/* to be replaced with svgs when working on animations */}
+        <div className="indicator"></div>
       </div>
-      {formatKeys.map((v, vi) => (
-        <div className="format" key={vi}>
-          <span>{cleanFormats(v, formats[v])}</span>
+      <div className="colorDetailsBox" ref={colDetailsBox}>
+        <div className="btn panelBtn moveBtn">
+          <MoveBtn />
         </div>
-      ))}
-      <div className="keyBtnBox">
-        <div className="btn keyBtn undoBtn">
-          <UndoBtn />
-        </div>
-        <div className="btn keyBtn deleteBtn">
-          <DeleteBtn />
-        </div>
-        <div className="btn keyBtn redoBtn">
-          <RedoBtn />
+        {formatKeys.map((v, vi) => (
+          <div className="format" key={vi}>
+            <span>{cleanFormats(v, formats[v])}</span>
+          </div>
+        ))}
+        <div className="keyBtnBox">
+          <div className="btn keyBtn undoBtn">
+            <UndoBtn />
+          </div>
+          <div className="btn keyBtn deleteBtn">
+            <DeleteBtn />
+          </div>
+          <div className="btn keyBtn redoBtn">
+            <RedoBtn />
+          </div>
         </div>
       </div>
-    </div>
+      <div className={`bracer right ${isActive ? "active" : ""}`}>
+        <div className="indicator"></div>
+      </div>
+    </>
   );
 }

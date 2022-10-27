@@ -106,7 +106,6 @@ export default function ColorPane({ pane, isActive }) {
       className={`colorBox pid${pane.paneId}`}
       style={{
         backgroundColor: getPaneColor(pane).hex,
-        border: `${isActive ? "5px" : "0px"} solid black`,
       }}
     >
       <ColorDetails pane={pane} isActive={isActive} />

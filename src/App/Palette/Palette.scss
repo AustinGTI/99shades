@@ -25,6 +25,23 @@ div.paletteBox {
       top: 0;
       bottom: 0;
       margin: auto 0;
+      overflow: visible;
+      svg {
+        overflow: visible;
+
+        path {
+          fill: var(--muted-green);
+          stroke-width: 10px;
+          stroke: var(--active-green);
+        }
+      }
+      &:hover {
+        svg {
+          path {
+            fill: var(--active-green);
+          }
+        }
+      }
 
       &.addRightBtn {
         right: 0;
@@ -40,6 +57,23 @@ div.paletteBox {
     &.downloadBtn {
       bottom: 0;
       right: 0;
+      overflow: visible;
+      svg {
+        overflow: visible;
+
+        path {
+          fill: var(--muted-blue);
+          stroke-width: 10px;
+          stroke: var(--active-blue);
+        }
+      }
+      &:hover {
+        svg {
+          path {
+            fill: var(--active-blue);
+          }
+        }
+      }
 
       //background-color: greenyellow;
     }
