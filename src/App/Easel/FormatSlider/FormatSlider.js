@@ -133,7 +133,7 @@ function Slider({ format, col, idx, colVal }) {
       nCol[idx] = nVal;
       return FUNCTIONS[format](nCol, true);
     });
-    console.log(gradients);
+    //console.log(gradients);
     const slideGradient = `linear-gradient(to right,${gradients.join(",")})`;
     slide.style.backgroundImage = slideGradient;
 

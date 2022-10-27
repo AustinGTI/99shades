@@ -1,7 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
+import { FUNCTIONS } from "../../../AuxFunctions/formatColor";
 import "./ColorBranch.scss";
 
 import ColorLeaf from "./ColorLeaf";
+
+function flattenBranch(branch) {
+  if (Array.isArray(branch)) {
+    return branch;
+  }
+  let leaves = [];
+  for (let key in branch) {
+    console.log(key, branch);
+    let nLeaves = flattenBranch(branch[key]);
+    leaves = leaves.concat(nLeaves);
+  }
+  return leaves;
+}
+function calcBranchAverage(branch) {
+  const flatBranch = flattenBranch(branch);
+  const colSum = flatBranch.reduce(
+    (t, v) => {
+      let rgb = FUNCTIONS["rgb"](v.hexcode);
+      return t.map((va, vai) => va + rgb[vai]);
+    },
+    [0, 0, 0]
+  );
+  return colSum.map((v) => parseInt(v / flatBranch.length));
+}
 
 export default function ColorBranch(params) {
   const { branch, branchName, depth, rootName } = params;
@@ -13,7 +38,7 @@ export default function ColorBranch(params) {
     const branchLeaves =
       branchContainer.current.querySelector("div.branchLeaves");
     const dropDownBtn = branchContainer.current.querySelector(
-      "div.branchRoot > button.dropdown"
+      "div.branchRoot  div.dropDiv"
     );
     const clickBloom = (e) => {
       if (branchLeaves.classList.contains("visible")) {
@@ -35,18 +60,32 @@ export default function ColorBranch(params) {
       dropDownBtn.removeEventListener("click", clickBloom);
     };
   }, []);
+  useEffect(() => {
+    const avgCol = calcBranchAverage(branch);
+    branchContainer.current.style.backgroundColor = `rgb(${avgCol.join(",")})`;
+    console.log(avgCol);
+  }, [branch]);
 
   return (
-    <div
-      className={`branchContainer ${branchClasses}`}
-      ref={branchContainer}
-      style={{ marginLeft: `${depth * 10}px` }}
-    >
+    <div className={`branchContainer ${branchClasses}`} ref={branchContainer}>
       <div className="branchRoot">
+        <div className="btnDiv climbDiv">
+          {Array.from(Array(depth).keys()).map((v, vi) => (
+            <div className="btn climbBtn" key={vi}></div>
+          ))}
+        </div>
+        <div className="colTag"></div>
+
         <p>
           {branchName} {rootName}
         </p>
-        <button className="dropdown">&gt;</button>
+        <div className="btnDiv dropDiv">
+          {Array(3)
+            .fill(true)
+            .map((v, vi) => (
+              <div key={vi} className="btn dropBtn"></div>
+            ))}
+        </div>
       </div>
       <div className="branchLeaves invisible">
         {!Array.isArray(branch)

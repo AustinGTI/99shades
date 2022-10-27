@@ -1,19 +1,63 @@
 .branchContainer {
-  background-color: orange;
-  border: 3px solid blue;
+  background-color: white;
+  border-radius: 10px;
+  //border: 1px solid gray;
   margin: 5px 0;
   .branchRoot {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    .colTag {
+      flex-grow: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background-color: red;
+      margin: 0 5px;
+    }
+
+    .climbDiv {
+      flex-grow: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      .climbBtn {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        background-color: black;
+        margin: 0 2px;
+      }
+    }
+    p {
+      flex-grow: 1;
+    }
+    .dropDiv {
+      flex-grow: 0;
+      margin-right: 5px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      height: 20px;
+      padding: 5px;
+      .dropBtn {
+        width: 5px;
+        height: 5px;
+        border-radius: 5px;
+        background-color: black;
+        margin: 0 2px;
+      }
+    }
   }
   .branchLeaves {
-  }
-  .visible {
-    display: block;
-  }
-  .invisible {
-    display: none;
+    &.visible {
+      display: block;
+    }
+    &.invisible {
+      display: none;
+    }
   }
 }
