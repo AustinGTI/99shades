@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import {
+  buildNewColor,
+  FUNCTIONS,
   hexToCMYK,
   hexToHSL,
   hexToHSV,
@@ -8,7 +10,7 @@ import {
 import useAppContext, {
   getPaneColor,
 } from "../../../AuxFunctions/useAppContext";
-import ColorTree from "../ColorTree/ColorTree";
+import { ReactComponent as SlideBtn } from "../../../Data/Icons/Buttons/slideBtn.svg";
 import "./FormatSlider.scss";
 
 const FORMATS = {
@@ -107,6 +109,7 @@ function Slider({ format, col, idx, colVal }) {
   const key = label.toLowerCase().split("/")[0];
 
   useEffect(() => {
+    //set slider position
     const slide = document.querySelector(
       `.slide.${format.toLowerCase()}.${key}`
     );
@@ -122,6 +125,17 @@ function Slider({ format, col, idx, colVal }) {
             mySlider.getBoundingClientRect().width)
       )
     )}px`;
+    //create the background gradient
+    const detail = 10;
+    const gradients = Array.from(Array(detail + 1).keys()).map((v) => {
+      let nVal = (v / detail) * range;
+      let nCol = [...col];
+      nCol[idx] = nVal;
+      return FUNCTIONS[format](nCol, true);
+    });
+    console.log(gradients);
+    const slideGradient = `linear-gradient(to right,${gradients.join(",")})`;
+    slide.style.backgroundImage = slideGradient;
 
     const [pick, drag, drop] = sliderFuncs({
       format,
@@ -147,7 +161,9 @@ function Slider({ format, col, idx, colVal }) {
     <div className="sliderBox">
       <p>{label}</p>
       <div className={`slide ${format.toLowerCase()} ${key}`}>
-        <div className="slider"></div>
+        <div className="slider">
+          <SlideBtn />
+        </div>
       </div>
     </div>
   );

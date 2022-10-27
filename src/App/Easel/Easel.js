@@ -33,7 +33,7 @@ export default function () {
   const [_, setter, pane] = useAppContext();
   useEffect(() => {
     let colRefresh = undefined;
-    colRefresh = setInterval(refreshColVal, 100, setter, getPaneColor(pane));
+    colRefresh = setInterval(refreshColVal, 10, setter, getPaneColor(pane));
     return () => {
       clearInterval(colRefresh);
     };

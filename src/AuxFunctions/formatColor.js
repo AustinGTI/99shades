@@ -218,7 +218,7 @@ export default function formatColor(hex) {
 
 //.. Calculate color transform
 const FORMATS = ["hex", "hsv", "rgb", "cmyk", "hsl", "col", "cls"];
-const FUNCTIONS = {
+export const FUNCTIONS = {
   rgb: hexToRGB,
   cmyk: hexToCMYK,
   hsl: hexToHSL,
