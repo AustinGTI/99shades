@@ -4,6 +4,7 @@ import useAppContext, {
   getPaneColor,
 } from "../../../AuxFunctions/useAppContext";
 import { buildNewColor } from "../../../AuxFunctions/formatColor";
+import { getContrastColor } from "../../../AuxFunctions/filterColor";
 
 export default function ColorLeaf(params) {
   const { title, hex } = params;
@@ -28,9 +29,10 @@ export default function ColorLeaf(params) {
       className={`leaf ${title.toLowerCase().replaceAll(" ", "_")} ${
         paneColor.col == title ? "active" : ""
       }`}
+      style={{ backgroundColor: hex, color: getContrastColor("hex", hex, 40) }}
       ref={leaf}
     >
-      <div style={{ backgroundColor: hex }}></div>
+      <div className="tag"></div>
       <p>{title}</p>
     </div>
   );

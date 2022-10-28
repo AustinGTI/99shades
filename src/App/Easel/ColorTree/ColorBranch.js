@@ -10,7 +10,6 @@ function flattenBranch(branch) {
   }
   let leaves = [];
   for (let key in branch) {
-    console.log(key, branch);
     let nLeaves = flattenBranch(branch[key]);
     leaves = leaves.concat(nLeaves);
   }
@@ -28,10 +27,27 @@ function calcBranchAverage(branch) {
   return colSum.map((v) => parseInt(v / flatBranch.length));
 }
 
+function showHideElem(elem, showhide = null) {
+  if (showhide == null || showhide) {
+    if (elem.classList.contains("invisible")) {
+      elem.classList.remove("invisible");
+      elem.classList.add("visible");
+    }
+  }
+  if (showhide == null || !showhide) {
+    if (elem.classList.contains("visible")) {
+      elem.classList.remove("visible");
+      elem.classList.add("invisible");
+    }
+  }
+}
+
 export default function ColorBranch(params) {
-  const { branch, branchName, depth, rootName } = params;
+  const { branch, branchName, parentInfo, rootName } = params;
   const branchContainer = useRef(null);
   let branchClasses = `${branchName} ${rootName}`;
+  const avgCol = `rgb(${calcBranchAverage(branch).join(",")})`;
+  parentInfo[avgCol] = branchContainer;
   branchClasses = branchClasses.slice(0, branchClasses.length - 2);
 
   useEffect(() => {
@@ -44,14 +60,11 @@ export default function ColorBranch(params) {
       if (branchLeaves.classList.contains("visible")) {
         //set every child to invisible
         branchLeaves.querySelectorAll(".visible").forEach((v) => {
-          v.classList.remove("visible");
-          v.classList.add("invisible");
+          showHideElem(v, false);
         });
-        branchLeaves.classList.remove("visible");
-        branchLeaves.classList.add("invisible");
+        showHideElem(branchLeaves, false);
       } else {
-        branchLeaves.classList.remove("invisible");
-        branchLeaves.classList.add("visible");
+        showHideElem(branchLeaves, true);
       }
     };
 
@@ -60,21 +73,37 @@ export default function ColorBranch(params) {
       dropDownBtn.removeEventListener("click", clickBloom);
     };
   }, []);
-  useEffect(() => {
-    const avgCol = calcBranchAverage(branch);
-    branchContainer.current.style.backgroundColor = `rgb(${avgCol.join(",")})`;
-    console.log(avgCol);
-  }, [branch]);
 
   return (
-    <div className={`branchContainer ${branchClasses}`} ref={branchContainer}>
+    <div
+      className={`branchContainer ${branchClasses}`}
+      ref={branchContainer}
+      style={{
+        filter: `drop-shadow(0 -${4 - Object.keys(parentInfo).length}px ${
+          7 - Object.keys(parentInfo).length * 2
+        }px #ccc)`,
+      }}
+    >
       <div className="branchRoot">
         <div className="btnDiv climbDiv">
-          {Array.from(Array(depth).keys()).map((v, vi) => (
-            <div className="btn climbBtn" key={vi}></div>
-          ))}
+          {/* {Object.keys(parentInfo)
+            .filter((v) => v != avgCol)
+            .map((v, vi) => (
+              <div
+                className="btn climbBtn"
+                style={{ backgroundColor: v }}
+                key={vi}
+                onClick={(e) =>
+                  showHideElem(
+                    parentInfo[v].current.querySelector(".branchLeaves"),
+                    false
+                  )
+                }
+                //onClick={(e) => console.log(parentInfo[v].current)}
+              ></div>
+            ))} */}
         </div>
-        <div className="colTag"></div>
+        <div className="colTag" style={{ backgroundColor: avgCol }}></div>
 
         <p>
           {branchName} {rootName}
@@ -94,7 +123,7 @@ export default function ColorBranch(params) {
                 key={vi}
                 branch={branch[v]}
                 branchName={v}
-                depth={depth + 1}
+                parentInfo={{ ...parentInfo }}
                 rootName={branchName + " " + rootName}
               />
             ))

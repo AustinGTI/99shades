@@ -8,6 +8,7 @@ import { ReactComponent as UndoBtn } from "../../../Data/Icons/Buttons/undoBtn.s
 import { ReactComponent as RedoBtn } from "../../../Data/Icons/Buttons/redoBtn.svg";
 import { ReactComponent as DeleteBtn } from "../../../Data/Icons/Buttons/deleteBtn.svg";
 import { ReactComponent as MoveBtn } from "../../../Data/Icons/Buttons/moveBtn.svg";
+import { getContrastColor } from "../../../AuxFunctions/filterColor";
 
 function cleanFormats(format, value) {
   if (["rgb", "hsv", "hsl", "cmyk"].includes(format)) {
@@ -20,28 +21,25 @@ export default function ColorDetails({ pane, isActive }) {
   let formats = getPaneColor(pane);
   let formatKeys = Object.keys(formats).filter((v) => v !== "cls");
   let emphasis = isActive ? 40 : 20;
-  let fontColor =
-    formats.hsl[2] > 50
-      ? [
-          formats.hsl[0],
-          formats.hsl[1].toString() + "%",
-          (formats.hsl[2] - emphasis).toString() + "%",
-        ]
-      : [
-          formats.hsl[0],
-          formats.hsl[1].toString() + "%",
-          (formats.hsl[2] + emphasis).toString() + "%",
-        ];
+  let fontColor = getContrastColor("hsl", formats.hsl, emphasis);
+  // formats.hsl[2] > 50
+  //   ? [
+  //       formats.hsl[0],
+  //       formats.hsl[1].toString() + "%",
+  //       (formats.hsl[2] - emphasis).toString() + "%",
+  //     ]
+  //   : [
+  //       formats.hsl[0],
+  //       formats.hsl[1].toString() + "%",
+  //       (formats.hsl[2] + emphasis).toString() + "%",
+  //     ];
   const colDetailsBox = useRef(null);
   useEffect(() => {
     const appBox = document.querySelector(".appBg > .appBox");
 
     if (isActive) {
       appBox.style.setProperty("--primary-active-color", formats.hex);
-      appBox.style.setProperty(
-        "--secondary-active-color",
-        `hsl(${fontColor.join(",")})`
-      );
+      appBox.style.setProperty("--secondary-active-color", fontColor);
     }
 
     colDetailsBox.current.parentElement.style.setProperty(
@@ -50,7 +48,7 @@ export default function ColorDetails({ pane, isActive }) {
     );
     colDetailsBox.current.parentElement.style.setProperty(
       "--secondary-color",
-      `hsl(${fontColor.join(",")})`
+      fontColor
     );
   }, [isActive, formats, colDetailsBox]);
 

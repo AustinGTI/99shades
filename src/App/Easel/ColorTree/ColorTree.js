@@ -93,7 +93,7 @@ export default function ColorTree() {
             key={vi}
             branch={tree[v]}
             branchName={v + "s"}
-            depth={0}
+            parentInfo={{}}
             rootName={""}
           />
         ))}
