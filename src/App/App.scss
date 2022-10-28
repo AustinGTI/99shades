@@ -44,21 +44,26 @@ div.appBg {
     flex-direction: row;
     div.mainBox {
       left: 0;
-
-      width: 78%;
+      width: 75%;
       height: 95vh;
 
       margin-left: 1%;
 
-      background-color: #fdd;
+      background-color: white;
+      box-shadow: 0 0 10px 2px #ddd;
       border-radius: 20px;
+      position: relative;
     }
 
     div.treeBox {
-      width: 20%;
-      margin-left: 1%;
+      width: 22%;
+      margin: 0 1%;
       height: 95vh;
       overflow: hidden;
+
+      box-shadow: 0 0 10px 2px #ddd;
+
+      border-radius: 10px;
 
       position: relative;
     }
@@ -67,12 +72,13 @@ div.appBg {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
   border-radius: 5px;
 }
 
@@ -80,10 +86,10 @@ div.appBg {
 ::-webkit-scrollbar-thumb {
   margin: 0 2px;
   border-radius: 5px;
-  background: #aaa;
+  background: #ccc;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #777;
+  background: #bbb;
 }

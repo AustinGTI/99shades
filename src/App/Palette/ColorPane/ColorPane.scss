@@ -3,10 +3,9 @@ div.colorBox {
   --secondary-color: white;
   position: relative;
 
-  width: 300px;
+  width: 250px;
   flex-grow: 0;
-  flex-shrink: 1;
-
+  flex-shrink: 0;
   height: 95%;
 
   margin: auto 3px;
