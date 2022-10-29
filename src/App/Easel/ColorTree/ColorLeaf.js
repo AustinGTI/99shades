@@ -21,9 +21,11 @@ export default function ColorLeaf(params) {
     };
     leaf.current.addEventListener("click", changeColor);
     return () => {
-      leaf.current.removeEventListener("click", changeColor);
+      if (leaf.current !== null) {
+        leaf.current.removeEventListener("click", changeColor);
+      }
     };
-  }, [paneColor]);
+  }, [paneColor, leaf]);
   return (
     <div
       className={`leaf ${title.toLowerCase().replaceAll(" ", "_")} ${

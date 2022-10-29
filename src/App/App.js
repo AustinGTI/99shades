@@ -6,7 +6,6 @@ import HexTuner from "./Easel/Hex/HexTuner";
 import Easel from "./Easel/Easel";
 import { buildNewColor } from "../AuxFunctions/formatColor";
 import ColorTree from "./Easel/ColorTree/ColorTree";
-import { ReactComponent as Logo } from "../Data/Icons/Logos/logoV1.svg";
 
 class ColorPane {
   constructor(id, position) {
@@ -217,9 +216,6 @@ function App() {
   return (
     <React.StrictMode>
       <div className="appBg">
-        <div className="logoBox">
-          <Logo />
-        </div>
         <AppContext.Provider
           value={{
             getter: appState,

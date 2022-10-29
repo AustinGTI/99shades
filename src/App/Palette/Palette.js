@@ -4,6 +4,7 @@ import ColorPane from "./ColorPane/ColorPane";
 
 import { ReactComponent as AddBtn } from "../../Data/Icons/Buttons/addBtn.svg";
 import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/downloadBtn.svg";
+import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV1.svg";
 
 import "./Palette.scss";
 
@@ -35,6 +36,9 @@ export default function Palette() {
   }, [appData, setAppData]);
   return (
     <div className="paletteBox">
+      <div className="logoBox">
+        <Logo />
+      </div>
       <div className="addRightBtn addBtn btn">
         <AddBtn />
       </div>

@@ -1,10 +1,12 @@
 div.paletteBox {
   position: relative;
 
-  width: 98%;
+  width: 92%;
   height: 60%;
 
   margin: 1% auto;
+
+  padding: 0 3%;
 
   border-radius: 10px;
 
@@ -14,14 +16,39 @@ div.paletteBox {
   flex-direction: row;
   justify-content: center;
 
-  overflow: auto;
+  //overflow-x: auto;
+  overflow-y: hidden;
 
   align-items: center;
 
-  div.btn {
+  div.logoBox {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+
+    overflow: visible;
+
+    width: 70px;
+    height: 70px;
+
+    background-color: white;
+    box-shadow: 0 0 10px 3px #ccc;
+    padding: 10px;
+
+    border-bottom-right-radius: 20px;
+
+    z-index: 10;
+  }
+
+  > div.btn {
     position: absolute;
     width: 50px;
     height: 50px;
+
+    background-color: white;
+    box-shadow: 0 0 10px 3px #ccc;
+    padding: 5px;
+    overflow: visible;
 
     z-index: 2;
 
@@ -29,10 +56,8 @@ div.paletteBox {
       top: 0;
       bottom: 0;
       margin: auto 0;
-      overflow: visible;
-      svg {
-        overflow: visible;
 
+      svg {
         path {
           fill: var(--muted-green);
           stroke-width: 10px;
@@ -49,9 +74,13 @@ div.paletteBox {
 
       &.addRightBtn {
         right: 0;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
       }
 
       &.addLeftBtn {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
         left: 0;
       }
 
@@ -59,9 +88,11 @@ div.paletteBox {
     }
 
     &.downloadBtn {
-      bottom: 5%;
+      bottom: 0;
       right: 0;
-      overflow: visible;
+
+      border-top-left-radius: 20px;
+
       svg {
         overflow: visible;
 
