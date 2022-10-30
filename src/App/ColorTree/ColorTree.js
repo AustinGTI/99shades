@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./ColorTree.scss";
-import cols from "../../../Data/Colors/tempColsv2.json";
+import cols from "../../Data/Colors/tempColsv2.json";
 import ColorBranch from "./ColorBranch";
-import useAppContext, {
-  getPaneColor,
-} from "../../../AuxFunctions/useAppContext";
+import useAppContext, { getPaneColor } from "../../AuxFunctions/useAppContext";
 
 function createColorTree(query = null) {
   const tree = {};

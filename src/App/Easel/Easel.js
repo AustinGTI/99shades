@@ -1,56 +1,62 @@
-import React, { useEffect } from "react";
-import { buildNewColor } from "../../AuxFunctions/formatColor";
-import useAppContext, { getPaneColor } from "../../AuxFunctions/useAppContext";
+import React, { useEffect, useReducer } from "react";
+import useAppContext from "../../AuxFunctions/useAppContext";
+import ColorPane from "./ColorPane/ColorPane";
+
+import { ReactComponent as AddBtn } from "../../Data/Icons/Buttons/addBtn.svg";
+import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/downloadBtn.svg";
+import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV1.svg";
+
 import "./Easel.scss";
-import FormatSlider from "./FormatSlider/FormatSlider";
-import HexTuner from "./Hex/HexTuner";
 
-const FORMATS = ["hsv", "rgb", "cmyk", "hsl"];
-const CURR_COLOR_VALUE = {
-  precolor: { col: undefined, format: undefined },
-  color: { col: undefined, format: undefined },
-};
-const refreshColVal = function (setter, currCols) {
-  if (
-    CURR_COLOR_VALUE.precolor.col === CURR_COLOR_VALUE.color.col &&
-    CURR_COLOR_VALUE.precolor.format === CURR_COLOR_VALUE.color.format
-  ) {
-    return;
-  }
-  CURR_COLOR_VALUE.precolor = { ...CURR_COLOR_VALUE.color };
-  setter({
-    command: "changePaneColor",
-    // color: CURR_COLOR_VALUE.func(CURR_COLOR_VALUE.color, true),
-    color: buildNewColor(
-      CURR_COLOR_VALUE.color.format,
-      CURR_COLOR_VALUE.color.col,
-      currCols
-    ),
-  });
-};
+export default function Palette() {
+  const [appData, setAppData] = useAppContext();
 
-export default function () {
-  const [_, setter, pane] = useAppContext();
   useEffect(() => {
-    let colRefresh = undefined;
-    colRefresh = setInterval(refreshColVal, 10, setter, getPaneColor(pane));
-    return () => {
-      clearInterval(colRefresh);
+    const addLeftBtn = document.querySelector(".addLeftBtn");
+    const addRightBtn = document.querySelector(".addRightBtn");
+    const panes = document.querySelectorAll("div.colorBox");
+
+    //add Pane function
+    const addPaneLeft = () => {
+      console.log("add left");
+      setAppData({ command: "addPane", direction: 0 });
     };
-  });
+    const addPaneRight = () => {
+      setAppData({ command: "addPane", direction: 1 });
+    };
+
+    //adding event listeners
+    addLeftBtn.addEventListener("click", addPaneLeft);
+    addRightBtn.addEventListener("click", addPaneRight);
+
+    return () => {
+      addLeftBtn.removeEventListener("click", addPaneLeft);
+      addRightBtn.removeEventListener("click", addPaneRight);
+    };
+  }, [appData, setAppData]);
   return (
-    <div className="tunersBox">
-      <HexTuner />
-      <div className="slidersBox">
-        {Array.from(Array(FORMATS.length).keys()).map((v, vi) => (
-          <FormatSlider
+    <div className="easelBox">
+      <div className="logoBox">
+        <Logo />
+      </div>
+      <div className="addRightBtn addBtn btn">
+        <AddBtn />
+      </div>
+      <div className="addLeftBtn addBtn btn">
+        <AddBtn />
+      </div>
+      <div className="downloadBtn btn">
+        <DownloadBtn />
+      </div>
+      {appData.colorPanes
+        .sort((a, b) => a.panePosition - b.panePosition)
+        .map((v, vi) => (
+          <ColorPane
             key={vi}
-            idx={vi}
-            format={FORMATS[vi]}
-            colVal={CURR_COLOR_VALUE}
+            pane={v}
+            isActive={appData.activePaneIdx === v.paneId}
           />
         ))}
-      </div>
     </div>
   );
 }

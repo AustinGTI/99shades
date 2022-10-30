@@ -2,10 +2,9 @@ import React, { useEffect, useReducer } from "react";
 import "./App.scss";
 import Palette from "./Palette/Palette";
 import cols from "../Data/Colors/tempColsv2.json";
-import HexTuner from "./Easel/Hex/HexTuner";
 import Easel from "./Easel/Easel";
 import { buildNewColor } from "../AuxFunctions/formatColor";
-import ColorTree from "./Easel/ColorTree/ColorTree";
+import ColorTree from "./ColorTree/ColorTree";
 
 class ColorPane {
   constructor(id, position) {
@@ -27,6 +26,8 @@ class ColorPane {
     this.fluxTimeoutDuration = 500;
   }
 }
+
+
 
 const appColorData = {
   activePaneIdx: 0, //this will refer to the active color in the app which the user is interacting with
@@ -224,8 +225,8 @@ function App() {
         >
           <div className="appBox">
             <div className="mainBox">
-              <Palette />
               <Easel />
+              <Palette />
             </div>
             <div className="treeBox">
               <ColorTree />

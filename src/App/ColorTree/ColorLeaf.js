@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import "./ColorLeaf.scss";
-import useAppContext, {
-  getPaneColor,
-} from "../../../AuxFunctions/useAppContext";
-import { buildNewColor } from "../../../AuxFunctions/formatColor";
-import { getContrastColor } from "../../../AuxFunctions/filterColor";
+import useAppContext, { getPaneColor } from "../../AuxFunctions/useAppContext";
+import { buildNewColor } from "../../AuxFunctions/formatColor";
+import { getContrastColor } from "../../AuxFunctions/filterColor";
 
 export default function ColorLeaf(params) {
   const { title, hex } = params;

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FUNCTIONS } from "../../../AuxFunctions/formatColor";
+import { FUNCTIONS } from "../../AuxFunctions/formatColor";
 import "./ColorBranch.scss";
 
 import ColorLeaf from "./ColorLeaf";
