@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {
     buildNewColor,
     FUNCTIONS,
@@ -97,23 +97,52 @@ function sliderFuncs(data) {
     };
     const dropSlider = (e) => {
         if (FORMATS[format][3][idx]) {
-            mySlider.style.backgroundColor = "red";
             FORMATS[format][3][idx] = false;
         }
     };
     return [pickSlider, dragSlider, dropSlider];
 }
 
+function setColorChannel(format, idx, colVal, currCol) {
+    const range = FORMATS[format][1][idx];
+    const enterHandler = function (e) {
+        if (e.which !== 13) {
+            return;
+        }
+        let nVal = e.target.value;
+        console.log("cjamge jamd;er");
+        if (nVal == "") {
+            nVal = 0;
+        } else if (isNaN(nVal)) {
+            nVal = currCol[idx];
+        } else if (nVal < 0) {
+            nVal = 0;
+        } else if (nVal > range) {
+            nVal = range;
+        }
+        currCol[idx] = nVal;
+        colVal.color.col = [...currCol];
+        colVal.color.format = format;
+        return;
+    }
+
+    return enterHandler;
+
+}
+
 function Slider({format, col, idx, colVal, direction}) {
     const label = FORMATS[format][0][idx];
     const key = label.toLowerCase().split("/")[0];
+    const sliderBox = useRef(null);
 
     useEffect(() => {
         //set slider position
-        const slide = document.querySelector(
-            `.slide.${format.toLowerCase()}.${key}`
+        const slide = sliderBox.current.querySelector(
+            ".slide"
         );
         const mySlider = slide.querySelector(".slider");
+        const channelInput = sliderBox.current.querySelector("div.slideInfo input");
+
         const value = col[idx];
         const range = FORMATS[format][1][idx];
 
@@ -125,6 +154,7 @@ function Slider({format, col, idx, colVal, direction}) {
                     mySlider.getBoundingClientRect().width)
             )
         )}px`;
+        channelInput.value = value;
         //create the background gradient
         const detail = 10;
         const gradients = Array.from(Array(detail + 1).keys()).map((v) => {
@@ -145,27 +175,33 @@ function Slider({format, col, idx, colVal, direction}) {
             mySlide: slide,
             mySlider,
         });
+        const enterHandler = setColorChannel(format, idx, colVal, col);
 
         mySlider.addEventListener("mousedown", pick);
         window.addEventListener("mouseup", drop);
         window.addEventListener("mousemove", drag);
 
+        channelInput.addEventListener("keyup", enterHandler);
+
         return () => {
             mySlider.removeEventListener("mousedown", pick);
             window.removeEventListener("mouseup", drop);
             window.removeEventListener("mousemove", drag);
+
+            channelInput.removeEventListener("keyup", enterHandler);
+
         };
     });
 
 
     return (
-        <div className="sliderBox">
+        <div className="sliderBox" ref={sliderBox}>
             <div className="slideInfo" style={{
                 float: direction,
                 display: "flex",
                 flexDirection: (direction == "right") ? "row-reverse" : "row"
             }}>
-                <input type={"text"} placeholder={111} style={{width:"40px"}}/>
+                <input type={"text"} placeholder={111} style={{width: "40px"}}/>
                 <p>{label}</p>
 
             </div>
