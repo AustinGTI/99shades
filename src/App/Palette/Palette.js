@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { buildNewColor } from "../../AuxFunctions/formatColor";
 import useAppContext, { getPaneColor } from "../../AuxFunctions/useAppContext";
 import "./Palette.scss";
 import FormatSlider from "./FormatSlider/FormatSlider";
 import HexTuner from "./Hex/HexTuner";
 
-const FORMATS = ["hsv", "rgb", "cmyk", "hsl"];
+const FORMATS = ["rgb", "hsv", "hsl", "cmyk"];
 const CURR_COLOR_VALUE = {
   precolor: { col: undefined, format: undefined },
   color: { col: undefined, format: undefined },
 };
+
 const refreshColVal = function (setter, currCols) {
   if (
     CURR_COLOR_VALUE.precolor.col === CURR_COLOR_VALUE.color.col &&
@@ -48,6 +49,7 @@ export default function Palette() {
             idx={vi}
             format={FORMATS[vi]}
             colVal={CURR_COLOR_VALUE}
+            direction={vi >= 2 ? "right" : "left"}
           />
         ))}
       </div>
