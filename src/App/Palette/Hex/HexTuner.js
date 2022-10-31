@@ -5,7 +5,6 @@ import useAppContext, {
 } from "../../../AuxFunctions/useAppContext";
 import "./HexTuner.scss";
 
-const hexChars = "0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F".split(",");
 
 export default function HexTuner() {
   const [_, setter, pane] = useAppContext();
@@ -21,11 +20,8 @@ export default function HexTuner() {
       return;
     }
 
-    const nChar = inputVal[inputVal.length - 1].toUpperCase();
-    if (
-      !hexChars.includes(nChar) &&
-      !(nChar === "#" && inputVal.length === 1)
-    ) {
+    //const nChar = inputVal[inputVal.length - 1].toUpperCase();
+    if (/[^0123456789ABCDEF]/gi.test(inputVal.slice(1))) {
       console.log("That is not a valid hex character");
       return;
     }
@@ -43,7 +39,7 @@ export default function HexTuner() {
 
     //function that permanently changes color
     const changeColor = (e) => {
-      if (e.which !== 13) {
+      if (e.which !== 13 && e.type !== "focusout") {
         return;
       }
       let col = e.target.value;
@@ -60,9 +56,12 @@ export default function HexTuner() {
     };
 
     inputBox.addEventListener("keyup", changeColor);
+    inputBox.addEventListener("focusout", changeColor);
 
     return () => {
       inputBox.removeEventListener("keyup", changeColor);
+      inputBox.removeEventListener("focusout", changeColor);
+
     };
   }, [paneColor.hex]);
   return (

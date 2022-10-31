@@ -106,7 +106,7 @@ function sliderFuncs(data) {
 function setColorChannel(format, idx, colVal, currCol) {
     const range = FORMATS[format][1][idx];
     const enterHandler = function (e) {
-        if (e.which !== 13) {
+        if (e.which !== 13 && e.type !== "focusout") {
             return;
         }
         let nVal = e.target.value;
@@ -182,6 +182,7 @@ function Slider({format, col, idx, colVal, direction}) {
         window.addEventListener("mousemove", drag);
 
         channelInput.addEventListener("keyup", enterHandler);
+        channelInput.addEventListener("focusout", enterHandler);
 
         return () => {
             mySlider.removeEventListener("mousedown", pick);
@@ -189,6 +190,8 @@ function Slider({format, col, idx, colVal, direction}) {
             window.removeEventListener("mousemove", drag);
 
             channelInput.removeEventListener("keyup", enterHandler);
+            channelInput.removeEventListener("focusout", enterHandler);
+
 
         };
     });
