@@ -26,12 +26,12 @@ export default function Palette() {
     };
 
     //adding event listeners
-    addLeftBtn.addEventListener("click", addPaneLeft);
-    addRightBtn.addEventListener("click", addPaneRight);
+    // addLeftBtn.addEventListener("click", addPaneLeft);
+    // addRightBtn.addEventListener("click", addPaneRight);
 
     return () => {
-      addLeftBtn.removeEventListener("click", addPaneLeft);
-      addRightBtn.removeEventListener("click", addPaneRight);
+      // addLeftBtn.removeEventListener("click", addPaneLeft);
+      // addRightBtn.removeEventListener("click", addPaneRight);
     };
   }, [appData, setAppData]);
   return (
@@ -39,12 +39,12 @@ export default function Palette() {
       <div className="logoBox">
         <Logo />
       </div>
-      <div className="addRightBtn addBtn btn">
+      {/*<div className="addRightBtn addBtn btn">
         <AddBtn />
       </div>
       <div className="addLeftBtn addBtn btn">
         <AddBtn />
-      </div>
+      </div>*/}
       <div className="downloadBtn btn">
         <DownloadBtn />
       </div>

@@ -5,6 +5,22 @@ import useAppContext, {
 } from "../../../AuxFunctions/useAppContext";
 import "./HexTuner.scss";
 
+//all the buttons
+import {ReactComponent as AddBtn
+} from "../../../Data/Icons/Buttons/addBtn.svg";
+import {ReactComponent as MoveLeftBtn
+} from "../../../Data/Icons/Buttons/moveLeftBtn.svg";
+import {ReactComponent as MoveRightBtn
+} from "../../../Data/Icons/Buttons/moveRightBtn.svg";
+import {ReactComponent as DupLeftBtn
+} from "../../../Data/Icons/Buttons/duplicateLeftBtn.svg";
+import {ReactComponent as DupRightBtn
+} from "../../../Data/Icons/Buttons/duplicateRightBtn.svg";
+import {ReactComponent as UndoBtn
+} from "../../../Data/Icons/Buttons/undoBtn.svg";
+import {ReactComponent as RedoBtn
+} from "../../../Data/Icons/Buttons/redoBtn.svg";
+
 
 export default function HexTuner() {
   const [_, setter, pane] = useAppContext();
@@ -65,8 +81,22 @@ export default function HexTuner() {
     };
   }, [paneColor.hex]);
   return (
+      <div className={"ctrlBox"}>
+        <div className={"leftBtns"}>
+          <div id={"dupBtn"}><DupLeftBtn/></div>
+          <div id={"addBtn"}><AddBtn/></div>
+          <div id={"moveBtn"}><MoveLeftBtn/></div>
+          <div id={"undoBtn"}><UndoBtn/></div>
+        </div>
     <div className="hexBox">
       <input type={"text"} value={color} onChange={certifyColorChange}></input>
     </div>
+        <div className={"rightBtns"}>
+          <div id={"redoBtn"}><RedoBtn/></div>
+          <div id={"moveBtn"}><MoveRightBtn/></div>
+          <div id={"addBtn"}><AddBtn/></div>
+          <div id={"dupBtn"}><DupRightBtn/></div>
+        </div>
+      </div>
   );
 }
