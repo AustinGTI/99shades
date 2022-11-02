@@ -9,9 +9,9 @@ import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV1.svg";
 import "./Easel.scss";
 
 export default function Palette() {
-  const [appData, setAppData] = useAppContext();
+  const appData = useAppContext()[0];
 
-  useEffect(() => {
+  /*useEffect(() => {
     const addLeftBtn = document.querySelector(".addLeftBtn");
     const addRightBtn = document.querySelector(".addRightBtn");
     const panes = document.querySelectorAll("div.colorBox");
@@ -25,15 +25,15 @@ export default function Palette() {
       setAppData({ command: "addPane", direction: 1 });
     };
 
-    //adding event listeners
-    // addLeftBtn.addEventListener("click", addPaneLeft);
-    // addRightBtn.addEventListener("click", addPaneRight);
 
+    //adding event listeners
+    addLeftBtn.addEventListener("click", addPaneLeft);
+    addRightBtn.addEventListener("click", addPaneRight);
     return () => {
-      // addLeftBtn.removeEventListener("click", addPaneLeft);
-      // addRightBtn.removeEventListener("click", addPaneRight);
+      addLeftBtn.removeEventListener("click", addPaneLeft);
+      addRightBtn.removeEventListener("click", addPaneRight);
     };
-  }, [appData, setAppData]);
+  }, [appData, setAppData]);*/
   return (
     <div className="easelBox">
       <div className="logoBox">

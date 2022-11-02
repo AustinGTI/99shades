@@ -68,15 +68,15 @@ export default function ColorDetails({ pane, isActive }) {
           </div>
         ))}
         <div className="keyBtnBox">
-          <div className="btn keyBtn undoBtn">
+          {/*<div className="btn keyBtn undoBtn">
             <UndoBtn />
-          </div>
+          </div>*/}
           <div className="btn keyBtn deleteBtn">
             <DeleteBtn />
           </div>
-          <div className="btn keyBtn redoBtn">
+          {/*<div className="btn keyBtn redoBtn">
             <RedoBtn />
-          </div>
+          </div>*/}
         </div>
       </div>
       <div className={`bracer right ${isActive ? "active" : ""}`}>

@@ -24,6 +24,8 @@ export default function ColorPane({ pane, isActive }) {
     const deletePane = (e) => {
       setter({ command: "deletePane", id: pane.paneId });
     };
+
+    /*
     const undoPaneColor = (e) => {
       setter({ command: "undoPaneColor", id: pane.paneId });
     };
@@ -69,7 +71,7 @@ export default function ColorPane({ pane, isActive }) {
           id: pane.paneId,
         });
       }
-    };
+    };*/
 
     //set pane to active
     const paneToActive = (e) => {
@@ -81,22 +83,22 @@ export default function ColorPane({ pane, isActive }) {
 
     //adding event listeners
     deleteBtn.addEventListener("click", deletePane);
-    undoBtn.addEventListener("click", undoPaneColor);
+    /*undoBtn.addEventListener("click", undoPaneColor);
     redoBtn.addEventListener("click", redoPaneColor);
 
     moveBtn.addEventListener("mousedown", dragPane);
-    window.addEventListener("mouseup", dropPane);
+    window.addEventListener("mouseup", dropPane);*/
 
     parentPane.addEventListener("click", paneToActive);
 
     return () => {
       //removing event listeners
       deleteBtn.removeEventListener("click", deletePane);
-      undoBtn.removeEventListener("click", undoPaneColor);
+      /*undoBtn.removeEventListener("click", undoPaneColor);
       redoBtn.removeEventListener("click", redoPaneColor);
 
       moveBtn.removeEventListener("mousedown", dragPane);
-      window.removeEventListener("mouseup", dropPane);
+      window.removeEventListener("mouseup", dropPane);*/
 
       parentPane.removeEventListener("click", paneToActive);
     };

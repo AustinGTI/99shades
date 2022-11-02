@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { buildNewColor } from "../../../AuxFunctions/formatColor";
 import useAppContext, {
   getPaneColor,
@@ -23,7 +23,8 @@ import {ReactComponent as RedoBtn
 
 
 export default function HexTuner() {
-  const [_, setter, pane] = useAppContext();
+  const [getter, setter, pane] = useAppContext();
+  const ctrlBox = useRef(null);
   const paneColor = getPaneColor(pane);
 
   const [color, setColor] = useState(paneColor.hex);
@@ -80,8 +81,72 @@ export default function HexTuner() {
 
     };
   }, [paneColor.hex]);
+
+
+  useEffect(() => {
+    const [dupLeftBtn,addLeftBtn,moveLeftBtn,undoBtn] = ctrlBox.current.querySelectorAll(".leftBtns > div");
+    const [dupRightBtn,addRightBtn,moveRightBtn,redoBtn] = ctrlBox.current.querySelectorAll(".rightBtns > div");
+
+    //add Pane function
+    const addPaneLeft = () => {
+      console.log("add left");
+      setter({ command: "addPane", direction: 0 });
+    };
+    const addPaneRight = () => {
+      setter({ command: "addPane", direction: 1 });
+    };
+    //add Pane function
+    const movePaneLeft = () => {
+      console.log("move left");
+      let panePos = pane.panePosition;
+      if (panePos == 0) {
+        return;
+      }
+      setter({
+        command: "movePane",
+        nposition: panePos-1,
+        id: pane.paneId,
+      });
+    };
+    const movePaneRight = () => {
+      console.log("move right");
+      let panePos = pane.panePosition;
+      if (panePos == getter.colorPanes.length-1) {
+        return;
+      }
+      setter({
+        command: "movePane",
+        nposition: panePos+1,
+        id: pane.paneId,
+      });
+    };
+    const undoPaneColor = (e) => {
+      setter({ command: "undoPaneColor", id: pane.paneId });
+    };
+    const redoPaneColor = (e) => {
+      setter({ command: "redoPaneColor", id: pane.paneId });
+    };
+
+
+    //adding event listeners
+    addLeftBtn.addEventListener("click", addPaneLeft);
+    addRightBtn.addEventListener("click", addPaneRight);
+    moveLeftBtn.addEventListener("click", movePaneLeft);
+    moveRightBtn.addEventListener("click", movePaneRight);
+    undoBtn.addEventListener("click",undoPaneColor);
+    redoBtn.addEventListener("click",redoPaneColor);
+
+    return () => {
+      addLeftBtn.removeEventListener("click", addPaneLeft);
+      addRightBtn.removeEventListener("click", addPaneRight);
+      moveLeftBtn.removeEventListener("click", movePaneLeft);
+      moveRightBtn.removeEventListener("click", movePaneRight);
+      undoBtn.removeEventListener("click",undoPaneColor);
+      redoBtn.removeEventListener("click",redoPaneColor);
+    };
+  }, [getter]);
   return (
-      <div className={"ctrlBox"}>
+      <div className={"ctrlBox"} ref={ctrlBox}>
         <div className={"leftBtns"}>
           <div id={"dupBtn"}><DupLeftBtn/></div>
           <div id={"addBtn"}><AddBtn/></div>
@@ -92,10 +157,10 @@ export default function HexTuner() {
       <input type={"text"} value={color} onChange={certifyColorChange}></input>
     </div>
         <div className={"rightBtns"}>
-          <div id={"redoBtn"}><RedoBtn/></div>
-          <div id={"moveBtn"}><MoveRightBtn/></div>
-          <div id={"addBtn"}><AddBtn/></div>
           <div id={"dupBtn"}><DupRightBtn/></div>
+          <div id={"addBtn"}><AddBtn/></div>
+          <div id={"moveBtn"}><MoveRightBtn/></div>
+          <div id={"redoBtn"}><RedoBtn/></div>
         </div>
       </div>
   );

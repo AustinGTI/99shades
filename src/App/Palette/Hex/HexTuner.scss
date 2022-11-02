@@ -40,13 +40,18 @@
   }
   .leftBtns,.rightBtns{
     display: flex;
-    flex-direction: row;
     >div{
       margin: 0 3px;
       background-color: #cccccc;
       width: 30px;
       height: 30px;
     }
-  }
 
+  }
+  .leftBtns{
+    flex-direction: row;
+  }
+  .rightBtns{
+    flex-direction: row-reverse;
+  }
 }
