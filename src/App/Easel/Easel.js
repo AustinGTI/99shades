@@ -1,15 +1,27 @@
-import React, { useEffect, useReducer } from "react";
+import React, {useEffect, useReducer, useRef} from "react";
 import useAppContext from "../../AuxFunctions/useAppContext";
 import ColorPane from "./ColorPane/ColorPane";
 
-import { ReactComponent as AddBtn } from "../../Data/Icons/Buttons/addBtn.svg";
 import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/downloadBtn.svg";
+import {ReactComponent as DeleteBtn} from "../../Data/Icons/Buttons/deleteBtn.svg";
 import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV1.svg";
 
 import "./Easel.scss";
 
 export default function Palette() {
-  const appData = useAppContext()[0];
+  const [appData,setter,pane] = useAppContext();
+  const easelBtnBox = useRef(null);
+
+  useEffect(()=>{
+      const deletePane = (e) => {
+          setter({ command: "deletePane", id: pane.paneId });
+      };
+      const [deleteBtn,downloadBtn] = easelBtnBox.current.querySelectorAll("div.btn");
+      deleteBtn.addEventListener("click",deletePane);
+      return ()=>{
+          deleteBtn.removeEventListener("click",deletePane);
+      }
+  })
 
   /*useEffect(() => {
     const addLeftBtn = document.querySelector(".addLeftBtn");
@@ -38,16 +50,26 @@ export default function Palette() {
     <div className="easelBox">
       <div className="logoBox">
         <Logo />
+
       </div>
+        <div className={"easelBtnBox"} ref={easelBtnBox}>
+            <div className={"deleteBtn btn"}>
+                <DeleteBtn/>
+            </div>
+            <div className="downloadBtn btn">
+                <DownloadBtn />
+            </div>
+        </div>
+
       {/*<div className="addRightBtn addBtn btn">
         <AddBtn />
       </div>
       <div className="addLeftBtn addBtn btn">
         <AddBtn />
       </div>*/}
-      <div className="downloadBtn btn">
-        <DownloadBtn />
-      </div>
+
+
+
       {appData.colorPanes
         .sort((a, b) => a.panePosition - b.panePosition)
         .map((v, vi) => (

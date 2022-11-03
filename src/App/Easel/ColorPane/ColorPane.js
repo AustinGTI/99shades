@@ -12,18 +12,16 @@ export default function ColorPane({ pane, isActive }) {
 
     //pane positions
 
-    let deleteBtn = parentPane.querySelector(".deleteBtn");
+    /*let deleteBtn = parentPane.querySelector(".deleteBtn");
     let undoBtn = parentPane.querySelector(".undoBtn");
     let redoBtn = parentPane.querySelector(".redoBtn");
-    let moveBtn = parentPane.querySelector(".moveBtn");
+    let moveBtn = parentPane.querySelector(".moveBtn");*/
 
     //is the pane being dragged
     let isDragging = false;
 
     //wrapped setter function
-    const deletePane = (e) => {
-      setter({ command: "deletePane", id: pane.paneId });
-    };
+
 
     /*
     const undoPaneColor = (e) => {
@@ -82,8 +80,8 @@ export default function ColorPane({ pane, isActive }) {
     };
 
     //adding event listeners
-    deleteBtn.addEventListener("click", deletePane);
-    /*undoBtn.addEventListener("click", undoPaneColor);
+    /*deleteBtn.addEventListener("click", deletePane);
+    undoBtn.addEventListener("click", undoPaneColor);
     redoBtn.addEventListener("click", redoPaneColor);
 
     moveBtn.addEventListener("mousedown", dragPane);
@@ -93,8 +91,8 @@ export default function ColorPane({ pane, isActive }) {
 
     return () => {
       //removing event listeners
-      deleteBtn.removeEventListener("click", deletePane);
-      /*undoBtn.removeEventListener("click", undoPaneColor);
+      /*deleteBtn.removeEventListener("click", deletePane);
+      undoBtn.removeEventListener("click", undoPaneColor);
       redoBtn.removeEventListener("click", redoPaneColor);
 
       moveBtn.removeEventListener("mousedown", dragPane);

@@ -39,78 +39,88 @@ div.easelBox {
 
     z-index: 10;
   }
-
-  > div.btn {
+  >div.easelBtnBox{
     position: absolute;
-    width: 50px;
-    height: 50px;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row;
 
     background-color: white;
     box-shadow: 0 0 10px 3px #ccc;
-    padding: 5px;
-    overflow: visible;
+    div.btn {
+      width: 50px;
+      height: 50px;
 
-    z-index: 2;
 
-    &.addBtn {
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
+      padding: 5px;
+      overflow: visible;
 
-      svg {
-        path {
-          fill: var(--muted-green);
-          stroke-width: 10px;
-          stroke: var(--active-green);
-        }
-      }
-      &:hover {
+      z-index: 2;
+
+      /*&.addBtn {
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+
         svg {
           path {
-            fill: var(--active-green);
+            fill: var(--muted-green);
+            stroke-width: 10px;
+            stroke: var(--active-green);
           }
         }
-      }
-
-      &.addRightBtn {
-        right: 0;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-      }
-
-      &.addLeftBtn {
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        left: 0;
-      }
-
-      //background-color: cornflowerblue;
-    }
-
-    &.downloadBtn {
-      bottom: 0;
-      right: 0;
-
-      border-top-left-radius: 20px;
-
-      svg {
-        overflow: visible;
-
-        path {
-          fill: var(--muted-blue);
-          stroke-width: 10px;
-          stroke: var(--active-blue);
+        &:hover {
+          svg {
+            path {
+              fill: var(--active-green);
+            }
+          }
         }
+
+        &.addRightBtn {
+          right: 0;
+          border-top-left-radius: 20px;
+          border-bottom-left-radius: 20px;
+        }
+
+        &.addLeftBtn {
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+          left: 0;
+        }
+
+        //background-color: cornflowerblue;
+      }*/
+      &.deleteBtn {
+
       }
-      &:hover {
+      &.downloadBtn {
+        border-radius: 20px;
+
         svg {
+          overflow: visible;
+
           path {
-            fill: var(--active-blue);
+            fill: var(--muted-blue);
+            stroke-width: 10px;
+            stroke: var(--active-blue);
           }
         }
-      }
 
-      //background-color: greenyellow;
-    }
+        &:hover {
+          svg {
+            path {
+              fill: var(--active-blue);
+            }
+          }
+        }
+
+
+        //background-color: greenyellow;
+      }
+  }
+
   }
 }

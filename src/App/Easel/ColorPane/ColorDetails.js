@@ -59,9 +59,9 @@ export default function ColorDetails({ pane, isActive }) {
         <div className="indicator"></div>
       </div>
       <div className="colorDetailsBox" ref={colDetailsBox}>
-        <div className="btn panelBtn moveBtn">
+        {/*<div className="btn panelBtn moveBtn">
           <MoveBtn />
-        </div>
+        </div>*/}
         {formatKeys.map((v, vi) => (
           <div className="format" key={vi}>
             <span>{cleanFormats(v, formats[v])}</span>
@@ -70,16 +70,18 @@ export default function ColorDetails({ pane, isActive }) {
         <div className="keyBtnBox">
           {/*<div className="btn keyBtn undoBtn">
             <UndoBtn />
-          </div>*/}
+          </div>
           <div className="btn keyBtn deleteBtn">
             <DeleteBtn />
           </div>
-          {/*<div className="btn keyBtn redoBtn">
+          <div className="btn keyBtn redoBtn">
             <RedoBtn />
           </div>*/}
         </div>
       </div>
+      
       <div className={`bracer right ${isActive ? "active" : ""}`}>
+        indicator
         <div className="indicator"></div>
       </div>
     </>
