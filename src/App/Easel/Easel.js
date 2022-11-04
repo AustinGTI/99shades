@@ -4,6 +4,8 @@ import ColorPane from "./ColorPane/ColorPane";
 
 import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/downloadBtn.svg";
 import {ReactComponent as DeleteBtn} from "../../Data/Icons/Buttons/deleteBtn.svg";
+import {ReactComponent as HideBtn} from "../../Data/Icons/Buttons/hideBtn.svg";
+import {ReactComponent as ShowBtn} from "../../Data/Icons/Buttons/showBtn.svg";
 import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV1.svg";
 
 import "./Easel.scss";
@@ -16,10 +18,15 @@ export default function Palette() {
       const deletePane = (e) => {
           setter({ command: "deletePane", id: pane.paneId });
       };
-      const [deleteBtn,downloadBtn] = easelBtnBox.current.querySelectorAll("div.btn");
+      const hideUnhidePane = (e) => {
+          setter({command:"toggleVisible",id: pane.paneId});
+      }
+      const [hideBtn,deleteBtn,downloadBtn] = easelBtnBox.current.querySelectorAll("div.btn");
       deleteBtn.addEventListener("click",deletePane);
+      hideBtn.addEventListener("click",hideUnhidePane);
       return ()=>{
           deleteBtn.removeEventListener("click",deletePane);
+          hideBtn.removeEventListener("click",hideUnhidePane);
       }
   })
 
@@ -53,12 +60,16 @@ export default function Palette() {
 
       </div>
         <div className={"easelBtnBox"} ref={easelBtnBox}>
+           <div className={"hideBtn btn"}>
+               <HideBtn/>
+           </div>
             <div className={"deleteBtn btn"}>
                 <DeleteBtn/>
             </div>
             <div className="downloadBtn btn">
                 <DownloadBtn />
             </div>
+
         </div>
 
       {/*<div className="addRightBtn addBtn btn">

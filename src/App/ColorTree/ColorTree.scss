@@ -9,7 +9,7 @@ div#tree {
   padding: 0 2%;
   padding-top: 18%;
 }
-div#treeCtrl {
+div#colorTreeCtrl {
   top: 0;
   left: 0;
   right: 0;
@@ -29,12 +29,13 @@ div#treeCtrl {
   border-radius: 7px;
   z-index: 1;
 
-  > button,
+  >div,
   input {
     height: 90%;
   }
 
-  > button {
+  > div{
+    width: 60px;
     margin: 0 2px;
   }
 

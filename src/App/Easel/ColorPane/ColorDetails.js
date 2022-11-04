@@ -19,6 +19,7 @@ function cleanFormats(format, value) {
 
 export default function ColorDetails({ pane, isActive }) {
   let formats = getPaneColor(pane);
+  let detailVisible = useAppContext()[0].colorDetailVisible;
   let formatKeys = Object.keys(formats).filter((v) => v !== "cls");
   let emphasis = isActive ? 40 : 20;
   let fontColor = getContrastColor("hsl", formats.hsl, emphasis);
@@ -54,11 +55,13 @@ export default function ColorDetails({ pane, isActive }) {
 
   return (
     <>
+{/*
       <div className={`bracer left ${isActive ? "active" : ""}`}>
-        {/* to be replaced with svgs when working on animations */}
+         to be replaced with svgs when working on animations
         <div className="indicator"></div>
       </div>
-      <div className="colorDetailsBox" ref={colDetailsBox}>
+*/}
+      <div className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
         {/*<div className="btn panelBtn moveBtn">
           <MoveBtn />
         </div>*/}
@@ -67,8 +70,9 @@ export default function ColorDetails({ pane, isActive }) {
             <span>{cleanFormats(v, formats[v])}</span>
           </div>
         ))}
+{/*
         <div className="keyBtnBox">
-          {/*<div className="btn keyBtn undoBtn">
+          <div className="btn keyBtn undoBtn">
             <UndoBtn />
           </div>
           <div className="btn keyBtn deleteBtn">
@@ -76,14 +80,16 @@ export default function ColorDetails({ pane, isActive }) {
           </div>
           <div className="btn keyBtn redoBtn">
             <RedoBtn />
-          </div>*/}
+          </div>
         </div>
+*/}
+
       </div>
-      
+{/*
       <div className={`bracer right ${isActive ? "active" : ""}`}>
-        indicator
         <div className="indicator"></div>
       </div>
+*/}
     </>
   );
 }

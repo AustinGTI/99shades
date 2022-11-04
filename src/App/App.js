@@ -5,19 +5,25 @@ import cols from "../Data/Colors/tempColsv2.json";
 import Easel from "./Easel/Easel";
 import { buildNewColor } from "../AuxFunctions/formatColor";
 import ColorTree from "./ColorTree/ColorTree";
+import {getPaneColor} from "../AuxFunctions/useAppContext";
 
 class ColorPane {
-  constructor(id, position) {
+  constructor(id, position,color =undefined) {
     this.paneId = id; //the id that will identify a color pane
-    this.colorStack = [
+    if (color === undefined)
+{     this.colorStack = [
       buildNewColor(
         "hex",
         cols[Math.floor(Math.random() * cols.length)].hexcode
       ),
     ]; //this will refer to the history of the colors that have been set on this pane
+ }
+    else{
+      this.colorStack = [color];
+    }
     this.colorStackPointer = 0; //this will refer to the current color on the pane by pointing to an index on the colorstack array [-1,-2]
     this.paneLocked = false; //this will indicate if the color is uneditable or not
-    this.colorDetailVisible = true; //this will indicate if the color details can be seen (may not be necessary)
+    // this.colorDetailVisible = true; //this will indicate if the color details can be seen (may not be necessary)
     this.panePosition = position; // this will indicate the position of the color relative to the others on the carousel
     this.colorInFlux = false; // indicates if the user is currently editing the pane color
 
@@ -35,6 +41,7 @@ const appColorData = {
     //this is a list of all the panes on the carousel and their attributes
     new ColorPane(0, 0),
   ],
+  colorDetailVisible:true
 };
 
 function getPane(panes, id) {
@@ -53,7 +60,7 @@ function setAppColorData(data, options) {
 
     //when adding a pane, requires direction(the direction in which the pane has been added)
     case "addPane":
-      let { direction } = options; // a direction of true is to the right, false is to the left
+      let { direction,duplicate = false } = options; // a direction of true is to the right, false is to the left
       if (colordata.colorPanes.length === 5) {
         console.log("You cannot add more than 5 colors");
         break;
@@ -68,7 +75,7 @@ function setAppColorData(data, options) {
       let newPaneId =
         Math.max(...colordata.colorPanes.map((v) => v.paneId)) + 1;
       let newPanePosition = activePane.panePosition + (direction ? 1 : -1);
-      colordata.colorPanes.push(new ColorPane(newPaneId, newPanePosition));
+      colordata.colorPanes.push(new ColorPane(newPaneId, newPanePosition,(!duplicate) ? undefined: getPaneColor(activePane)));
       break;
 
     //when removing a pane, requires nothing
@@ -199,9 +206,8 @@ function setAppColorData(data, options) {
 
     //show/hide color details
     case "toggleVisible":
-      activePane.colorDetailVisible = !activePane.colorDetailVisible;
+      colordata.colorDetailVisible = !colordata.colorDetailVisible;
       break;
-
     default:
       console.log("that is not a valid command");
       break;

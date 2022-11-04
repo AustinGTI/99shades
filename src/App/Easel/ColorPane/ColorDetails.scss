@@ -2,7 +2,7 @@ div.colorDetailsBox {
   //position: absolute;
 
   width: 70%;
-  height: 90%;
+  height: 100%;
 
   text-align: center;
 
@@ -14,6 +14,14 @@ div.colorDetailsBox {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  &.visible{
+    visibility: visible;
+  }
+
+  &.hidden{
+    visibility:hidden;
+  }
 
   div.format {
     position: relative;
@@ -63,7 +71,7 @@ div.colorDetailsBox {
     }
   }
 
-  div.btn.panelBtn {
+  div.btn.panelbtn {
     width: 120%;
     height: 22%;
 

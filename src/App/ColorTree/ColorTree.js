@@ -3,6 +3,10 @@ import "./ColorTree.scss";
 import cols from "../../Data/Colors/tempColsv2.json";
 import ColorBranch from "./ColorBranch";
 import useAppContext, { getPaneColor } from "../../AuxFunctions/useAppContext";
+import {ReactComponent as SnapToBtn} from "../../Data/Icons/Buttons/snapBtn.svg";
+import {ReactComponent as ExpandBtn} from "../../Data/Icons/Buttons/expandBtn.svg";
+import {ReactComponent as CollapseBtn} from "../../Data/Icons/Buttons/collapseBtn.svg";
+import {ReactComponent as SearchBtn} from "../../Data/Icons/Buttons/searchBtn.svg";
 
 function createColorTree(query = null) {
   const tree = {};
@@ -34,14 +38,10 @@ export default function ColorTree() {
   const [gt, st, pane] = useAppContext();
   const paneColor = getPaneColor(pane);
   useEffect(() => {
-    const snapBtn = document.querySelector("#treeCtrl > button.snapToActive");
-    const openBtn = document.querySelector("#treeCtrl > button.openAll");
-    const closeBtn = document.querySelector("#treeCtrl > button.closeAll");
-    const searchBtn = document.querySelector("#treeCtrl > button.searchBtn");
-
-    const searchInput = document.querySelector("#treeCtrl > input.search");
+    const [snapBtn,expandBtn,collapseBtn,searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
+    const searchInput = document.querySelector("#colorTreeCtrl > input");
     const treeElem = document.querySelector("#tree");
-
+    console.log(snapBtn);
     const paneCls = paneColor.cls;
 
     function goToCol() {
@@ -98,16 +98,16 @@ export default function ColorTree() {
     };
 
     snapBtn.addEventListener("click", snapToCol);
-    openBtn.addEventListener("click", openAll);
-    closeBtn.addEventListener("click", closeAll);
+    expandBtn.addEventListener("click", openAll);
+    collapseBtn.addEventListener("click", closeAll);
 
     searchBtn.addEventListener("click", search);
     searchInput.addEventListener("keyup", search);
 
     return () => {
       snapBtn.removeEventListener("click", snapToCol);
-      openBtn.removeEventListener("click", openAll);
-      closeBtn.removeEventListener("click", closeAll);
+      expandBtn.removeEventListener("click", openAll);
+      collapseBtn.removeEventListener("click", closeAll);
 
       searchBtn.removeEventListener("click", search);
       searchInput.removeEventListener("keyup", search);
@@ -115,16 +115,22 @@ export default function ColorTree() {
   }, [paneColor]);
   return (
     <>
-      <div id="treeCtrl">
+      <div id="colorTreeCtrl">
+{/*
         <button className="snapToActive">.</button>
         <button className="openAll">+</button>
         <button className="closeAll">,</button>
+*/}
+        <div className="snapBtnBox"><SnapToBtn/></div>
+        <div className="expandBtnBox"><ExpandBtn/></div>
+        <div className="collapseBtnBox"><CollapseBtn/></div>
         <input
           type="text"
           className="search"
           placeholder="Write a color any color"
         ></input>
-        <button className="searchBtn">?</button>
+        <div className="searchBtnBox"><SearchBtn/></div>
+        {/*<button className="searchBtn">?</button>*/}
       </div>
       <div id="tree">
         {Object.keys(tree).length ? (

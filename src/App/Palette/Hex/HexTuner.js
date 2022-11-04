@@ -127,10 +127,20 @@ export default function HexTuner() {
       setter({ command: "redoPaneColor", id: pane.paneId });
     };
 
+    const duplicatePaneLeft = (e) => {
+      setter({command:"addPane", direction:0,duplicate:true});
+    }
+
+    const duplicatePaneRight = (e) => {
+      setter({command:"addPane", direction:1,duplicate:true});
+    }
+
 
     //adding event listeners
     addLeftBtn.addEventListener("click", addPaneLeft);
     addRightBtn.addEventListener("click", addPaneRight);
+    dupLeftBtn.addEventListener("click",duplicatePaneLeft);
+    dupRightBtn.addEventListener("click",duplicatePaneRight);
     moveLeftBtn.addEventListener("click", movePaneLeft);
     moveRightBtn.addEventListener("click", movePaneRight);
     undoBtn.addEventListener("click",undoPaneColor);
@@ -139,6 +149,8 @@ export default function HexTuner() {
     return () => {
       addLeftBtn.removeEventListener("click", addPaneLeft);
       addRightBtn.removeEventListener("click", addPaneRight);
+      dupLeftBtn.removeEventListener("click",duplicatePaneLeft);
+      dupRightBtn.removeEventListener("click",duplicatePaneRight);
       moveLeftBtn.removeEventListener("click", movePaneLeft);
       moveRightBtn.removeEventListener("click", movePaneRight);
       undoBtn.removeEventListener("click",undoPaneColor);
