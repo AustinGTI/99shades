@@ -53,8 +53,8 @@ export default function ColorBranch(params) {
   useEffect(() => {
     const branchLeaves =
       branchContainer.current.querySelector("div.branchLeaves");
-    const dropDownBtn = branchContainer.current.querySelector(
-      "div.branchRoot  div.dropDiv"
+    const branchRoot = branchContainer.current.querySelector(
+      "div.branchRoot"
     );
     const clickBloom = (e) => {
       if (branchLeaves.classList.contains("visible")) {
@@ -68,9 +68,9 @@ export default function ColorBranch(params) {
       }
     };
 
-    dropDownBtn.addEventListener("click", clickBloom);
+    branchRoot.addEventListener("click", clickBloom);
     return () => {
-      dropDownBtn.removeEventListener("click", clickBloom);
+      branchRoot.removeEventListener("click", clickBloom);
     };
   }, []);
 
@@ -108,6 +108,7 @@ export default function ColorBranch(params) {
         <p>
           {branchName} {rootName}
         </p>
+{/*
         <div className="btnDiv dropDiv">
           {Array(3)
             .fill(true)
@@ -115,6 +116,7 @@ export default function ColorBranch(params) {
               <div key={vi} className="btn dropBtn"></div>
             ))}
         </div>
+*/}
       </div>
       <div className="branchLeaves invisible">
         {!Array.isArray(branch)
