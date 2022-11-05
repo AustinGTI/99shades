@@ -1,8 +1,7 @@
 @mixin neomorph{
-  border-radius: 28px;
   background: var(--main-bg-color);
-  box-shadow: 8px 8px 8px #e2e2e2,
-  -8px -8px 8px #fefefe;
+  box-shadow: 4px 4px 4px #e2e2e2,
+  -4px -4px 4px #fefefe;
 }
 
 
@@ -19,13 +18,36 @@ div.slidersBox {
   justify-content: center;
   align-items: flex-end;
 
+  div.slideInfo{
+    align-items: center;
+    p{
+        padding: 0 5px;
+    }
+    input{
+      margin: 0 10px;
+      border: none;
+      text-align: center;
+      border-radius: 5px;
+      background-color: transparent;
+      font-family: var(--primary-font);
+
+
+      box-shadow: 2px 2px 4px #e2e2e2,
+      -2px -2px 4px #fefefe;
+    }
+    span{
+      width: 15px;
+      height: 80%;
+      border-radius: 3px;
+    }
+  }
   div.formatBox {
     height: 95%;
     width: 23%;
 
     margin: 5px 5px;
     padding: 0 5px;
-    border-radius: 10px;
+    border-radius: 15px;
 
     display: flex;
     flex-direction: column;

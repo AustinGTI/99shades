@@ -6,7 +6,7 @@ import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/download
 import {ReactComponent as DeleteBtn} from "../../Data/Icons/Buttons/deleteBtn.svg";
 import {ReactComponent as HideBtn} from "../../Data/Icons/Buttons/hideBtn.svg";
 import {ReactComponent as ShowBtn} from "../../Data/Icons/Buttons/showBtn.svg";
-import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV1.svg";
+import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV2.svg";
 
 import "./Easel.scss";
 

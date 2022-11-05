@@ -33,11 +33,12 @@ div.easelBox {
 
     background-color: white;
     //box-shadow: 0 0 10px 3px #ccc;
-   padding: 10px;
+   padding: 5px;
 
-    border-bottom-right-radius: 20px;
-
+    border-radius: 15px;
+    box-shadow: 4px 4px 9px #e2e2e2, -4px -4px 9px #fefefe;
     z-index: 10;
+
   }
   >div.easelBtnBox{
     position: absolute;
@@ -47,7 +48,7 @@ div.easelBox {
     padding: 7px;
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
 
     box-shadow: 4px 4px 9px #e2e2e2,
@@ -61,7 +62,7 @@ div.easelBox {
       width: 40px;
       height: 40px;
 
-      margin: 0 4px;
+      margin: 4px ;
 
       border-radius: 10px;
 

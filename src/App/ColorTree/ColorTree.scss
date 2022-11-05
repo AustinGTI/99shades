@@ -37,12 +37,23 @@ div#colorTreeCtrl {
   }
 
   > div{
-    width: 60px;
+    width: 15%;
     margin: 0 2px;
+    padding: 3px;
+    background-color: transparent;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px #e2e2e2,
+    -2px -2px 5px #fefefe;
+    flex-grow: 1;
+    svg{
+      rect{
+        fill: transparent;
+      }
+    }
   }
 
   > input {
-    flex-grow: 1;
+    width: 75%;
     margin: 0 5px;
     background-color: inherit;
     border: none;

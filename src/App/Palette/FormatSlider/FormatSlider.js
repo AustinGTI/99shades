@@ -19,24 +19,28 @@ const FORMATS = {
         [100, 100, 100, 100],
         hexToCMYK,
         Array(4).fill(false),
+        ["#00FFFF","#FF00FF","#0000FF","#000000"]
     ],
     rgb: [
         ["Red", "Green", "Blue"],
         [255, 255, 255],
         hexToRGB,
         Array(3).fill(false),
+        ["#FF0000","#00FF00","#0000FF"]
     ],
     hsl: [
         ["Hue", "Saturation", "Lightness"],
         [360, 100, 100],
         hexToHSL,
         Array(3).fill(false),
+        null
     ],
     hsv: [
         ["Hue", "Saturation", "Value/Brightness"],
         [360, 100, 100],
         hexToHSV,
         Array(3).fill(false),
+        null
     ],
 };
 
@@ -130,7 +134,7 @@ function setColorChannel(format, idx, colVal, currCol) {
 
 }
 
-function Slider({format, col, idx, colVal, direction}) {
+function Slider({format,coltag, col, idx, colVal, direction}) {
     const label = FORMATS[format][0][idx];
     const key = label.toLowerCase().split("/")[0];
     const sliderBox = useRef(null);
@@ -204,8 +208,9 @@ function Slider({format, col, idx, colVal, direction}) {
                 display: "flex",
                 flexDirection: (direction == "right") ? "row-reverse" : "row"
             }}>
-                <input type={"text"} placeholder={111} style={{width: "40px"}}/>
+                <input type={"text"} style={{width: "40px"}}/>
                 <p>{label}</p>
+                {(coltag === null) ? <></> : <span style={{backgroundColor:coltag[idx]}}></span>}
 
             </div>
             <div className={`slide ${format.toLowerCase()} ${key}`}>
@@ -232,6 +237,7 @@ export default function FormatSlider({idx, format, colVal, direction}) {
                     //setter={setter}
                     colVal={colVal}
                     direction={direction}
+                    coltag = {FORMATS[format][4]}
                 />
             ))}
         </div>
