@@ -1,5 +1,5 @@
 import React, {useEffect, useReducer, useRef} from "react";
-import useAppContext from "../../AuxFunctions/useAppContext";
+import useAppContext, {getPaneColor} from "../../AuxFunctions/useAppContext";
 import ColorPane from "./ColorPane/ColorPane";
 
 import { ReactComponent as DownloadBtn } from "../../Data/Icons/Buttons/downloadBtn.svg";
@@ -13,6 +13,7 @@ import "./Easel.scss";
 export default function Palette() {
   const [appData,setter,pane] = useAppContext();
   const easelBtnBox = useRef(null);
+  const logoBox = useRef(null);
 
   useEffect(()=>{
       const deletePane = (e) => {
@@ -30,6 +31,19 @@ export default function Palette() {
       }
   })
 
+    useEffect(()=>{
+        //dynamic logo
+        const logoCircles = Array.from(logoBox.current.querySelectorAll("svg circle")).sort((a,b)=>b.r.baseVal.value-a.r.baseVal.value);
+        logoCircles.forEach((v,vi)=>{
+            if (appData.colorPanes.length > vi){
+                v.style.fill=getPaneColor(appData.colorPanes[vi]).hex;
+            }
+            else{
+                v.style.fill="transparent";
+            }
+        })
+
+    },[appData]);
   /*useEffect(() => {
     const addLeftBtn = document.querySelector(".addLeftBtn");
     const addRightBtn = document.querySelector(".addRightBtn");
@@ -55,7 +69,7 @@ export default function Palette() {
   }, [appData, setAppData]);*/
   return (
     <div className="easelBox">
-      <div className="logoBox">
+      <div className="logoBox" ref={logoBox}>
         <Logo />
 
       </div>
