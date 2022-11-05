@@ -87,6 +87,8 @@ export default function Palette() {
           <ColorPane
             key={vi}
             pane={v}
+            isLeft = {vi == 0}
+            isRight = {vi == appData.colorPanes.length-1}
             isActive={appData.activePaneIdx === v.paneId}
           />
         ))}

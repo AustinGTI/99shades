@@ -51,6 +51,8 @@ div.easelBox {
     box-shadow: 0 0 10px 3px #ccc;
 
     border-bottom-left-radius: 20px;
+
+    z-index: 2;
     div.btn {
       width: 50px;
       height: 50px;
@@ -59,7 +61,6 @@ div.easelBox {
       padding: 5px;
       overflow: visible;
 
-      z-index: 2;
 
       /*&.addBtn {
         top: 0;

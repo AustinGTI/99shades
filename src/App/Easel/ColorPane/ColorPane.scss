@@ -11,8 +11,16 @@ div.colorBox {
   margin: auto 0;
 
   background-color: magenta;
-  border-radius: 20px;
   //border: 5px solid var(--secondary-color);
+  &.right{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  &.left{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+
 
   display: flex;
   flex-direction: row;

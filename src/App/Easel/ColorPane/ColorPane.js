@@ -5,7 +5,7 @@ import useAppContext, {
   getPaneColor,
 } from "../../../AuxFunctions/useAppContext";
 
-export default function ColorPane({ pane, isActive }) {
+export default function ColorPane({ pane,isRight,isLeft, isActive }) {
   const setter = useAppContext()[1];
   useEffect(() => {
     const parentPane = document.querySelector(`.colorBox.pid${pane.paneId}`);
@@ -103,7 +103,7 @@ export default function ColorPane({ pane, isActive }) {
   }, [pane]);
   return (
     <div
-      className={`colorBox pid${pane.paneId}`}
+      className={`colorBox pid${pane.paneId} ${isLeft ? "left" : ""} ${isRight ? "right" : ""}`}
       style={{
         backgroundColor: getPaneColor(pane).hex,
       }}
