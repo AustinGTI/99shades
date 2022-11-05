@@ -9,6 +9,7 @@ import {ReactComponent as ShowBtn} from "../../Data/Icons/Buttons/showBtn.svg";
 import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV2.svg";
 
 import "./Easel.scss";
+import {hexToRGB} from "../../AuxFunctions/formatColor";
 
 export default function Palette() {
   const [appData,setter,pane] = useAppContext();
@@ -42,6 +43,10 @@ export default function Palette() {
                 v.style.fill="transparent";
             }
         })
+        let activeColor = getPaneColor(appData.colorPanes.find((v)=>v.paneId === appData.activePaneIdx));
+        let nBgColor = activeColor.rgb.map(v=>parseInt(255*9/10 + v/10));
+        let nBgColorHex=hexToRGB(nBgColor,true);
+        document.documentElement.style.setProperty('--main-bg-color',nBgColorHex);
 
     },[appData]);
   /*useEffect(() => {

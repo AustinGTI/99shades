@@ -49,7 +49,6 @@ export default function ColorBranch(params) {
   const avgCol = `rgb(${calcBranchAverage(branch).join(",")})`;
   parentInfo[avgCol] = branchContainer;
   branchClasses = branchClasses.slice(0, branchClasses.length - 2);
-  console.log(`${4 - Object.keys(parentInfo).length}px ${4 - Object.keys(parentInfo).length}px ${ 7 - Object.keys(parentInfo).length * 2 }px #e2e2e2 -${4 - Object.keys(parentInfo).length}px  -${4 - Object.keys(parentInfo).length}px  ${ 7 - Object.keys(parentInfo).length * 2 }px #fefefe`,);
 
   useEffect(() => {
     const branchLeaves =

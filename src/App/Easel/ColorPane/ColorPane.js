@@ -4,6 +4,7 @@ import "./ColorPane.scss";
 import useAppContext, {
   getPaneColor,
 } from "../../../AuxFunctions/useAppContext";
+import {hexToRGB} from "../../../AuxFunctions/formatColor";
 
 export default function ColorPane({ pane,isRight,isLeft, isActive }) {
   const setter = useAppContext()[1];
@@ -76,6 +77,9 @@ export default function ColorPane({ pane,isRight,isLeft, isActive }) {
       if (e.target.classList.contains("btn")) {
         return;
       }
+      //calculate the background color
+
+
       setter({ command: "activatePane", id: pane.paneId });
     };
 

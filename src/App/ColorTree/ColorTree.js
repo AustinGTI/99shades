@@ -41,7 +41,6 @@ export default function ColorTree() {
     const [snapBtn,expandBtn,collapseBtn,searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
     const searchInput = document.querySelector("#colorTreeCtrl > input");
     const treeElem = document.querySelector("#tree");
-    console.log(snapBtn);
     const paneCls = paneColor.cls;
 
     function goToCol() {
@@ -127,7 +126,7 @@ export default function ColorTree() {
         <input
           type="text"
           className="search"
-          placeholder="Write a color any color"
+          placeholder="Write a color..."
         ></input>
         <div className="searchBtnBox"><SearchBtn/></div>
         {/*<button className="searchBtn">?</button>*/}
