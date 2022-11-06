@@ -30,6 +30,7 @@ export default function Palette() {
           deleteBtn.removeEventListener("click",deletePane);
           hideBtn.removeEventListener("click",hideUnhidePane);
       }
+      //pane deletion
   })
 
     useEffect(()=>{
