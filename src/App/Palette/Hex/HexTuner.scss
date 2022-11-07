@@ -64,19 +64,19 @@
         }
       }
     }
-    
+
     >div:hover{
-      background-color: var(--primary-active-color);
+      background-color: var(--btn-bg-color);
       opacity: 0.5;
       svg{
         path,line,polyline{
           //filter: blur(5px);
-          stroke: var(--secondary-active-color);
+          stroke: var(--btn-fill-color);
           //filter: brightness(120%);
           opacity: 0.8;
         }
         circle,ellipse{
-          fill: var(--secondary-active-color);
+          fill: var(--btn-fill-color);
         }
       }
     }
@@ -87,12 +87,12 @@
       //background-color: var(--dark-bg-color);
       path,line,polyline{
         //filter: blur(5px);
-        stroke: var(--dark-bg-color);
+        stroke: var(--btn-fill-color);
         //filter: brightness(120%);
         opacity: 0.8;
       }
       circle,ellipse{
-        fill: var(--dark-bg-color);
+        fill: var(--btn-fill-color);
       }
 
   }

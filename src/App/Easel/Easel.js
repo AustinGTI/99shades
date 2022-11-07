@@ -9,7 +9,7 @@ import {ReactComponent as ShowBtn} from "../../Data/Icons/Buttons/showBtn.svg";
 import { ReactComponent as Logo } from "../../Data/Icons/Logos/logoV2.svg";
 
 import "./Easel.scss";
-import {hexToRGB} from "../../AuxFunctions/formatColor";
+import {hexToHSL, hexToRGB} from "../../AuxFunctions/formatColor";
 
 export default function Palette() {
   const [appData,setter,pane] = useAppContext();
@@ -49,11 +49,15 @@ export default function Palette() {
         let bgDarkHex = hexToRGB(nBgColor.map(v=>parseInt(v*0.94)),true);
         let bgLightHex = hexToRGB(nBgColor.map(v=>Math.max(0,parseInt(v*1.06))),true);
         let nBgColorHex=hexToRGB(nBgColor,true);
+        let btnBgColor = `rgba(${activeColor.rgb.join(',')},0.1)`;
+        let btnFillColor = hexToHSL(activeColor.hsl.map((v,vi)=>( vi==2 )?50:v),true);
 
-        console.log(nBgColor,bgDarkHex,bgLightHex);
+        console.log(nBgColor,bgDarkHex,bgLightHex,btnBgColor,btnFillColor);
         document.documentElement.style.setProperty('--main-bg-color',nBgColorHex);
         document.documentElement.style.setProperty('--dark-bg-color',bgDarkHex);
         document.documentElement.style.setProperty('--light-bg-color',bgLightHex);
+        document.documentElement.style.setProperty('--btn-bg-color',btnBgColor);
+        document.documentElement.style.setProperty('--btn-fill-color',btnFillColor);
 
     },[appData]);
   /*useEffect(() => {
