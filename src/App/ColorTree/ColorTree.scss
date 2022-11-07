@@ -20,8 +20,7 @@ div#colorTreeCtrl {
   height: 5%;
   position: absolute;
   background-color:var(--main-bg-color);
-  box-shadow: 4px 4px 9px #e2e2e2,
-  -4px -4px 9px #fefefe;
+  box-shadow: 4px 4px 9px var(--dark-bg-color), -4px -4px 9px var(--light-bg-color);
 
   display: flex;
   flex-direction: row;
@@ -42,8 +41,8 @@ div#colorTreeCtrl {
     padding: 3px;
     background-color: transparent;
     border-radius: 5px;
-    box-shadow: 2px 2px 5px #e2e2e2,
-    -2px -2px 5px #fefefe;
+    box-shadow: 2px 2px 5px var(--dark-bg-color),
+    -2px -2px 5px var(--light-bg-color);
     flex-grow: 1;
     svg{
       rect{

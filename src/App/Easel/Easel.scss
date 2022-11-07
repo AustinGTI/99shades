@@ -36,7 +36,7 @@ div.easelBox {
    padding: 5px;
 
     border-radius: 15px;
-    box-shadow: 4px 4px 9px #e2e2e2, -4px -4px 9px #fefefe;
+    box-shadow: 4px 4px 9px var(--dark-bg-color), -4px -4px 9px var(--light-bg-color);
     z-index: 10;
 
   }
@@ -51,8 +51,7 @@ div.easelBox {
     flex-direction: column;
     justify-content: space-around;
 
-    box-shadow: 4px 4px 9px #e2e2e2,
-    -4px -4px 9px #fefefe;
+    box-shadow: 4px 4px 9px var(--dark-bg-color), -4px -4px 9px var(--light-bg-color);
     //box-shadow: 0 0 10px 3px #ccc;
 
     border-radius: 10px;
@@ -66,8 +65,7 @@ div.easelBox {
 
       border-radius: 10px;
 
-      box-shadow: 2px 2px 5px #e2e2e2,
-      -2px -2px 5px #fefefe;
+      box-shadow: 2px 2px 5px var(--dark-bg-color), -2px -2px 5px var(--light-bg-color);
 
       overflow: visible;
       svg{

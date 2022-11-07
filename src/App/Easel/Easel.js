@@ -46,8 +46,14 @@ export default function Palette() {
         })
         let activeColor = getPaneColor(appData.colorPanes.find((v)=>v.paneId === appData.activePaneIdx));
         let nBgColor = activeColor.rgb.map(v=>parseInt(255*9/10 + v/10));
+        let bgDarkHex = hexToRGB(nBgColor.map(v=>parseInt(v*0.94)),true);
+        let bgLightHex = hexToRGB(nBgColor.map(v=>Math.max(0,parseInt(v*1.06))),true);
         let nBgColorHex=hexToRGB(nBgColor,true);
+
+        console.log(nBgColor,bgDarkHex,bgLightHex);
         document.documentElement.style.setProperty('--main-bg-color',nBgColorHex);
+        document.documentElement.style.setProperty('--dark-bg-color',bgDarkHex);
+        document.documentElement.style.setProperty('--light-bg-color',bgLightHex);
 
     },[appData]);
   /*useEffect(() => {

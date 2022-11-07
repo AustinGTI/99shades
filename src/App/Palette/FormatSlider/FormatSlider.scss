@@ -1,7 +1,6 @@
 @mixin neomorph{
   background: var(--main-bg-color);
-  box-shadow: 4px 4px 4px #e2e2e2,
-  -4px -4px 4px #fefefe;
+  box-shadow: 4px 4px 4px var(--dark-bg-color), -4px -4px 4px var(--light-bg-color);
 }
 
 
@@ -32,8 +31,7 @@ div.slidersBox {
       font-family: var(--primary-font);
 
 
-      box-shadow: 2px 2px 4px #e2e2e2,
-      -2px -2px 4px #fefefe;
+      box-shadow: 2px 2px 4px var(--dark-bg-color), -2px -2px 4px var(--light-bg-color);
     }
     span{
       width: 15px;

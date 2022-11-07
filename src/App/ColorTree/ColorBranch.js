@@ -79,7 +79,7 @@ export default function ColorBranch(params) {
       className={`branchContainer ${branchClasses}`}
       ref={branchContainer}
       style={{
-        boxShadow: `${4 - Object.keys(parentInfo).length}px ${4 - Object.keys(parentInfo).length}px ${ 7 - Object.keys(parentInfo).length * 2 }px #e2e2e2, -${4 - Object.keys(parentInfo).length}px  -${4 - Object.keys(parentInfo).length}px  ${ 7 - Object.keys(parentInfo).length * 2 }px #fefefe`,
+        boxShadow: `${4 - Object.keys(parentInfo).length}px ${4 - Object.keys(parentInfo).length}px ${ 7 - Object.keys(parentInfo).length * 2 }px var(--dark-bg-color), -${4 - Object.keys(parentInfo).length}px  -${4 - Object.keys(parentInfo).length}px  ${ 7 - Object.keys(parentInfo).length * 2 }px var(--light-bg-color)`,
 /*
         filter: `drop-shadow(0 -${4 - Object.keys(parentInfo).length}px ${
           7 - Object.keys(parentInfo).length * 2

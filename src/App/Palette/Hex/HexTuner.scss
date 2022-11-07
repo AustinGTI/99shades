@@ -48,19 +48,56 @@
       height: 30px;
       border-radius: 7px;
       padding: 5px;
-      box-shadow: 2px 2px 5px #e2e2e2,
-      -2px -2px 5px #fefefe;
+      box-shadow: 2px 2px 5px var(--dark-bg-color),
+      -2px -2px 5px var(--light-bg-color);
 
-
+      transition: width 100ms ease-in-out,height 100ms ease-in-out,padding 100ms ease-in-out;
       svg{
         rect{
           fill: transparent;
         }
+        path,line,polyline{
+          transition: fill 100ms ease-in-out;
+        }
+        circle,ellipse{
+          transition: fill 100ms ease-in-out;
+        }
       }
     }
+    
+    >div:hover{
+      background-color: var(--primary-active-color);
+      opacity: 0.5;
+      svg{
+        path,line,polyline{
+          //filter: blur(5px);
+          stroke: var(--secondary-active-color);
+          //filter: brightness(120%);
+          opacity: 0.8;
+        }
+        circle,ellipse{
+          fill: var(--secondary-active-color);
+        }
+      }
+    }
+    >div:active{
+      background-color: transparent;
+      box-shadow:inset 2px 2px 5px var(--dark-bg-color),
+      inset -2px -2px 5px var(--light-bg-color);
+      //background-color: var(--dark-bg-color);
+      path,line,polyline{
+        //filter: blur(5px);
+        stroke: var(--dark-bg-color);
+        //filter: brightness(120%);
+        opacity: 0.8;
+      }
+      circle,ellipse{
+        fill: var(--dark-bg-color);
+      }
 
   }
-  .leftBtns{
+}
+.leftBtns{
     flex-direction: row;
   }
   .rightBtns{
