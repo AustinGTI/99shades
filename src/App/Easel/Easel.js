@@ -91,7 +91,7 @@ export default function Palette() {
       </div>
         <div className={"easelBtnBox"} ref={easelBtnBox}>
            <div className={"hideBtn btn"}>
-               <HideBtn/>
+               {appData.colorDetailVisible ? <HideBtn/> : <ShowBtn/>}
            </div>
             <div className={"deleteBtn btn"}>
                 <DeleteBtn/>
