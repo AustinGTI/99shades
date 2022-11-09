@@ -1,8 +1,11 @@
 .branchContainer {
   background-color: var(--main-bg-color);
   border-radius: 10px;
+  background-color: #fdfdfd;
+  box-shadow: 9px 9px 18px #e2e2e2, -9px -9px 18px #fefefe;
   //border: 1px solid gray;
   margin: 5px 3px;
+
   .branchRoot {
     display: flex;
     flex-direction: row;
@@ -24,6 +27,7 @@
       flex-direction: row;
       justify-content: space-around;
       align-items: center;
+
       .climbBtn {
         width: 12px;
         height: 12px;
@@ -32,10 +36,12 @@
         margin: 0 2px;
       }
     }
+
     p {
       flex-grow: 1;
       margin: 5% 0;
     }
+
     .dropDiv {
       flex-grow: 0;
       margin-right: 5px;
@@ -45,6 +51,7 @@
       align-items: center;
       height: 20px;
       padding: 5px;
+
       .dropBtn {
         width: 5px;
         height: 5px;
@@ -54,6 +61,7 @@
       }
     }
   }
+
   .branchLeaves {
     margin: 0 4px;
     padding-bottom: 3px;
@@ -61,6 +69,7 @@
     &.visible {
       display: block;
     }
+
     &.invisible {
       display: none;
     }

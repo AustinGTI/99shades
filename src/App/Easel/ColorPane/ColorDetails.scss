@@ -15,90 +15,58 @@ div.colorDetailsBox {
   justify-content: center;
   align-items: center;
 
-  &.visible{
+  &.visible {
     visibility: visible;
   }
 
-  &.hidden{
-    visibility:hidden;
+  &.hidden {
+    visibility: hidden;
   }
 
-  div.format {
-    position: relative;
-    width: 70%;
-    height: 13%;
-
-    font-size: large;
-  }
-
-  div.keyBtnBox {
-    position: relative;
-    width: 100%;
-    height: 15%;
-
-    bottom: -2%;
-
+  div.colorDetailBox {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 10px;
 
-    div.btn {
+    div.detailFormatBox {
       position: relative;
-      width: 30px;
-      height: 30px;
-
-      margin: 0 5px;
-
-      svg {
-        overflow: visible;
-        path,
-        circle {
-          stroke-width: 15px;
-          fill: var(--primary-color);
-          stroke: var(--secondary-color);
-        }
-      }
+      width: fit-content;
+      margin: 0 auto;
     }
-    div.btn:hover {
-      svg {
-        path,
-        circle {
-          fill: var(--secondary-color);
-          stroke: var(--secondary-color);
-        }
-      }
+
+    div.detailFormatBox:before, div.detailFormatBox:after {
+      content: "";
+      position: absolute;
+      background-color: var(--secondary-color);
+      height: 4px;
+      width: 4px;
+      border-radius: 2px;
+      margin: auto 0;
+      top: 0;
+      bottom: 0;
+
     }
+
+    div.detailFormatBox:before {
+      left: -7px;
+    }
+
+    div.detailFormatBox:after {
+      right: -7px;
+    }
+
+
   }
+}
 
-  div.btn.panelbtn {
-    width: 120%;
-    height: 22%;
-
-    padding: 10% 0;
-
-    position: relative;
-
-    svg {
-      overflow: visible;
-      circle {
-        fill: var(--secondary-color);
-      }
-      rect {
-        fill: var(--primary-color);
-        stroke-width: 50px;
-        stroke: var(--secondary-color);
-      }
-    }
-    &:hover {
-      svg {
-        rect {
-          fill: var(--secondary-color);
-        }
-        circle {
-          fill: var(--primary-color);
-        }
-      }
+div.colorDetailsBox:hover {
+  div.colorDetailBox {
+    div.detailFormatBox:before, div.detailFormatBox:after {
+      background-color: white;
+      height: 6px;
+      width: 6px;
+      border-radius: 3px;
     }
   }
 }
