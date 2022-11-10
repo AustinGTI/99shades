@@ -1,6 +1,7 @@
 div.colorBox {
   --primary-color: black;
   --secondary-color: white;
+  --alternate-color: grey;
   position: relative;
 
   width: 250px;
@@ -12,11 +13,12 @@ div.colorBox {
 
   background-color: magenta;
   //border: 5px solid var(--secondary-color);
-  &.right{
+  &.right {
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
   }
-  &.left{
+
+  &.left {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
   }
@@ -27,39 +29,119 @@ div.colorBox {
   align-items: center;
   justify-content: center;
 
-  div.bracer {
-    width: 5%;
-    height: 60%;
+  div.colorDetailsBox {
+    //position: absolute;
+
+    width: 70%;
+    height: 100%;
+
+    text-align: center;
+
+    margin: 0 0;
+
+    color: var(--secondary-color);
+
     display: flex;
-    padding-top: 35%;
     flex-direction: column;
-    &.right {
-      justify-content: flex-end;
-    }
-    &.left {
-      justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+
+
+    div.colorDetailBox {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin: 10px;
+
+      div.detailFormatBox {
+        position: relative;
+        width: fit-content;
+        margin: 0 auto;
+      }
+
+      div.detailFormatBox:before, div.detailFormatBox:after {
+        content: "";
+        position: absolute;
+        background-color: var(--secondary-color);
+        height: 4px;
+        width: 4px;
+        border-radius: 2px;
+        margin: auto 0;
+        top: 0;
+        bottom: 0;
+
+        transition: width 100ms ease-in-out, height 100ms ease-in-out, left 100ms ease-in-out, right 100ms ease-in-out;
+      }
+
+      div.detailFormatBox:before {
+        left: -7px;
+      }
+
+      div.detailFormatBox:after {
+        right: -7px;
+      }
+
+      div.detailValueBox {
+        position: relative;
+      }
+
+      div.detailValueBox:after {
+        position: absolute;
+
+        bottom: -5px;
+
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+
+        content: "";
+        width: 0%;
+        height: 4px;
+        border-radius: 2px;
+        background-color: var(--secondary-color);
+
+        transition: width 200ms ease-in-out;
+      }
+
+
     }
 
-    div.indicator {
-      height: 5%;
-      width: 100%;
-      border-radius: 10px;
-      background-color: var(--secondary-color);
+    &.visible {
+      visibility: visible;
     }
-    &.active {
-      div.indicator {
-        height: 90%;
+
+    &.hidden {
+      visibility: hidden;
+    }
+
+  }
+
+
+  &.active {
+    div.colorDetailBox {
+
+      div.detailValueBox:after {
+        width: 100% !important;
       }
     }
   }
+
   &:hover {
-    div.bracer {
-      div.indicator {
-        height: 10%;
-      }
-      &.active {
-        div.indicator {
-          height: 100%;
+    div.colorDetailsBox {
+      div.colorDetailBox {
+        div.detailFormatBox:before, div.detailFormatBox:after {
+          background-color: var(--alternate-color);
+          height: 6px;
+          width: 6px;
+          border-radius: 3px;
+        }
+
+        div.detailFormatBox:before {
+          left: -9px;
+        }
+
+        div.detailFormatBox:after {
+          right: -9px;
         }
       }
     }

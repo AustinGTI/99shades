@@ -34,6 +34,7 @@ export default function ColorDetails({pane, isActive}) {
     let formatKeys = Object.keys(formats).filter((v) => v !== "cls");
     let emphasis = isActive ? 40 : 20;
     let fontColor = getContrastColor("hsl", formats.hsl, emphasis);
+    let hoverColor = getContrastColor("hsl", formats.hsl, 50);
     // formats.hsl[2] > 50
     //   ? [
     //       formats.hsl[0],
@@ -60,6 +61,10 @@ export default function ColorDetails({pane, isActive}) {
         );
         colDetailsBox.current.parentElement.style.setProperty(
             "--secondary-color",
+            fontColor
+        );
+        colDetailsBox.current.parentElement.style.setProperty(
+            "--alternate-color",
             fontColor
         );
     }, [isActive, formats, colDetailsBox]);
