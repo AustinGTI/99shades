@@ -70,7 +70,7 @@ div.colorBox {
         top: 0;
         bottom: 0;
 
-        transition: width 100ms ease-in-out, height 100ms ease-in-out, left 100ms ease-in-out, right 100ms ease-in-out;
+        transition: width 100ms ease-in, height 100ms ease-in, left 100ms ease-in, right 100ms ease-in;
       }
 
       div.detailFormatBox:before {
@@ -114,19 +114,21 @@ div.colorBox {
       visibility: hidden;
     }
 
+
   }
 
 
   &.active {
-    div.colorDetailBox {
-
-      div.detailValueBox:after {
-        width: 100% !important;
-      }
-    }
+    //div.colorDetailBox {
+    //
+    //  div.detailValueBox:after {
+    //    width: 100% !important;
+    //  }
+    //}
   }
 
   &:hover {
+
     div.colorDetailsBox {
       div.colorDetailBox {
         div.detailFormatBox:before, div.detailFormatBox:after {
@@ -144,6 +146,64 @@ div.colorBox {
           right: -9px;
         }
       }
+    }
+  }
+}
+
+div.colorBox {
+  &:before {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    left: 0;
+
+    margin: 0 auto;
+
+    content: "";
+    width: 0%;
+    height: 6px;
+    border-radius: 3px;
+
+    background-color: var(--secondary-color);
+
+    transition: width 150ms ease-in-out;
+  }
+
+  &:after {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    left: 0;
+
+    margin: 0 auto;
+
+    content: "";
+    width: 0%;
+    height: 6px;
+    border-radius: 3px;
+
+    background-color: var(--secondary-color);
+
+    transition: width 150ms ease-in-out;
+  }
+}
+
+div.colorBox.active {
+  &:before {
+    width: 80%;
+  }
+
+  &:after {
+    width: 80%;
+  }
+
+  &:hover {
+    &:before {
+      width: 85%;
+    }
+
+    &:after {
+      width: 85%;
     }
   }
 }

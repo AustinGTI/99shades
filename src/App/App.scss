@@ -21,6 +21,7 @@
 div.appBg {
   position: absolute;
   background-color: var(--main-bg-color);
+  transition: background-color 1000ms linear;
 
   width: 100%;
   height: 100%;
