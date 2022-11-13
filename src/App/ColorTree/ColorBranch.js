@@ -45,7 +45,7 @@ function showHideElem(elem, showhide = null) {
 }
 
 export default function ColorBranch(params) {
-    const {branch, branchName, rootName, treeVisible} = params;
+    const {branch, branchName, rootName, treeState} = params;
     const branchContainer = useRef(null);
     const [iamVisible, setVisible] = useState(false);
     let branchClasses = `${branchName} ${rootName}`;
@@ -72,7 +72,6 @@ export default function ColorBranch(params) {
             //     setVisible(true);
             // }
             setVisible(!iamVisible);
-            console.log("visibility switched ", iamVisible);
         };
 
         branchRoot.addEventListener("click", clickBloom);
@@ -83,6 +82,13 @@ export default function ColorBranch(params) {
     useEffect(() => {
         branchContainer.current.style.setProperty('--avg-branch-color', avgColBg);
     });
+    useEffect(() => {
+        if (treeState.open && (treeState.payload.length === 0 || treeState.payload.includes(branchClasses.split(" ")[0]))) {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }, [treeState])
 
     return (
         <div
@@ -131,14 +137,14 @@ export default function ColorBranch(params) {
 */}
             </div>
             <div className="branchLeaves">
-                {(treeVisible || iamVisible) ? (!Array.isArray(branch)
+                {(iamVisible) ? (!Array.isArray(branch)
                     ? Object.keys(branch).map((v, vi) => (
                         <ColorBranch
                             key={vi}
                             branch={branch[v]}
                             branchName={v}
                             rootName={branchName + " " + rootName}
-                            treeVisible={treeVisible}
+                            treeState={treeState}
                         />
                     ))
                     : branch.map(({title, hexcode}, vi) => (
