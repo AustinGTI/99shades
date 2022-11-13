@@ -33,29 +33,6 @@ function goToCol(treeElem, pane) {
         });
 }
 
-const openAll = function (treeElem) {
-    treeElem.querySelectorAll(".invisible").forEach((v) => {
-        v.classList.remove("invisible");
-        v.classList.add("visible");
-    });
-};
-const closeAll = function (treeElem) {
-    treeElem.querySelectorAll(".visible").forEach((v) => {
-        v.classList.remove("visible");
-        v.classList.add("invisible");
-    });
-};
-
-const search = function (treeElem, searchInput, setTree) {
-    let searchQuery = searchInput.value;
-    if (searchQuery) {
-        setTree(createColorTree(searchQuery));
-    } else {
-        setTree(createColorTree());
-    }
-    setTimeout(openAll, 100, treeElem);
-};
-
 
 function createColorTree(query = null) {
     const tree = {};
@@ -84,6 +61,7 @@ function createColorTree(query = null) {
 
 export default function ColorTree() {
     let [tree, setTree] = useState(createColorTree());
+    const [branchesOpen, setBranchState] = useState(false);
     const [gt, st, pane] = useAppContext();
     useEffect(() => {
         const [snapBtn, expandBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
@@ -95,30 +73,39 @@ export default function ColorTree() {
             setTree(createColorTree());
             setTimeout(goToCol, 100, treeElem, pane);
         };
-        const openAllHandler = function (e) {
-            openAll(treeElem);
-        }
-        const closeAllHandler = function (e) {
-            closeAll(treeElem);
-        }
+
+        const openAll = function (e) {
+            setBranchState(true);
+        };
+
+        const closeAll = function (e) {
+            setBranchState(false);
+        };
+
         const searchHandler = (e) => {
             if (e.which !== 13 && e.type === "keyup") {
                 return;
             }
-            search(treeElem, searchInput, setTree);
+            let searchQuery = searchInput.value;
+            if (searchQuery) {
+                setTree(createColorTree(searchQuery));
+            } else {
+                setTree(createColorTree());
+            }
+            setTimeout(openAll, 100, treeElem);
         }
 
         snapBtn.addEventListener("click", goToColHandler);
-        expandBtn.addEventListener("click", openAllHandler);
-        collapseBtn.addEventListener("click", closeAllHandler);
+        expandBtn.addEventListener("click", openAll);
+        collapseBtn.addEventListener("click", closeAll);
 
         searchBtn.addEventListener("click", searchHandler);
         searchInput.addEventListener("keyup", searchHandler);
 
         return () => {
             snapBtn.removeEventListener("click", goToColHandler);
-            expandBtn.removeEventListener("click", openAllHandler);
-            collapseBtn.removeEventListener("click", closeAllHandler);
+            expandBtn.removeEventListener("click", openAll);
+            collapseBtn.removeEventListener("click", closeAll);
 
             searchBtn.removeEventListener("click", searchHandler);
             searchInput.removeEventListener("keyup", searchHandler);
@@ -151,7 +138,7 @@ export default function ColorTree() {
                             branch={tree[v]}
                             branchName={v + "s"}
                             rootName={""}
-                            parentVisible={true}
+                            treeVisible={branchesOpen}
                         />
                     ))
                 ) : (

@@ -45,10 +45,10 @@ function showHideElem(elem, showhide = null) {
 }
 
 export default function ColorBranch(params) {
-    const {branch, branchName, rootName, parentVisible} = params;
+    const {branch, branchName, rootName, treeVisible} = params;
     const branchContainer = useRef(null);
+    const [iamVisible, setVisible] = useState(false);
     let branchClasses = `${branchName} ${rootName}`;
-    let iamVisible = false;
     const avgCol = calcBranchAverage(branch);
     const avgColRGB = `rgb(${avgCol.join(',')})`;
     const avgColBg = getLighterColor('rgb', avgCol, 95);
@@ -56,31 +56,30 @@ export default function ColorBranch(params) {
     branchClasses = branchClasses.slice(0, branchClasses.length - 2);
 
     useEffect(() => {
-        const branchLeaves =
-            branchContainer.current.querySelector("div.branchLeaves");
         const branchRoot = branchContainer.current.querySelector(
             "div.branchRoot"
         );
-        if (parentVisible && branchLeaves.classList.contains("visible")) {
-            iamVisible = true;
-        }
         const clickBloom = (e) => {
-            if (branchLeaves.classList.contains("visible")) {
-                //set every child to invisible
-                branchLeaves.querySelectorAll(".visible").forEach((v) => {
-                    showHideElem(v, false);
-                });
-                showHideElem(branchLeaves, false);
-            } else {
-                showHideElem(branchLeaves, true);
-            }
+            // if (branchLeaves.classList.contains("visible")) {
+            //     //set every child to invisible
+            //     branchLeaves.querySelectorAll(".visible").forEach((v) => {
+            //         showHideElem(v, false);
+            //     });
+            //     showHideElem(branchLeaves, false);
+            //     setVisible(false);
+            // } else {
+            //     showHideElem(branchLeaves, true);
+            //     setVisible(true);
+            // }
+            setVisible(!iamVisible);
+            console.log("visibility switched ", iamVisible);
         };
 
         branchRoot.addEventListener("click", clickBloom);
         return () => {
             branchRoot.removeEventListener("click", clickBloom);
         };
-    }, []);
+    }, [iamVisible]);
     useEffect(() => {
         branchContainer.current.style.setProperty('--avg-branch-color', avgColBg);
     });
@@ -131,20 +130,20 @@ export default function ColorBranch(params) {
         </div>
 */}
             </div>
-            <div className="branchLeaves invisible">
-                {!Array.isArray(branch)
+            <div className="branchLeaves">
+                {(treeVisible || iamVisible) ? (!Array.isArray(branch)
                     ? Object.keys(branch).map((v, vi) => (
                         <ColorBranch
                             key={vi}
                             branch={branch[v]}
                             branchName={v}
                             rootName={branchName + " " + rootName}
-                            parentVisible={iamVisible}
+                            treeVisible={treeVisible}
                         />
                     ))
                     : branch.map(({title, hexcode}, vi) => (
-                        <ColorLeaf key={vi} title={title} hex={hexcode} parentVisible={iamVisible}/>
-                    ))}
+                        <ColorLeaf key={vi} title={title} hex={hexcode}/>
+                    ))) : <></>}
             </div>
         </div>
     );
