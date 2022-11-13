@@ -1,8 +1,6 @@
 import React, {useEffect, useRef} from "react";
 import "./ColorDetails.scss";
-import useAppContext, {
-    getPaneColor,
-} from "../../../AuxFunctions/useAppContext";
+import useAppContext from "../../../AuxFunctions/useAppContext";
 import formatColor from "../../../AuxFunctions/formatColor";
 import {ReactComponent as UndoBtn} from "../../../Data/Icons/Buttons/undoBtn.svg";
 import {ReactComponent as RedoBtn} from "../../../Data/Icons/Buttons/redoBtn.svg";
@@ -29,7 +27,7 @@ function ColorDetail({format, value}) {
 }
 
 export default function ColorDetails({pane, isActive}) {
-    let formats = getPaneColor(pane);
+    let formats = pane.getPaneColor();
     let detailVisible = useAppContext()[0].colorDetailVisible;
     let formatKeys = Object.keys(formats).filter((v) => v !== "cls");
     let emphasis = isActive ? 40 : 20;
@@ -79,7 +77,7 @@ export default function ColorDetails({pane, isActive}) {
                     // <div className="format" key={vi}>
                     //   <span>{cleanFormats(v, formats[v])}</span>
                     // </div>
-                    <ColorDetail value={formats[v]} format={v}/>
+                    <ColorDetail key={vi} value={formats[v]} format={v}/>
                 ))}
 
             </div>

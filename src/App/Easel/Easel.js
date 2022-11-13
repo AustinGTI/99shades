@@ -1,5 +1,5 @@
 import React, {useEffect, useReducer, useRef} from "react";
-import useAppContext, {getPaneColor} from "../../AuxFunctions/useAppContext";
+import useAppContext from "../../AuxFunctions/useAppContext";
 import ColorPane from "./ColorPane/ColorPane";
 
 import {ReactComponent as DownloadBtn} from "../../Data/Icons/Buttons/downloadBtn.svg";
@@ -37,12 +37,12 @@ export default function Palette() {
         const logoCircles = Array.from(logoBox.current.querySelectorAll("svg circle")).sort((a, b) => b.r.baseVal.value - a.r.baseVal.value);
         logoCircles.forEach((v, vi) => {
             if (appData.colorPanes.length > vi) {
-                v.style.fill = getPaneColor(appData.colorPanes[vi]).hex;
+                v.style.fill = appData.colorPanes[vi].getPaneColor().hex;
             } else {
                 v.style.fill = "transparent";
             }
         });
-        let activeColor = getPaneColor(appData.colorPanes.find((v) => v.paneId === appData.activePaneIdx));
+        let activeColor = appData.colorPanes.find((v) => v.paneId === appData.activePaneIdx).getPaneColor();
         let nBgColor = activeColor.rgb.map(v => parseInt(255 * 9 / 10 + v / 10));
         let bgDarkHex = hexToRGB(nBgColor.map(v => parseInt(v * 0.94)), true);
         let bgLightHex = hexToRGB(nBgColor.map(v => Math.max(0, parseInt(v * 1.06))), true);
@@ -50,7 +50,7 @@ export default function Palette() {
         let btnBgColor = `rgba(${activeColor.rgb.join(',')},0.1)`;
         let btnFillColor = hexToHSL(activeColor.hsl.map((v, vi) => (vi === 2) ? 50 : v), true);
 
-        console.log(nBgColor, bgDarkHex, bgLightHex, btnBgColor, btnFillColor);
+        // console.log(nBgColor, bgDarkHex, bgLightHex, btnBgColor, btnFillColor);
         document.documentElement.style.setProperty('--main-bg-color', nBgColorHex);
         document.documentElement.style.setProperty('--dark-bg-color', bgDarkHex);
         document.documentElement.style.setProperty('--light-bg-color', bgLightHex);

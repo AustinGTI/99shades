@@ -1,95 +1,105 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FUNCTIONS } from "../../AuxFunctions/formatColor";
+import React, {useEffect, useRef, useState} from "react";
+import {FUNCTIONS} from "../../AuxFunctions/formatColor";
 import "./ColorBranch.scss";
 
 import ColorLeaf from "./ColorLeaf";
+import {getLighterColor, getUsableColor} from "../../AuxFunctions/filterColor";
 
 function flattenBranch(branch) {
-  if (Array.isArray(branch)) {
-    return branch;
-  }
-  let leaves = [];
-  for (let key in branch) {
-    let nLeaves = flattenBranch(branch[key]);
-    leaves = leaves.concat(nLeaves);
-  }
-  return leaves;
+    if (Array.isArray(branch)) {
+        return branch;
+    }
+    let leaves = [];
+    for (let key in branch) {
+        let nLeaves = flattenBranch(branch[key]);
+        leaves = leaves.concat(nLeaves);
+    }
+    return leaves;
 }
+
 function calcBranchAverage(branch) {
-  const flatBranch = flattenBranch(branch);
-  const colSum = flatBranch.reduce(
-    (t, v) => {
-      let rgb = FUNCTIONS["rgb"](v.hexcode);
-      return t.map((va, vai) => va + rgb[vai]);
-    },
-    [0, 0, 0]
-  );
-  return colSum.map((v) => parseInt(v / flatBranch.length));
+    const flatBranch = flattenBranch(branch);
+    const colSum = flatBranch.reduce(
+        (t, v) => {
+            let rgb = FUNCTIONS["rgb"](v.hexcode);
+            return t.map((va, vai) => va + rgb[vai]);
+        },
+        [0, 0, 0]
+    );
+    return colSum.map((v) => parseInt(v / flatBranch.length));
 }
 
 function showHideElem(elem, showhide = null) {
-  if (showhide == null || showhide) {
-    if (elem.classList.contains("invisible")) {
-      elem.classList.remove("invisible");
-      elem.classList.add("visible");
+    if (showhide == null || showhide) {
+        if (elem.classList.contains("invisible")) {
+            elem.classList.remove("invisible");
+            elem.classList.add("visible");
+        }
     }
-  }
-  if (showhide == null || !showhide) {
-    if (elem.classList.contains("visible")) {
-      elem.classList.remove("visible");
-      elem.classList.add("invisible");
+    if (showhide == null || !showhide) {
+        if (elem.classList.contains("visible")) {
+            elem.classList.remove("visible");
+            elem.classList.add("invisible");
+        }
     }
-  }
 }
 
 export default function ColorBranch(params) {
-  const { branch, branchName, parentInfo, rootName } = params;
-  const branchContainer = useRef(null);
-  let branchClasses = `${branchName} ${rootName}`;
-  const avgCol = `rgb(${calcBranchAverage(branch).join(",")})`;
-  parentInfo[avgCol] = branchContainer;
-  branchClasses = branchClasses.slice(0, branchClasses.length - 2);
+    const {branch, branchName, rootName, parentVisible} = params;
+    const branchContainer = useRef(null);
+    let branchClasses = `${branchName} ${rootName}`;
+    let iamVisible = false;
+    const avgCol = calcBranchAverage(branch);
+    const avgColRGB = `rgb(${avgCol.join(',')})`;
+    const avgColBg = getLighterColor('rgb', avgCol, 95);
+    // console.log(avgColBg);
+    branchClasses = branchClasses.slice(0, branchClasses.length - 2);
 
-  useEffect(() => {
-    const branchLeaves =
-      branchContainer.current.querySelector("div.branchLeaves");
-    const branchRoot = branchContainer.current.querySelector(
-      "div.branchRoot"
-    );
-    const clickBloom = (e) => {
-      if (branchLeaves.classList.contains("visible")) {
-        //set every child to invisible
-        branchLeaves.querySelectorAll(".visible").forEach((v) => {
-          showHideElem(v, false);
-        });
-        showHideElem(branchLeaves, false);
-      } else {
-        showHideElem(branchLeaves, true);
-      }
-    };
+    useEffect(() => {
+        const branchLeaves =
+            branchContainer.current.querySelector("div.branchLeaves");
+        const branchRoot = branchContainer.current.querySelector(
+            "div.branchRoot"
+        );
+        if (parentVisible && branchLeaves.classList.contains("visible")) {
+            iamVisible = true;
+        }
+        const clickBloom = (e) => {
+            if (branchLeaves.classList.contains("visible")) {
+                //set every child to invisible
+                branchLeaves.querySelectorAll(".visible").forEach((v) => {
+                    showHideElem(v, false);
+                });
+                showHideElem(branchLeaves, false);
+            } else {
+                showHideElem(branchLeaves, true);
+            }
+        };
 
-    branchRoot.addEventListener("click", clickBloom);
-    return () => {
-      branchRoot.removeEventListener("click", clickBloom);
-    };
-  }, []);
+        branchRoot.addEventListener("click", clickBloom);
+        return () => {
+            branchRoot.removeEventListener("click", clickBloom);
+        };
+    }, []);
+    useEffect(() => {
+        branchContainer.current.style.setProperty('--avg-branch-color', avgColBg);
+    });
 
-  return (
-    <div
-      className={`branchContainer ${branchClasses}`}
-      ref={branchContainer}
-      style={{
-        boxShadow: `${4 - Object.keys(parentInfo).length}px ${4 - Object.keys(parentInfo).length}px ${ 7 - Object.keys(parentInfo).length * 2 }px var(--dark-bg-color), -${4 - Object.keys(parentInfo).length}px  -${4 - Object.keys(parentInfo).length}px  ${ 7 - Object.keys(parentInfo).length * 2 }px var(--light-bg-color)`,
-/*
-        filter: `drop-shadow(0 -${4 - Object.keys(parentInfo).length}px ${
-          7 - Object.keys(parentInfo).length * 2
-        }px #ccc)`,
-*/
-      }}
-    >
-      <div className="branchRoot">
-        <div className="btnDiv climbDiv">
-          {/* {Object.keys(parentInfo)
+    return (
+        <div
+            className={`branchContainer ${branchClasses}`}
+            ref={branchContainer}
+            style={{
+                //       boxShadow: `${4 - Object.keys(parentInfo).length}px ${4 - Object.keys(parentInfo).length}px
+                // ${7 - Object.keys(parentInfo).length * 2}px
+                //  var(--dark-bg-color), -${4 - Object.keys(parentInfo).length}px
+                //    -${4 - Object.keys(parentInfo).length}px
+                //      ${7 - Object.keys(parentInfo).length * 2}px var(--light-bg-color)`,
+            }}
+        >
+            <div className="branchRoot">
+                <div className="btnDiv climbDiv">
+                    {/* {Object.keys(parentInfo)
             .filter((v) => v != avgCol)
             .map((v, vi) => (
               <div
@@ -105,13 +115,13 @@ export default function ColorBranch(params) {
                 //onClick={(e) => console.log(parentInfo[v].current)}
               ></div>
             ))} */}
-        </div>
-        <div className="colTag" style={{ backgroundColor: avgCol }}></div>
+                </div>
+                <div className="colTag" style={{backgroundColor: avgColRGB}}></div>
 
-        <p>
-          {branchName} {rootName}
-        </p>
-{/*
+                <p>
+                    {branchName} {rootName}
+                </p>
+                {/*
         <div className="btnDiv dropDiv">
           {Array(3)
             .fill(true)
@@ -120,22 +130,22 @@ export default function ColorBranch(params) {
             ))}
         </div>
 */}
-      </div>
-      <div className="branchLeaves invisible">
-        {!Array.isArray(branch)
-          ? Object.keys(branch).map((v, vi) => (
-              <ColorBranch
-                key={vi}
-                branch={branch[v]}
-                branchName={v}
-                parentInfo={{ ...parentInfo }}
-                rootName={branchName + " " + rootName}
-              />
-            ))
-          : branch.map(({ title, hexcode }, vi) => (
-              <ColorLeaf key={vi} title={title} hex={hexcode} />
-            ))}
-      </div>
-    </div>
-  );
+            </div>
+            <div className="branchLeaves invisible">
+                {!Array.isArray(branch)
+                    ? Object.keys(branch).map((v, vi) => (
+                        <ColorBranch
+                            key={vi}
+                            branch={branch[v]}
+                            branchName={v}
+                            rootName={branchName + " " + rootName}
+                            parentVisible={iamVisible}
+                        />
+                    ))
+                    : branch.map(({title, hexcode}, vi) => (
+                        <ColorLeaf key={vi} title={title} hex={hexcode} parentVisible={iamVisible}/>
+                    ))}
+            </div>
+        </div>
+    );
 }

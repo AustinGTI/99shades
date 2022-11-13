@@ -1,4 +1,4 @@
-@mixin neomorph{
+@mixin neomorph {
   background: var(--main-bg-color);
   box-shadow: 4px 4px 4px var(--dark-bg-color), -4px -4px 4px var(--light-bg-color);
 }
@@ -17,12 +17,14 @@ div.slidersBox {
   justify-content: center;
   align-items: flex-end;
 
-  div.slideInfo{
+  div.slideInfo {
     align-items: center;
-    p{
-        padding: 0 5px;
+
+    p {
+      padding: 0 5px;
     }
-    input{
+
+    input {
       margin: 0 10px;
       border: none;
       text-align: center;
@@ -33,12 +35,14 @@ div.slidersBox {
 
       box-shadow: 2px 2px 4px var(--dark-bg-color), -2px -2px 4px var(--light-bg-color);
     }
-    span{
+
+    span {
       width: 15px;
       height: 80%;
       border-radius: 3px;
     }
   }
+
   div.formatBox {
     height: 95%;
     width: 23%;
@@ -67,10 +71,12 @@ div.slidersBox {
       flex-direction: column;
 
       justify-content: space-around;
+
       p {
         //height: 13px;
         margin: 0 0 0 5px;
       }
+
       .slide {
         position: relative;
         //background-color: white;
@@ -81,6 +87,7 @@ div.slidersBox {
 
         max-height: 10px;
         flex-grow: 1;
+
 
         .slider {
           display: flex;
@@ -95,9 +102,12 @@ div.slidersBox {
           margin: auto 0;
           top: 0;
           bottom: 0;
+
           svg {
             transform: scale(1.5);
           }
+
+          transition: left 50ms linear;
         }
       }
     }

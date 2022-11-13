@@ -1,9 +1,7 @@
 import React, {useEffect} from "react";
 import ColorDetails from "./ColorDetails";
 import "./ColorPane.scss";
-import useAppContext, {
-    getPaneColor,
-} from "../../../AuxFunctions/useAppContext";
+import useAppContext from "../../../AuxFunctions/useAppContext";
 import {hexToRGB} from "../../../AuxFunctions/formatColor";
 
 export default function ColorPane({pane, isRight, isLeft, isActive}) {
@@ -107,7 +105,7 @@ export default function ColorPane({pane, isRight, isLeft, isActive}) {
         <div
             className={`colorBox pid${pane.paneId} ${isLeft ? "left" : ""} ${isRight ? "right" : ""} ${isActive ? "active" : ""}`}
             style={{
-                backgroundColor: getPaneColor(pane).hex,
+                backgroundColor: pane.getPaneColor().hex,
             }}
         >
             <ColorDetails pane={pane} isActive={isActive}/>

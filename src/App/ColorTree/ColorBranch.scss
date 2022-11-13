@@ -2,15 +2,20 @@
   background-color: var(--main-bg-color);
   border-radius: 10px;
   background-color: #fdfdfd;
-  box-shadow: 9px 9px 18px #e2e2e2, -9px -9px 18px #fefefe;
+  box-shadow: 3px 3px 6px #e2e2e2, -3px -3px 6px #fefefe;
   //border: 1px solid gray;
   margin: 5px 3px;
+
+  &:hover {
+    background-color: var(--avg-branch-color);
+  }
 
   .branchRoot {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+
 
     .colTag {
       flex-grow: 0;

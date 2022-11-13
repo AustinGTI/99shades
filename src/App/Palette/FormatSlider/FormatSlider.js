@@ -1,15 +1,13 @@
 import React, {useEffect, useRef} from "react";
 import {
-    buildNewColor,
+    buildNewColorFloat,
     FUNCTIONS,
     hexToCMYK,
     hexToHSL,
     hexToHSV,
     hexToRGB,
 } from "../../../AuxFunctions/formatColor";
-import useAppContext, {
-    getPaneColor,
-} from "../../../AuxFunctions/useAppContext";
+import useAppContext from "../../../AuxFunctions/useAppContext";
 import {ReactComponent as SlideBtn} from "../../../Data/Icons/Buttons/slideBtn.svg";
 import "./FormatSlider.scss";
 
@@ -19,14 +17,14 @@ const FORMATS = {
         [100, 100, 100, 100],
         hexToCMYK,
         Array(4).fill(false),
-        ["#00FFFF","#FF00FF","#0000FF","#000000"]
+        ["#00FFFF", "#FF00FF", "#0000FF", "#000000"]
     ],
     rgb: [
         ["Red", "Green", "Blue"],
         [255, 255, 255],
         hexToRGB,
         Array(3).fill(false),
-        ["#FF0000","#00FF00","#0000FF"]
+        ["#FF0000", "#00FF00", "#0000FF"]
     ],
     hsl: [
         ["Hue", "Saturation", "Lightness"],
@@ -57,7 +55,7 @@ function sliderFuncs(data) {
         FORMATS[format][3][idx] = true;
         document.querySelector("body").style.userSelect = "none";
 
-        e.currentTarget.style.backgroundColor = "black";
+        // e.currentTarget.style.backgroundColor = "black";
     };
     const dragSlider = (e) => {
         if (!FORMATS[format][3][idx]) {
@@ -97,7 +95,7 @@ function sliderFuncs(data) {
         // setTimeout(() => {
         //   canDrag = true;
         // }, 1000 / 1000);
-        return;
+
     };
     const dropSlider = (e) => {
         if (FORMATS[format][3][idx]) {
@@ -127,14 +125,14 @@ function setColorChannel(format, idx, colVal, currCol) {
         currCol[idx] = nVal;
         colVal.color.col = [...currCol];
         colVal.color.format = format;
-        return;
+
     }
 
     return enterHandler;
 
 }
 
-function Slider({format,coltag, col, idx, colVal, direction}) {
+function Slider({format, coltag, col, idx, colVal, direction}) {
     const label = FORMATS[format][0][idx];
     const key = label.toLowerCase().split("/")[0];
     const sliderBox = useRef(null);
@@ -210,7 +208,7 @@ function Slider({format,coltag, col, idx, colVal, direction}) {
             }}>
                 <input type={"text"} style={{width: "40px"}}/>
                 <p>{label}</p>
-                {(coltag === null) ? <></> : <span style={{backgroundColor:coltag[idx]}}></span>}
+                {(coltag === null) ? <></> : <span style={{backgroundColor: coltag[idx]}}></span>}
 
             </div>
             <div className={`slide ${format.toLowerCase()} ${key}`}>
@@ -224,7 +222,7 @@ function Slider({format,coltag, col, idx, colVal, direction}) {
 
 export default function FormatSlider({idx, format, colVal, direction}) {
     const [_, st, pane] = useAppContext();
-    const paneColor = getPaneColor(pane);
+    const paneColor = pane.getPaneColor();
     //${idx === 2 ? " colorListBox" : ""}
     return (
         <div className={`formatBox`}>
@@ -237,7 +235,7 @@ export default function FormatSlider({idx, format, colVal, direction}) {
                     //setter={setter}
                     colVal={colVal}
                     direction={direction}
-                    coltag = {FORMATS[format][4]}
+                    coltag={FORMATS[format][4]}
                 />
             ))}
         </div>

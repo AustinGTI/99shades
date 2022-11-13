@@ -1,21 +1,21 @@
 import React, {useEffect, useRef} from "react";
 import "./ColorLeaf.scss";
-import useAppContext, {getPaneColor} from "../../AuxFunctions/useAppContext";
-import {buildNewColor} from "../../AuxFunctions/formatColor";
+import useAppContext from "../../AuxFunctions/useAppContext";
+import {buildNewColorFloat} from "../../AuxFunctions/formatColor";
 import {getContrastColor} from "../../AuxFunctions/filterColor";
 
 export default function ColorLeaf(params) {
-    const {title, hex} = params;
-    const txtColor = getContrastColor("hex", hex, 40);
+    const {title, hex, parentVisible} = params;
     const leaf = useRef(null);
     const [_, setter, pane] = useAppContext();
-    const paneColor = getPaneColor(pane);
+    const paneColor = pane.getPaneColor();
     useEffect(() => {
+        const txtColor = getContrastColor("hex", hex, 40);
         const changeColor = (e) => {
             console.log(hex);
             setter({
                 command: "changePaneColor",
-                color: buildNewColor("hex", hex, paneColor),
+                color: buildNewColorFloat("hex", hex, paneColor),
             });
         };
         leaf.current.addEventListener("click", changeColor);
