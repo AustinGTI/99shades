@@ -3,72 +3,13 @@ import ColorDetails from "./ColorDetails";
 import "./ColorPane.scss";
 import useAppContext from "../../../AuxFunctions/useAppContext";
 import {hexToRGB} from "../../../AuxFunctions/formatColor";
+import {motion} from "framer-motion";
 
 export default function ColorPane({pane, isRight, isLeft, isActive}) {
     const setter = useAppContext()[1];
     useEffect(() => {
         const parentPane = document.querySelector(`.colorBox.pid${pane.paneId}`);
 
-        //pane positions
-
-        /*let deleteBtn = parentPane.querySelector(".deleteBtn");
-        let undoBtn = parentPane.querySelector(".undoBtn");
-        let redoBtn = parentPane.querySelector(".redoBtn");
-        let moveBtn = parentPane.querySelector(".moveBtn");*/
-
-        //is the pane being dragged
-        let isDragging = false;
-
-        //wrapped setter function
-
-
-        /*
-        const undoPaneColor = (e) => {
-          setter({ command: "undoPaneColor", id: pane.paneId });
-        };
-        const redoPaneColor = (e) => {
-          setter({ command: "redoPaneColor", id: pane.paneId });
-        };
-
-        //drag and drop the pane
-        const dragPane = (e) => {
-          isDragging = true;
-          parentPane.style.userSelect = "none";
-
-          e.currentTarget.style.backgroundColor = "black";
-        };
-        const dropPane = (e) => {
-          if (isDragging) {
-            //get pane positions
-            const allPanes = document.querySelectorAll(".colorBox");
-
-            let panePositions = Array.from(allPanes)
-              .filter((v) => v !== parentPane)
-              .map(
-                (v) =>
-                  v.getBoundingClientRect().x + v.getBoundingClientRect().width / 2
-              );
-
-            //make sure the panes are sorted least to most
-            if (panePositions !== panePositions.sort((a, b) => a - b)) {
-              throw Error("this should not be happening");
-            }
-            //change pane position
-            let nPanePosition = e.pageX;
-            panePositions.push(nPanePosition);
-            panePositions.sort((a, b) => a - b);
-            let nPaneIndex = panePositions.findIndex((v) => v === nPanePosition);
-
-            parentPane.style.userSelect = "text";
-            moveBtn.style.backgroundColor = "white";
-            isDragging = false;
-            setter({
-              command: "movePane",
-              nposition: nPaneIndex,
-              id: pane.paneId,
-            });
-          }
-        };*/
 
         //set pane to active
         const paneToActive = (e) => {
@@ -102,13 +43,16 @@ export default function ColorPane({pane, isRight, isLeft, isActive}) {
         };
     }, [pane]);
     return (
-        <div
+        <motion.div
             className={`colorBox pid${pane.paneId} ${isLeft ? "left" : ""} ${isRight ? "right" : ""} ${isActive ? "active" : ""}`}
+            initial={{width: '10px'}}
+            animate={{width: '250px'}}
+            // exit={{width: '0px'}}
             style={{
                 backgroundColor: pane.getPaneColor().hex,
             }}
         >
             <ColorDetails pane={pane} isActive={isActive}/>
-        </div>
+        </motion.div>
     );
 }

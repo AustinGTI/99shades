@@ -6,6 +6,7 @@ import {ReactComponent as UndoBtn} from "../../../Data/Icons/Buttons/undoBtn.svg
 import {ReactComponent as RedoBtn} from "../../../Data/Icons/Buttons/redoBtn.svg";
 import {ReactComponent as DeleteBtn} from "../../../Data/Icons/Buttons/deleteBtn.svg";
 import {ReactComponent as MoveBtn} from "../../../Data/Icons/Buttons/moveBtn.svg";
+import {motion} from "framer-motion";
 import {getContrastColor} from "../../../AuxFunctions/filterColor";
 
 function cleanFormats(format, value) {
@@ -69,7 +70,8 @@ export default function ColorDetails({pane, isActive}) {
 
     return (
         <>
-            <div className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
+            <motion.div initial={{opacity: 0}} animate={{opacity: 1}}
+                        className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
                 {/*<div className="btn panelBtn moveBtn">
           <MoveBtn />
         </div>*/}
@@ -80,7 +82,7 @@ export default function ColorDetails({pane, isActive}) {
                     <ColorDetail key={vi} value={formats[v]} format={v}/>
                 ))}
 
-            </div>
+            </motion.div>
         </>
     );
 }

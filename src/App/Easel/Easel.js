@@ -10,6 +10,7 @@ import {ReactComponent as Logo} from "../../Data/Icons/Logos/logoV2.svg";
 
 import "./Easel.scss";
 import {hexToHSL, hexToRGB} from "../../AuxFunctions/formatColor";
+import {AnimatePresence} from "framer-motion";
 
 export default function Palette() {
     const [appData, setter, pane] = useAppContext();
@@ -108,17 +109,35 @@ export default function Palette() {
       </div>*/}
 
 
-            {appData.colorPanes
-                .sort((a, b) => a.panePosition - b.panePosition)
-                .map((v, vi) => (
-                    <ColorPane
-                        key={vi}
-                        pane={v}
-                        isLeft={vi == 0}
-                        isRight={vi == appData.colorPanes.length - 1}
-                        isActive={appData.activePaneIdx === v.paneId}
-                    />
-                ))}
+            {/*{appdata.colorpanes*/}
+            {/*    .sort((a, b) => a.paneposition - b.paneposition)*/}
+            {/*    .map((v, vi) => (*/}
+            {/*        <colorpane*/}
+            {/*            key={vi}*/}
+            {/*            pane={v}*/}
+            {/*            isleft={vi == 0}*/}
+            {/*            isright={vi == appdata.colorpanes.length - 1}*/}
+            {/*            isactive={appdata.activepaneidx === v.paneid}*/}
+            {/*        />*/}
+            {/*    ))}*/}
+            {
+                Array.from(Array(5).keys()).map(
+                    (v) => {
+                        const pane = appData.colorPanes.find(p => p.panePosition === v);
+                        return (<AnimatePresence key={v}>
+                            {
+                                (pane) &&
+                                (<ColorPane
+                                    pane={pane}
+                                    isLeft={v == 0}
+                                    isRight={v == appData.colorPanes.length - 1}
+                                    isActive={appData.activePaneIdx === pane.paneId}
+                                />)
+                            }
+                        </AnimatePresence>);
+                    }
+                )
+            }
         </div>
     );
 }
