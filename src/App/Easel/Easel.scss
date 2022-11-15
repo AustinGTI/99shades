@@ -33,14 +33,15 @@ div.easelBox {
 
     background-color: white;
     //box-shadow: 0 0 10px 3px #ccc;
-   padding: 5px;
+    padding: 5px;
 
     border-radius: 15px;
     box-shadow: 4px 4px 9px var(--dark-bg-color), -4px -4px 9px var(--light-bg-color);
     z-index: 10;
 
   }
-  >div.easelBtnBox{
+
+  > div.easelBtnBox {
     position: absolute;
     top: 0;
     right: 0;
@@ -57,11 +58,12 @@ div.easelBox {
     border-radius: 10px;
 
     z-index: 2;
+
     div.btn {
       width: 40px;
       height: 40px;
 
-      margin: 4px ;
+      margin: 4px;
 
       border-radius: 10px;
 
@@ -70,51 +72,69 @@ div.easelBox {
       overflow: visible;
 
       transition: background-color 100ms ease-in-out;
-      svg{
-        rect{
+
+      svg {
+        rect {
           fill: transparent;
         }
-        path,line,polyline{
+
+        path, line, polyline {
           transition: stroke 100ms ease-in-out;
         }
-        circle,ellipse{
+
+        circle, ellipse {
           transition: fill 100ms ease-in-out;
         }
       }
-      &:hover{
+
+      &:hover {
         background-color: var(--btn-bg-color);
         opacity: 0.5;
-        svg{
-          path,line,polyline{
+
+        svg {
+          path, line, polyline {
             //filter: blur(5px);
             stroke: var(--btn-fill-color);
             //filter: brightness(120%);
             opacity: 0.8;
           }
-          circle,ellipse{
+
+          circle, ellipse {
             fill: var(--btn-fill-color);
           }
         }
       }
-      &:active{
+
+      &:active {
         background-color: transparent;
-        box-shadow:inset 2px 2px 5px var(--dark-bg-color),
+        box-shadow: inset 2px 2px 5px var(--dark-bg-color),
         inset -2px -2px 5px var(--light-bg-color);
         //background-color: var(--dark-bg-color);
-        path,line,polyline{
+        path, line, polyline {
           //filter: blur(5px);
           stroke: var(--btn-fill-color);
           //filter: brightness(120%);
           opacity: 0.8;
         }
-        circle,ellipse{
+
+        circle, ellipse {
           fill: var(--btn-fill-color);
         }
 
       }
 
 
+    }
+
   }
 
+  > ul.easelPaneBox {
+
+    position: relative;
+    width: 90%;
+    display: flex;
+    height: 100%;
+    flex-grow: 1;
+    justify-content: center;
   }
 }

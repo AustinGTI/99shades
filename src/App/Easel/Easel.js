@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useRef} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import useAppContext from "../../AuxFunctions/useAppContext";
 import ColorPane from "./ColorPane/ColorPane";
 
@@ -11,11 +11,18 @@ import {ReactComponent as Logo} from "../../Data/Icons/Logos/logoV2.svg";
 import "./Easel.scss";
 import {hexToHSL, hexToRGB} from "../../AuxFunctions/formatColor";
 import {AnimatePresence} from "framer-motion";
+import {Reorder} from "framer-motion";
 
 export default function Palette() {
     const [appData, setter, pane] = useAppContext();
+    const reorderPanes = function (newPanes) {
+        setter({command: "reorderPanes", newPanes});
+        console.log(newPanes.map(v => v.getPaneColor().col));
+    }
+
     const easelBtnBox = useRef(null);
     const logoBox = useRef(null);
+    console.log("rerender");
     useEffect(() => {
         const deletePane = (e) => {
             setter({command: "deletePane", id: pane.paneId});
@@ -58,7 +65,8 @@ export default function Palette() {
         document.documentElement.style.setProperty('--btn-bg-color', btnBgColor);
         document.documentElement.style.setProperty('--btn-fill-color', btnFillColor);
 
-    }, [appData]);
+    }, [appData, appData.colorPanes.length]);
+
     /*useEffect(() => {
       const addLeftBtn = document.querySelector(".addLeftBtn");
       const addRightBtn = document.querySelector(".addRightBtn");
@@ -120,24 +128,35 @@ export default function Palette() {
             {/*            isactive={appdata.activepaneidx === v.paneid}*/}
             {/*        />*/}
             {/*    ))}*/}
-            {
-                Array.from(Array(5).keys()).map(
-                    (v) => {
-                        const pane = appData.colorPanes.find(p => p.panePosition === v);
-                        return (<AnimatePresence key={v}>
-                            {
-                                (pane) &&
-                                (<ColorPane
-                                    pane={pane}
-                                    isLeft={v == 0}
-                                    isRight={v == appData.colorPanes.length - 1}
-                                    isActive={appData.activePaneIdx === pane.paneId}
-                                />)
-                            }
-                        </AnimatePresence>);
-                    }
-                )
-            }
+            {/*{<AnimatePresence>*/}
+            {/*    {Array.from(Array(5).keys()).map(*/}
+            {/*        (v) => {*/}
+            {/*            const pane = appData.colorPanes.find(p => p.panePosition === v);*/}
+            {/*            return ((pane) && (pane.paneAlive) &&*/}
+            {/*                <ColorPane*/}
+            {/*                    key={v}*/}
+            {/*                    pane={pane}*/}
+            {/*                    isLeft={v == 0}*/}
+            {/*                    isRight={v == appData.colorPanes.length - 1}*/}
+            {/*                    isActive={appData.activePaneIdx === pane.paneId}*/}
+            {/*                />);*/}
+            {/*        }*/}
+            {/*    )}</AnimatePresence>*/}
+            <Reorder.Group className={"easelPaneBox"} values={appData.colorPanes} as="ul" axis={"x"}
+                           onReorder={reorderPanes}>
+                {/*<AnimatePresence initial={false}>*/}
+                {appData.colorPanes.map((pane, pi) => {
+                    return <ColorPane
+                        key={pane.paneId}
+                        pane={pane}
+                        // isLeft={pi == 0}
+                        // isRight={pi == appData.colorPanes.length - 1}
+                        isActive={appData.activePaneIdx === pane.paneId}
+                    />
+                })}
+                {/*</AnimatePresence>*/}
+            </Reorder.Group>
+
         </div>
     );
 }

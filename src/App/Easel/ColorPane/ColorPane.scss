@@ -1,13 +1,11 @@
-div.colorBox {
+li.colorBox {
   --primary-color: black;
   --secondary-color: white;
   --alternate-color: grey;
   position: relative;
 
-  width: 250px;
-  flex-grow: 0;
-  flex-shrink: 1;
-  height: 95%;
+  height: 100%;
+  //user-select: none;
 
   margin: auto 0;
 
@@ -150,7 +148,7 @@ div.colorBox {
   }
 }
 
-div.colorBox {
+li.colorBox {
   &:before {
     position: absolute;
     top: 10px;
@@ -188,7 +186,7 @@ div.colorBox {
   }
 }
 
-div.colorBox.active {
+li.colorBox.active {
   &:before {
     width: 80%;
   }

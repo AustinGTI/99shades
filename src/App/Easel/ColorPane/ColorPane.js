@@ -3,10 +3,11 @@ import ColorDetails from "./ColorDetails";
 import "./ColorPane.scss";
 import useAppContext from "../../../AuxFunctions/useAppContext";
 import {hexToRGB} from "../../../AuxFunctions/formatColor";
-import {motion} from "framer-motion";
+import {Reorder} from "framer-motion";
 
-export default function ColorPane({pane, isRight, isLeft, isActive}) {
+export default function ColorPane({pane, isActive}) {
     const setter = useAppContext()[1];
+    console.log("pane rerender");
     useEffect(() => {
         const parentPane = document.querySelector(`.colorBox.pid${pane.paneId}`);
 
@@ -43,16 +44,31 @@ export default function ColorPane({pane, isRight, isLeft, isActive}) {
         };
     }, [pane]);
     return (
-        <motion.div
-            className={`colorBox pid${pane.paneId} ${isLeft ? "left" : ""} ${isRight ? "right" : ""} ${isActive ? "active" : ""}`}
-            initial={{width: '10px'}}
-            animate={{width: '250px'}}
-            // exit={{width: '0px'}}
-            style={{
-                backgroundColor: pane.getPaneColor().hex,
-            }}
+        <Reorder.Item value={pane} as={"li"}
+                      className={`colorBox pid${pane.paneId} ${isActive ? "active" : ""}`}
+            // initial={{width: '10px'}}
+            // animate={{width: '250px'}}
+            // exit={{width: '10px'}}
+                      initial={{
+                          opacity: 0,
+                          // width: '10px'
+                      }}
+                      animate={{
+                          opacity: 1,
+                          // width: '250px',
+                          transition: {duration: 0.3}
+                      }}
+                      exit={{
+                          opacity: 0,
+                          // width: '250px',
+                          transition: {duration: 0.3}
+                      }}
+                      style={{
+                          backgroundColor: pane.getPaneColor().hex,
+                          width: '250px',
+                      }}
         >
             <ColorDetails pane={pane} isActive={isActive}/>
-        </motion.div>
+        </Reorder.Item>
     );
 }

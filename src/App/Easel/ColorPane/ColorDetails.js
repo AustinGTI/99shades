@@ -70,7 +70,8 @@ export default function ColorDetails({pane, isActive}) {
 
     return (
         <>
-            <motion.div initial={{opacity: 0}} animate={{opacity: 1}}
+            {/*<motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}*/}
+            <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}
                         className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
                 {/*<div className="btn panelBtn moveBtn">
           <MoveBtn />

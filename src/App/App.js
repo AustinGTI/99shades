@@ -28,6 +28,7 @@ class ColorPane {
         //settings that define how long it takes with no activity for a color to be set in the stack
         this.fluxTimeoutId = undefined;
         this.fluxTimeoutDuration = 500;
+        this.paneAlive = true;
     }
 
     getPaneColor() {
@@ -76,10 +77,20 @@ function setAppColorData(data, options) {
             let newPaneId =
                 Math.max(...colordata.colorPanes.map((v) => v.paneId)) + 1;
             let newPanePosition = activePane.panePosition + (direction ? 1 : -1);
-            colordata.colorPanes.push(new ColorPane(newPaneId, newPanePosition, (!duplicate) ? undefined : activePane.getPaneColor()));
+            // colordata.colorPanes.push(new ColorPane(newPaneId, newPanePosition, (!duplicate) ? undefined : activePane.getPaneColor()));
+            colordata.colorPanes.splice(newPanePosition, 0, new ColorPane(newPaneId, newPanePosition, (!duplicate) ? undefined : activePane.getPaneColor()));
             break;
 
         //when removing a pane, requires nothing
+        case "killPane":
+            if (colordata.colorPanes.length === 1) {
+                console.log("cannot kill the only pane");
+                break;
+            }
+            getPane(colordata.colorPanes, options.id).paneAlive = false;
+            //delay the pane deletion to allow for pane exit
+            break;
+
         case "deletePane":
             if (colordata.colorPanes.length === 1) {
                 console.log("cannot delete the only pane");
@@ -178,6 +189,7 @@ function setAppColorData(data, options) {
             break;
 
         //change the position of the active pane.. requires the new position
+        //deprecated
         case "movePane":
             let {nposition} = options;
             let mvPane = getPane(colordata.colorPanes, options.id);
@@ -198,6 +210,12 @@ function setAppColorData(data, options) {
             }
             mvPane.panePosition = nposition;
             // colordata.activePaneIdx = mvPane.paneid;
+            break;
+
+        case "reorderPanes":
+            let {newPanes} = options;
+            colordata.colorPanes = newPanes;
+            colordata.colorPanes.forEach((v, vi) => v.panePosition = vi);
             break;
 
         //lock/unlock active colorpane
@@ -238,6 +256,7 @@ function App() {
                         <div className="treeBox">
                             <ColorTree/>
                         </div>
+                        
                     </div>
                 </AppContext.Provider>
             </div>
