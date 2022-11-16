@@ -3,6 +3,7 @@ import "./ColorLeaf.scss";
 import useAppContext from "../../AuxFunctions/useAppContext";
 import {buildNewColorFloat} from "../../AuxFunctions/formatColor";
 import {getContrastColor} from "../../AuxFunctions/filterColor";
+import {AnimatePresence, motion} from "framer-motion";
 
 export default function ColorLeaf(params) {
     const {title, hex, parentVisible} = params;
@@ -28,7 +29,10 @@ export default function ColorLeaf(params) {
         };
     }, [paneColor, leaf]);
     return (
-        <div
+        <motion.div
+            // initial={{height: 0, opacity: 0}}
+            // animate={{height: '50px', opacity: 1}}
+            // exit={{height: 0, opacity: 0}}
             className={`leaf ${title.toLowerCase().replaceAll(" ", "_")} ${
                 paneColor.col == title ? "active" : ""
             }`}
@@ -37,6 +41,6 @@ export default function ColorLeaf(params) {
         >
             <div className="tag"></div>
             <p>{title}</p>
-        </div>
+        </motion.div>
     );
 }

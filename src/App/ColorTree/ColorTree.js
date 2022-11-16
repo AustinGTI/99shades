@@ -7,6 +7,7 @@ import {ReactComponent as SnapToBtn} from "../../Data/Icons/Buttons/snapBtn.svg"
 // import {ReactComponent as ExpandBtn} from "../../Data/Icons/Buttons/expandBtn.svg";
 import {ReactComponent as CollapseBtn} from "../../Data/Icons/Buttons/collapseBtn.svg";
 import {ReactComponent as SearchBtn} from "../../Data/Icons/Buttons/searchBtn.svg";
+import {AnimatePresence, motion} from "framer-motion";
 
 function goToCol(treeElem, pane) {
     const paneColor = pane.getPaneColor();
@@ -139,6 +140,7 @@ export default function ColorTree() {
                 <div className="searchBtnBox"><SearchBtn/></div>
                 {/*<button className="searchBtn">?</button>*/}
             </div>
+
             <div id="tree">
                 {Object.keys(tree).length ? (
                     Object.keys(tree).map((v, vi) => (

@@ -4,7 +4,7 @@ import "./ColorBranch.scss";
 
 import ColorLeaf from "./ColorLeaf";
 import {getLighterColor, getUsableColor} from "../../AuxFunctions/filterColor";
-import {useInView} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 
 function flattenBranch(branch) {
     if (Array.isArray(branch)) {
@@ -123,7 +123,10 @@ export default function ColorBranch(params) {
     }, [treeState])
 
     return (
-        <div
+        <motion.div
+            // initial={{height: 0, opacity: 0}}
+            // animate={{height: 'fit-content', opacity: 1}}
+            // exit={{height: 0, opacity: 0}}
             className={`branchContainer ${branchClasses}`}
             ref={branchContainer}
             style={{
@@ -185,21 +188,22 @@ export default function ColorBranch(params) {
             {/*    </div>*/}
             {/*</div>*/}
             <div className="branchLeaves">
-                {(iamVisible) ? (!Array.isArray(branch)
-                    ? Object.keys(branch).map((v, vi) => (
-                        <ColorBranch
-                            key={vi}
-                            branch={branch[v]}
-                            branchName={v}
-                            rootName={branchName + " " + rootName}
-                            treeState={treeState}
-                        />
-                    ))
-                    : branch.map(({title, hexcode}, vi) => (
-                        (leavesVisible || inFocus) ? <ColorLeaf key={vi} title={title} hex={hexcode}/> :
-                            <div key={vi} style={{height: "50px", width: "100%", margin: "3px 0"}}></div>
-                    ))) : <></>}
+                <AnimatePresence initial={false}>
+                    {(iamVisible) ? (!Array.isArray(branch)
+                        ? Object.keys(branch).map((v, vi) => (
+                            <ColorBranch
+                                key={vi}
+                                branch={branch[v]}
+                                branchName={v}
+                                rootName={branchName + " " + rootName}
+                                treeState={treeState}
+                            />
+                        ))
+                        : branch.map(({title, hexcode}, vi) => (
+                            (leavesVisible || inFocus) ? <ColorLeaf key={vi} title={title} hex={hexcode}/> :
+                                <div key={vi} style={{height: "50px", width: "100%", margin: "3px 0"}}></div>
+                        ))) : <></>}</AnimatePresence>
             </div>
-        </div>
+        </motion.div>
     );
 }
