@@ -42,7 +42,6 @@ export default function Palette() {
 
     const easelBtnBox = useRef(null);
     const logoBox = useRef(null);
-    console.log("rerender");
     useEffect(() => {
         const deletePane = (e) => {
             setter({command: "deletePane", id: pane.paneId});

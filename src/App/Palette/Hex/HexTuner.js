@@ -89,8 +89,10 @@ export default function HexTuner() {
 
 
     useEffect(() => {
-        const [dupLeftBtn, addLeftBtn, moveLeftBtn, undoBtn] = ctrlBox.current.querySelectorAll(".leftBtns > div");
-        const [dupRightBtn, addRightBtn, moveRightBtn, redoBtn] = ctrlBox.current.querySelectorAll(".rightBtns > div");
+        // const [dupLeftBtn, addLeftBtn, moveLeftBtn, undoBtn] = ctrlBox.current.querySelectorAll(".leftBtns > div");
+        // const [dupRightBtn, addRightBtn, moveRightBtn, redoBtn] = ctrlBox.current.querySelectorAll(".rightBtns > div");
+        const [dupLeftBtn, addLeftBtn, undoBtn] = ctrlBox.current.querySelectorAll(".leftBtns > div");
+        const [dupRightBtn, addRightBtn, redoBtn] = ctrlBox.current.querySelectorAll(".rightBtns > div");
 
         //add Pane function
         const addPaneLeft = () => {
@@ -146,8 +148,8 @@ export default function HexTuner() {
         addRightBtn.addEventListener("click", addPaneRight);
         dupLeftBtn.addEventListener("click", duplicatePaneLeft);
         dupRightBtn.addEventListener("click", duplicatePaneRight);
-        moveLeftBtn.addEventListener("click", movePaneLeft);
-        moveRightBtn.addEventListener("click", movePaneRight);
+        //moveLeftBtn.addEventListener("click", movePaneLeft);
+        //moveRightBtn.addEventListener("click", movePaneRight);
         undoBtn.addEventListener("click", undoPaneColor);
         redoBtn.addEventListener("click", redoPaneColor);
 
@@ -156,8 +158,8 @@ export default function HexTuner() {
             addRightBtn.removeEventListener("click", addPaneRight);
             dupLeftBtn.removeEventListener("click", duplicatePaneLeft);
             dupRightBtn.removeEventListener("click", duplicatePaneRight);
-            moveLeftBtn.removeEventListener("click", movePaneLeft);
-            moveRightBtn.removeEventListener("click", movePaneRight);
+            //moveLeftBtn.removeEventListener("click", movePaneLeft);
+            //moveRightBtn.removeEventListener("click", movePaneRight);
             undoBtn.removeEventListener("click", undoPaneColor);
             redoBtn.removeEventListener("click", redoPaneColor);
         };
@@ -167,7 +169,7 @@ export default function HexTuner() {
             <div className={"leftBtns"}>
                 <div id={"dupBtn"}><DupLeftBtn/></div>
                 <div id={"addBtn"}><AddBtn/></div>
-                <div id={"moveBtn"}><MoveLeftBtn/></div>
+                {/*<div id={"moveBtn"}><MoveLeftBtn/></div>*/}
                 <div id={"undoBtn"}><UndoBtn/></div>
             </div>
             <div className="hexBox">
@@ -176,7 +178,7 @@ export default function HexTuner() {
             <div className={"rightBtns"}>
                 <div id={"dupBtn"}><DupRightBtn/></div>
                 <div id={"addBtn"}><AddBtn/></div>
-                <div id={"moveBtn"}><MoveRightBtn/></div>
+                {/*<div id={"moveBtn"}><MoveRightBtn/></div>*/}
                 <div id={"redoBtn"}><RedoBtn/></div>
             </div>
         </div>

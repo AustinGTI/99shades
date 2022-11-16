@@ -7,7 +7,6 @@ import {Reorder} from "framer-motion";
 
 export default function ColorPane({pane, isActive}) {
     const setter = useAppContext()[1];
-    console.log("pane rerender");
     useEffect(() => {
         const parentPane = document.querySelector(`.colorBox.pid${pane.paneId}`);
 

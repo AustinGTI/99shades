@@ -112,7 +112,6 @@ function setColorChannel(format, idx, colVal, currCol) {
             return;
         }
         let nVal = e.target.value;
-        console.log("cjamge jamd;er");
         if (nVal == "") {
             nVal = 0;
         } else if (isNaN(nVal)) {

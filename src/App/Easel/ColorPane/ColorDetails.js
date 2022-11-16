@@ -54,15 +54,15 @@ export default function ColorDetails({pane, isActive}) {
             appBox.style.setProperty("--secondary-active-color", fontColor);
         }
 
-        colDetailsBox.current.parentElement.style.setProperty(
+        colDetailsBox.current.parentElement.parentElement.style.setProperty(
             "--primary-color",
             formats.hex
         );
-        colDetailsBox.current.parentElement.style.setProperty(
+        colDetailsBox.current.parentElement.parentElement.style.setProperty(
             "--secondary-color",
             fontColor
         );
-        colDetailsBox.current.parentElement.style.setProperty(
+        colDetailsBox.current.parentElement.parentElement.style.setProperty(
             "--alternate-color",
             fontColor
         );
