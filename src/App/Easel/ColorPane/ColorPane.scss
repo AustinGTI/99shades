@@ -30,7 +30,7 @@ li.colorBox {
   div.colorDetailsBox {
     //position: absolute;
 
-    width: 70%;
+    width: 100%;
     height: 100%;
 
     text-align: center;
@@ -43,6 +43,7 @@ li.colorBox {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: opacity 200ms ease-in-out;
 
 
     div.colorDetailBox {
@@ -50,6 +51,8 @@ li.colorBox {
       flex-direction: column;
       text-align: center;
       margin: 10px;
+      opacity: 1;
+
 
       div.detailFormatBox {
         position: relative;
@@ -105,11 +108,11 @@ li.colorBox {
     }
 
     &.visible {
-      visibility: visible;
+      opacity: 1;
     }
 
     &.hidden {
-      visibility: hidden;
+      opacity: 0;
     }
 
 

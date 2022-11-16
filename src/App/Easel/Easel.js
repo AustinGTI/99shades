@@ -13,12 +13,32 @@ import {hexToHSL, hexToRGB} from "../../AuxFunctions/formatColor";
 import {AnimatePresence} from "framer-motion";
 import {Reorder} from "framer-motion";
 
-export default function Palette() {
-    const [appData, setter, pane] = useAppContext();
+
+function ColorPanes({appData, setter}) {
     const reorderPanes = function (newPanes) {
         setter({command: "reorderPanes", newPanes});
         console.log(newPanes.map(v => v.getPaneColor().col));
     }
+    return <Reorder.Group className={"easelPaneBox"} values={appData.colorPanes} as="ul" axis={"x"}
+                          onReorder={reorderPanes} onPan={(e, info) => console.log(info.offset.x)}>
+        <AnimatePresence initial={false}>
+            {appData.colorPanes.map((pane, pi) => {
+                return <ColorPane
+                    key={pane.paneId}
+                    pane={pane}
+                    // isLeft={pi == 0}
+                    // isRight={pi == appData.colorPanes.length - 1}
+                    isActive={appData.activePaneIdx === pane.paneId}
+                />
+            })}
+        </AnimatePresence>
+    </Reorder.Group>
+}
+
+
+export default function Palette() {
+    const [appData, setter, pane] = useAppContext();
+
 
     const easelBtnBox = useRef(null);
     const logoBox = useRef(null);
@@ -142,20 +162,7 @@ export default function Palette() {
             {/*                />);*/}
             {/*        }*/}
             {/*    )}</AnimatePresence>*/}
-            <Reorder.Group className={"easelPaneBox"} values={appData.colorPanes} as="ul" axis={"x"}
-                           onReorder={reorderPanes}>
-                {/*<AnimatePresence initial={false}>*/}
-                {appData.colorPanes.map((pane, pi) => {
-                    return <ColorPane
-                        key={pane.paneId}
-                        pane={pane}
-                        // isLeft={pi == 0}
-                        // isRight={pi == appData.colorPanes.length - 1}
-                        isActive={appData.activePaneIdx === pane.paneId}
-                    />
-                })}
-                {/*</AnimatePresence>*/}
-            </Reorder.Group>
+            <ColorPanes appData={appData} setter={setter}/>
 
         </div>
     );

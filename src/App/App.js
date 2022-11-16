@@ -214,6 +214,8 @@ function setAppColorData(data, options) {
 
         case "reorderPanes":
             let {newPanes} = options;
+            console.log(newPanes);
+            console.log(colordata.colorPanes);
             colordata.colorPanes = newPanes;
             colordata.colorPanes.forEach((v, vi) => v.panePosition = vi);
             break;
@@ -256,7 +258,7 @@ function App() {
                         <div className="treeBox">
                             <ColorTree/>
                         </div>
-                        
+
                     </div>
                 </AppContext.Provider>
             </div>

@@ -50,18 +50,21 @@ export default function ColorPane({pane, isActive}) {
             // animate={{width: '250px'}}
             // exit={{width: '10px'}}
                       initial={{
-                          opacity: 0,
-                          // width: '10px'
+                          // opacity: 0,
+                          width: '0px'
                       }}
                       animate={{
-                          opacity: 1,
-                          // width: '250px',
-                          transition: {duration: 0.3}
+                          // opacity: 1,
+                          width: '250px',
                       }}
                       exit={{
-                          opacity: 0,
-                          // width: '250px',
-                          transition: {duration: 0.3}
+                          // opacity: 0,
+                          width: '0px',
+                          transition: {delay: 0.2, ease: "easeInOut"}
+                      }}
+                      transition={{
+                          duration: 0.3,
+                          ease: "easeOut"
                       }}
                       style={{
                           backgroundColor: pane.getPaneColor().hex,

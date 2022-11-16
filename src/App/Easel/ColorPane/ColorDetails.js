@@ -70,19 +70,19 @@ export default function ColorDetails({pane, isActive}) {
 
     return (
         <>
-            {/*<motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}*/}
-            <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}
-                        className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
+            <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0, transition: {delay: 0}}}
+                        transition={{delay: 0.3}} style={{width: '100%'}}>
                 {/*<div className="btn panelBtn moveBtn">
           <MoveBtn />
         </div>*/}
-                {formatKeys.map((v, vi) => (
-                    // <div className="format" key={vi}>
-                    //   <span>{cleanFormats(v, formats[v])}</span>
-                    // </div>
-                    <ColorDetail key={vi} value={formats[v]} format={v}/>
-                ))}
-
+                <div className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
+                    {formatKeys.map((v, vi) => (
+                        // <div className="format" key={vi}>
+                        //   <span>{cleanFormats(v, formats[v])}</span>
+                        // </div>
+                        <ColorDetail key={vi} value={formats[v]} format={v}/>
+                    ))}
+                </div>
             </motion.div>
         </>
     );
