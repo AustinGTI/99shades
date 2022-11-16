@@ -4,6 +4,7 @@ import "./ColorBranch.scss";
 
 import ColorLeaf from "./ColorLeaf";
 import {getLighterColor, getUsableColor} from "../../AuxFunctions/filterColor";
+import {useInView} from "framer-motion";
 
 function flattenBranch(branch) {
     if (Array.isArray(branch)) {
@@ -48,6 +49,8 @@ export default function ColorBranch(params) {
     const {branch, branchName, rootName, treeState} = params;
     const branchContainer = useRef(null);
     const [iamVisible, setVisible] = useState(false);
+    const [leavesVisible, setLeavesVisible] = useState(false);
+    const [inFocus, setInFocus] = useState(false);
     let branchClasses = `${branchName} ${rootName}`;
     const avgCol = calcBranchAverage(branch);
     const avgColRGB = `rgb(${avgCol.join(',')})`;
@@ -59,6 +62,25 @@ export default function ColorBranch(params) {
         const branchRoot = branchContainer.current.querySelector(
             "div.branchRoot"
         );
+
+
+        const observeCallback = function (entries, observer) {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    console.log(branchClasses, " Houston we have intersection");
+                    setLeavesVisible(true);
+                } else {
+                    setLeavesVisible(false);
+                }
+            })
+        }
+        let observer = new IntersectionObserver(observeCallback, {
+            threshold: 0,
+            root: document.querySelector(".treeBox")
+        });
+        observer.observe(branchContainer.current.querySelector("div.branchLeaves"));
+
+
         const clickBloom = (e) => {
             // if (branchLeaves.classList.contains("visible")) {
             //     //set every child to invisible
@@ -83,10 +105,20 @@ export default function ColorBranch(params) {
         branchContainer.current.style.setProperty('--avg-branch-color', avgColBg);
     });
     useEffect(() => {
-        if (treeState.open && (treeState.payload.length === 0 || treeState.payload.includes(branchClasses.split(" ")[0]))) {
-            setVisible(true);
+        if (treeState.open) {
+            if ((treeState.payload.length === 0)) {
+                setVisible(true);
+                setInFocus(false)
+            } else if (!treeState.payload.includes(branchClasses.split(" ")[0])) {
+
+                setInFocus(false)
+            } else if (treeState.payload.includes(branchClasses.split(" ")[0])) {
+                setVisible(true);
+                setInFocus(true);
+            }
         } else {
             setVisible(false);
+            setInFocus(false)
         }
     }, [treeState])
 
@@ -136,6 +168,22 @@ export default function ColorBranch(params) {
         </div>
 */}
             </div>
+            {/*    <div className="branchLeaves">*/}
+            {/*        {(iamVisible) ? (!Array.isArray(branch)*/}
+            {/*            ? Object.keys(branch).map((v, vi) => (*/}
+            {/*                <ColorBranch*/}
+            {/*                    key={vi}*/}
+            {/*                    branch={branch[v]}*/}
+            {/*                    branchName={v}*/}
+            {/*                    rootName={branchName + " " + rootName}*/}
+            {/*                    treeState={treeState}*/}
+            {/*                />*/}
+            {/*            ))*/}
+            {/*            : branch.map(({title, hexcode}, vi) => (*/}
+            {/*                <ColorLeaf key={vi} title={title} hex={hexcode}/>*/}
+            {/*            ))) : <></>}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className="branchLeaves">
                 {(iamVisible) ? (!Array.isArray(branch)
                     ? Object.keys(branch).map((v, vi) => (
@@ -148,7 +196,8 @@ export default function ColorBranch(params) {
                         />
                     ))
                     : branch.map(({title, hexcode}, vi) => (
-                        <ColorLeaf key={vi} title={title} hex={hexcode}/>
+                        (leavesVisible || inFocus) ? <ColorLeaf key={vi} title={title} hex={hexcode}/> :
+                            <div key={vi} style={{height: "50px", width: "100%", margin: "3px 0"}}></div>
                     ))) : <></>}
             </div>
         </div>
