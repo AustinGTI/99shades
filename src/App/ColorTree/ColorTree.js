@@ -71,7 +71,6 @@ export default function ColorTree() {
     let [tree, setTree] = useState(createColorTree());
     const [branchState, setBranchState] = useReducer(setTreeState, {open: false, payload: []});
     const [gt, st, pane] = useAppContext();
-    //variants for animation
     useEffect(() => {
         const [snapBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
         // const [snapBtn, expandBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
@@ -83,7 +82,7 @@ export default function ColorTree() {
         const goToColHandler = function (e) {
             setTree(createColorTree());
             setBranchState([true, pane.getPaneColor().cls])
-            setTimeout(goToCol, 100, treeElem, pane);
+            setTimeout(goToCol, 1000, treeElem, pane);
         };
 
         const openAll = function (e) {
@@ -157,10 +156,13 @@ export default function ColorTree() {
                 {/*<button className="searchBtn">?</button>*/}
             </div>
 
+            {/*<AnimatePresence initial={false} transition={{delayChildren: 5}}>*/}
             <div id="tree">
                 {Object.keys(tree).length ? (
                     Object.keys(tree).map((v, vi) => (
                         <ColorBranch
+                            index={vi}
+                            total={Object.keys(tree).length}
                             key={vi}
                             branch={tree[v]}
                             branchName={v + "s"}
@@ -172,6 +174,7 @@ export default function ColorTree() {
                     <div>Oops!</div>
                 )}
             </div>
+            {/*</AnimatePresence>*/}
         </>
     );
 }

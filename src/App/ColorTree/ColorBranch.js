@@ -46,7 +46,7 @@ function showHideElem(elem, showhide = null) {
 }
 
 export default function ColorBranch(params) {
-    const {branch, branchName, rootName, treeState} = params;
+    const {branch, branchName, rootName, treeState, index, total} = params;
     const branchContainer = useRef(null);
     const [iamVisible, setVisible] = useState(false);
     const [leavesVisible, setLeavesVisible] = useState(false);
@@ -58,26 +58,31 @@ export default function ColorBranch(params) {
     // console.log(avgColBg);
     branchClasses = branchClasses.slice(0, branchClasses.length - 2);
 
-    const variants = {
+    const boxVariant = {
         hidden: {
-            opacity: 0,
+            x: "-100vw", //move out of the site
         },
         visible: {
-            opacity: 1,
-        }
-    }
-    const leavesVariants = {
-        hidden: {
-            opacity: 0,
-        },
-        visible: {
-            opacity: 1,
+            x: 0, // bring it back to nrmal
             transition: {
-                when: "beforeChildren",
-                staggerChildren: 5,
-            }
-        }
-    }
+                delay: 0.5,
+                when: "beforeChildren", //use this instead of delay
+                staggerChildren: 0.2, //apply stagger on the parent tag
+            },
+        },
+    };
+
+    const listVariant = {
+        hidden: {
+            x: -10, //move out of the site
+            opacity: 0,
+        },
+        visible: {
+            x: 0, // bring it back to nrmal
+            opacity: 1,
+        },
+    };
+
 
     useEffect(() => {
         const branchRoot = branchContainer.current.querySelector(
@@ -114,6 +119,10 @@ export default function ColorBranch(params) {
             //     showHideElem(branchLeaves, true);
             //     setVisible(true);
             // }
+            // if (iamVisible) {
+            //     treeState.open = false;
+            //     treeState.payload = [];
+            // }
             setVisible(!iamVisible);
         };
 
@@ -145,10 +154,34 @@ export default function ColorBranch(params) {
 
     return (
         <motion.div
-            // initial={{height: 0, opacity: 0}}
-            // animate={{height: 'fit-content', opacity: 1}}
-            // exit={{height: 0, opacity: 0}}
-            variants={variants}
+            initial={{height: 0, opacity: 0}}
+            animate={{height: 'fit-content', opacity: 1}}
+            exit={{
+                height: 0, margin: 0, opacity: 0,
+                transition: {
+                    height: {
+                        delay: (total - index) * 0.05 + 0.1,
+                        duration: 0.25
+                    },
+                    opacity: {
+                        delay: (total - index) * 0.05,
+                        duration: 0.25
+                    },
+                    margin: {
+                        duration: 0.25
+                    }
+                }
+            }}
+            transition={{
+                height: {
+                    delay: index * 0.05,
+                    duration: 0.25
+                },
+                opacity: {
+                    delay: index * 0.05 + 0.25,
+                    duration: 0.25
+                }
+            }}
             className={`branchContainer ${branchClasses}`}
             ref={branchContainer}
             style={{
@@ -209,12 +242,12 @@ export default function ColorBranch(params) {
             {/*            ))) : <></>}*/}
             {/*    </div>*/}
             {/*</div>*/}
-            <AnimatePresence initial={false}>
-                <motion.div variants={leavesVariants} animate={iamVisible ? "visible" : "hidden"}
-                            className="branchLeaves">
+            <motion.div className="branchLeaves">
+                <AnimatePresence initial={false} transition={{delayChildren: 5}}>
                     {(iamVisible) ? (!Array.isArray(branch)
                         ? Object.keys(branch).map((v, vi) => (
                             <ColorBranch
+                                index={vi}
                                 key={vi}
                                 branch={branch[v]}
                                 branchName={v}
@@ -223,14 +256,15 @@ export default function ColorBranch(params) {
                             />
                         ))
                         : branch.map(({title, hexcode}, vi) => (
-                            (leavesVisible || inFocus) ? <ColorLeaf key={vi} title={title} hex={hexcode}/> :
+                            (leavesVisible || inFocus) ?
+                                <ColorLeaf index={vi} total={branch.length} key={vi} title={title} hex={hexcode}/> :
                                 <div key={vi} style={{
                                     height: "50px",
                                     width: "100%",
                                     margin: "3px 0"
                                 }}></div>))) : <></>}
-                </motion.div>
-            </AnimatePresence>
+                </AnimatePresence>
+            </motion.div>
         </motion.div>
     );
 }

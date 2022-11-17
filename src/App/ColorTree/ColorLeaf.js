@@ -6,10 +6,11 @@ import {getContrastColor} from "../../AuxFunctions/filterColor";
 import {AnimatePresence, motion} from "framer-motion";
 
 export default function ColorLeaf(params) {
-    const {title, hex, parentVisible} = params;
+    const {title, hex, index, total} = params;
     const leaf = useRef(null);
     const [_, setter, pane] = useAppContext();
     const paneColor = pane.getPaneColor();
+    const leafAnimDuration = 0.5 / total;
     useEffect(() => {
         const txtColor = getContrastColor("hex", hex, 40);
         const changeColor = (e) => {
@@ -30,15 +31,33 @@ export default function ColorLeaf(params) {
     }, [paneColor, leaf]);
     return (
         <motion.div
-            // initial={{height: 0, opacity: 0}}
-            // animate={{height: '50px', opacity: 1}}
-            // exit={{height: 0, opacity: 0}}
-            variants={{
-                visible: {
-                    height: '50px'
+            initial={{height: 0, opacity: 0}}
+            animate={{height: 'fit-content', opacity: 1}}
+            exit={{
+                height: 0, margin: 0, opacity: 0,
+                transition: {
+                    height: {
+                        delay: (total - index) * leafAnimDuration + 0.1,
+                        duration: leafAnimDuration
+                    },
+                    opacity: {
+                        delay: (total - index) * leafAnimDuration,
+                        duration: leafAnimDuration
+                    },
+                    margin: {
+                        delay: (total - index) * leafAnimDuration + 0.1,
+                        duration: leafAnimDuration
+                    }
+                }
+            }}
+            transition={{
+                height: {
+                    delay: index * leafAnimDuration,
+                    duration: leafAnimDuration
                 },
-                hidden: {
-                    height: '0px'
+                opacity: {
+                    delay: index * leafAnimDuration + 0.1,
+                    duration: leafAnimDuration
                 }
             }}
             className={`leaf ${title.toLowerCase().replaceAll(" ", "_")} ${
