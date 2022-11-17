@@ -71,10 +71,12 @@ export default function ColorTree() {
     let [tree, setTree] = useState(createColorTree());
     const [branchState, setBranchState] = useReducer(setTreeState, {open: false, payload: []});
     const [gt, st, pane] = useAppContext();
+    //variants for animation
     useEffect(() => {
         const [snapBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
         // const [snapBtn, expandBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
-        const searchInput = document.querySelector("#colorTreeCtrl > input");
+        const searchInput = document.querySelector("#colorTreeCtrl > .inputBox > input");
+        const cancelSearchBtn = document.querySelector("#colorTreeCtrl > .inputBox > div.cancelSearchBtnBox");
         const treeElem = document.querySelector("#tree");
 
 
@@ -92,8 +94,17 @@ export default function ColorTree() {
             setBranchState([false]);
         };
 
+        const cancelSearch = function (e) {
+            closeAll();
+            setTree(createColorTree());
+            searchInput.value = "";
+            console.log("but why am i running really?");
+        }
+
         const searchHandler = (e) => {
-            if (e.which !== 13 && e.type === "keyup") {
+            console.log("or is it you");
+            console.log(e);
+            if ((e.which !== 13 && e.type === "keyup") || (e.type === "click" && e.target.parentElement.classList.contains("inputBox"))) {
                 return;
             }
             let searchQuery = searchInput.value;
@@ -111,6 +122,7 @@ export default function ColorTree() {
 
         searchBtn.addEventListener("click", searchHandler);
         searchInput.addEventListener("keyup", searchHandler);
+        cancelSearchBtn.addEventListener("click", cancelSearch);
 
         return () => {
             snapBtn.removeEventListener("click", goToColHandler);
@@ -119,6 +131,7 @@ export default function ColorTree() {
 
             searchBtn.removeEventListener("click", searchHandler);
             searchInput.removeEventListener("keyup", searchHandler);
+            cancelSearchBtn.removeEventListener("click", cancelSearch);
         };
     }, [pane]);
     return (
@@ -129,15 +142,18 @@ export default function ColorTree() {
         <button className="openAll">+</button>
         <button className="closeAll">,</button>
 */}
-                <div className="snapBtnBox"><SnapToBtn/></div>
+                <div className="snapBtnBox ctrlBtn"><SnapToBtn/></div>
                 {/*<div className="expandBtnBox"><ExpandBtn/></div>*/}
-                <div className="collapseBtnBox"><CollapseBtn/></div>
-                <input
+                <div className="collapseBtnBox ctrlBtn"><CollapseBtn/></div>
+                <div className="inputBox"><input
                     type="text"
-                    className="search"
+                    className="search "
                     placeholder="Write a color..."
-                ></input>
-                <div className="searchBtnBox"><SearchBtn/></div>
+                >
+                </input>
+                    <div className="cancelSearchBtnBox "></div>
+                </div>
+                <div className="searchBtnBox ctrlBtn"><SearchBtn/></div>
                 {/*<button className="searchBtn">?</button>*/}
             </div>
 

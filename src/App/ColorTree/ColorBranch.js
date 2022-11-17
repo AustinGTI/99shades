@@ -58,6 +58,27 @@ export default function ColorBranch(params) {
     // console.log(avgColBg);
     branchClasses = branchClasses.slice(0, branchClasses.length - 2);
 
+    const variants = {
+        hidden: {
+            opacity: 0,
+        },
+        visible: {
+            opacity: 1,
+        }
+    }
+    const leavesVariants = {
+        hidden: {
+            opacity: 0,
+        },
+        visible: {
+            opacity: 1,
+            transition: {
+                when: "beforeChildren",
+                staggerChildren: 5,
+            }
+        }
+    }
+
     useEffect(() => {
         const branchRoot = branchContainer.current.querySelector(
             "div.branchRoot"
@@ -67,7 +88,7 @@ export default function ColorBranch(params) {
         const observeCallback = function (entries, observer) {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    console.log(branchClasses, " Houston we have intersection");
+                    // console.log(branchClasses, " Houston we have intersection");
                     setLeavesVisible(true);
                 } else {
                     setLeavesVisible(false);
@@ -127,6 +148,7 @@ export default function ColorBranch(params) {
             // initial={{height: 0, opacity: 0}}
             // animate={{height: 'fit-content', opacity: 1}}
             // exit={{height: 0, opacity: 0}}
+            variants={variants}
             className={`branchContainer ${branchClasses}`}
             ref={branchContainer}
             style={{
@@ -187,8 +209,9 @@ export default function ColorBranch(params) {
             {/*            ))) : <></>}*/}
             {/*    </div>*/}
             {/*</div>*/}
-            <div className="branchLeaves">
-                <AnimatePresence initial={false}>
+            <AnimatePresence initial={false}>
+                <motion.div variants={leavesVariants} animate={iamVisible ? "visible" : "hidden"}
+                            className="branchLeaves">
                     {(iamVisible) ? (!Array.isArray(branch)
                         ? Object.keys(branch).map((v, vi) => (
                             <ColorBranch
@@ -201,9 +224,13 @@ export default function ColorBranch(params) {
                         ))
                         : branch.map(({title, hexcode}, vi) => (
                             (leavesVisible || inFocus) ? <ColorLeaf key={vi} title={title} hex={hexcode}/> :
-                                <div key={vi} style={{height: "50px", width: "100%", margin: "3px 0"}}></div>
-                        ))) : <></>}</AnimatePresence>
-            </div>
+                                <div key={vi} style={{
+                                    height: "50px",
+                                    width: "100%",
+                                    margin: "3px 0"
+                                }}></div>))) : <></>}
+                </motion.div>
+            </AnimatePresence>
         </motion.div>
     );
 }

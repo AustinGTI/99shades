@@ -33,6 +33,14 @@ export default function ColorLeaf(params) {
             // initial={{height: 0, opacity: 0}}
             // animate={{height: '50px', opacity: 1}}
             // exit={{height: 0, opacity: 0}}
+            variants={{
+                visible: {
+                    height: '50px'
+                },
+                hidden: {
+                    height: '0px'
+                }
+            }}
             className={`leaf ${title.toLowerCase().replaceAll(" ", "_")} ${
                 paneColor.col == title ? "active" : ""
             }`}

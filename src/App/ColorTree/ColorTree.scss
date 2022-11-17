@@ -34,42 +34,59 @@ div#colorTreeCtrl {
   border-radius: 7px;
   z-index: 1;
 
-  > div,
-  input {
-    height: 90%;
-  }
 
   > div {
-    width: 15%;
-    margin: 0 2px;
-    padding: 3px;
-    background-color: transparent;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px var(--dark-bg-color), -2px -2px 5px var(--light-bg-color);
-    //background-color: #fdfdfd;
-    //box-shadow: 9px 9px 18px #e2e2e2, -9px -9px 18px #fefefe;
-    flex-grow: 1;
-    transition: background-color 100ms ease-in-out;
+    height: 90%;
 
-    svg {
-      rect {
-        fill: transparent;
-      }
-
-      path, line, polyline {
-        transition: stroke 100ms ease-in-out;
-      }
-
-      circle, ellipse {
-        transition: fill 100ms ease-in-out;
-      }
-    }
-
-    &:hover {
-      background-color: var(--btn-bg-color);
-      opacity: 0.5;
+    &.ctrlBtn {
+      width: 15%;
+      margin: 0 2px;
+      padding: 3px;
+      background-color: transparent;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px var(--dark-bg-color), -2px -2px 5px var(--light-bg-color);
+      //background-color: #fdfdfd;
+      //box-shadow: 9px 9px 18px #e2e2e2, -9px -9px 18px #fefefe;
+      flex-grow: 1;
+      transition: background-color 100ms ease-in-out;
 
       svg {
+        rect {
+          fill: transparent;
+        }
+
+        path, line, polyline {
+          transition: stroke 100ms ease-in-out;
+        }
+
+        circle, ellipse {
+          transition: fill 100ms ease-in-out;
+        }
+      }
+
+      &:hover {
+        background-color: var(--btn-bg-color);
+        opacity: 0.5;
+
+        svg {
+          path, line, polyline {
+            //filter: blur(5px);
+            stroke: var(--btn-fill-color);
+            //filter: brightness(120%);
+            opacity: 0.8;
+          }
+
+          circle, ellipse {
+            fill: var(--btn-fill-color);
+          }
+        }
+      }
+
+      &:active {
+        background-color: transparent;
+        box-shadow: inset 2px 2px 5px var(--dark-bg-color),
+        inset -2px -2px 5px var(--light-bg-color);
+        //background-color: var(--dark-bg-color);
         path, line, polyline {
           //filter: blur(5px);
           stroke: var(--btn-fill-color);
@@ -80,42 +97,54 @@ div#colorTreeCtrl {
         circle, ellipse {
           fill: var(--btn-fill-color);
         }
+
       }
     }
 
-    &:active {
-      background-color: transparent;
-      box-shadow: inset 2px 2px 5px var(--dark-bg-color),
-      inset -2px -2px 5px var(--light-bg-color);
-      //background-color: var(--dark-bg-color);
-      path, line, polyline {
-        //filter: blur(5px);
-        stroke: var(--btn-fill-color);
-        //filter: brightness(120%);
-        opacity: 0.8;
+    &.inputBox {
+      position: relative;
+      width: 70%;
+
+      input {
+        margin: 0 5px;
+        height: 100%;
+        background-color: inherit;
+        border: none;
+        color: #999;
+        border-radius: 7px;
+        font-family: var(--primary-font);
+        font-size: 15px;
+        //box-shadow: inset 0 0 5px 2px #ccc;
+        box-shadow: inset 4px 4px 7px var(--dark-bg-color), inset -4px -4px 7px var(--light-bg-color);
+
+        &:focus {
+          outline: none;
+        }
       }
 
-      circle, ellipse {
-        fill: var(--btn-fill-color);
-      }
+      div.cancelSearchBtnBox {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
 
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        right: 13px;
+
+        border-radius: 5px;
+
+        &:hover {
+          background-color: blue;
+        }
+
+        &:active {
+          background-color: green;
+        }
+      }
     }
   }
 
-  > input {
-    width: 75%;
-    margin: 0 5px;
-    background-color: inherit;
-    border: none;
-    color: #999;
-    border-radius: 7px;
-    font-family: var(--primary-font);
-    font-size: 15px;
-    //box-shadow: inset 0 0 5px 2px #ccc;
-    box-shadow: inset 4px 4px 7px var(--dark-bg-color), inset -4px -4px 7px var(--light-bg-color);
 
-    &:focus {
-      outline: none;
-    }
-  }
 }
