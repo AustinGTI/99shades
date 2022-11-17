@@ -72,17 +72,20 @@ export default function ColorTree() {
     const [branchState, setBranchState] = useReducer(setTreeState, {open: false, payload: []});
     const [gt, st, pane] = useAppContext();
     useEffect(() => {
-        const [snapBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
+        const [snapBtn, collapseBtn, inputBox, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
         // const [snapBtn, expandBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
-        const searchInput = document.querySelector("#colorTreeCtrl > .inputBox > input");
-        const cancelSearchBtn = document.querySelector("#colorTreeCtrl > .inputBox > div.cancelSearchBtnBox");
+        const searchInput = inputBox.querySelector("input");
+        const cancelSearchBtn = inputBox.querySelector("div.cancelSearchBtnBox");
         const treeElem = document.querySelector("#tree");
 
 
         const goToColHandler = function (e) {
             setTree(createColorTree());
-            setBranchState([true, pane.getPaneColor().cls])
-            setTimeout(goToCol, 1000, treeElem, pane);
+            closeAll();
+            setTimeout(() => {
+                setBranchState([true, pane.getPaneColor().cls])
+                setTimeout(goToCol, 500, treeElem, pane);
+            }, 500)
         };
 
         const openAll = function (e) {
@@ -103,7 +106,8 @@ export default function ColorTree() {
         const searchHandler = (e) => {
             console.log("or is it you");
             console.log(e);
-            if ((e.which !== 13 && e.type === "keyup") || (e.type === "click" && e.target.parentElement.classList.contains("inputBox"))) {
+            if ((e.which !== 13 && e.type === "keyup")) {
+                console.log("case fail");
                 return;
             }
             let searchQuery = searchInput.value;
@@ -120,6 +124,7 @@ export default function ColorTree() {
         collapseBtn.addEventListener("click", closeAll);
 
         searchBtn.addEventListener("click", searchHandler);
+        console.log(searchBtn);
         searchInput.addEventListener("keyup", searchHandler);
         cancelSearchBtn.addEventListener("click", cancelSearch);
 

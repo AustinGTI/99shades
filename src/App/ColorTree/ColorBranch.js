@@ -119,10 +119,10 @@ export default function ColorBranch(params) {
             //     showHideElem(branchLeaves, true);
             //     setVisible(true);
             // }
-            // if (iamVisible) {
-            //     treeState.open = false;
-            //     treeState.payload = [];
-            // }
+            if (iamVisible) {
+                treeState.open = false;
+                treeState.payload = [];
+            }
             setVisible(!iamVisible);
         };
 
@@ -161,25 +161,25 @@ export default function ColorBranch(params) {
                 transition: {
                     height: {
                         delay: (total - index) * 0.05 + 0.1,
-                        duration: 0.25
+                        duration: 0.1
                     },
                     opacity: {
                         delay: (total - index) * 0.05,
-                        duration: 0.25
+                        duration: 0.1
                     },
                     margin: {
-                        duration: 0.25
+                        duration: 0.1
                     }
                 }
             }}
             transition={{
                 height: {
                     delay: index * 0.05,
-                    duration: 0.25
+                    duration: 0.1
                 },
                 opacity: {
-                    delay: index * 0.05 + 0.25,
-                    duration: 0.25
+                    delay: index * 0.05 + 0.1,
+                    duration: 0.1
                 }
             }}
             className={`branchContainer ${branchClasses}`}
