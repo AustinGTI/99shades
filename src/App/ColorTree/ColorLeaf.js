@@ -66,7 +66,7 @@ export default function ColorLeaf(params) {
             // style={{ backgroundColor: hex, color: txtColor }}
             ref={leaf}
         >
-            <div className="tag"></div>
+
             <p>{title}</p>
         </motion.div>
     );

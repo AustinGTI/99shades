@@ -17,7 +17,7 @@ const FORMATS = {
         [100, 100, 100, 100],
         hexToCMYK,
         Array(4).fill(false),
-        ["#00FFFF", "#FF00FF", "#0000FF", "#000000"]
+        ["#00FFFF", "#FF00FF", "#FFFF00", "#000000"]
     ],
     rgb: [
         ["Red", "Green", "Blue"],
