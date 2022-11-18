@@ -101,6 +101,7 @@ div.easelBox {
 
           circle, ellipse {
             fill: var(--btn-fill-color);
+            stroke: var(--btn-fill-color);
           }
         }
       }
