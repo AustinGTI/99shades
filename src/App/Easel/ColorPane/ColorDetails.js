@@ -16,13 +16,29 @@ function cleanFormats(format, value) {
     return value;
 }
 
+function copyTextToClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
 
 function ColorDetail({format, value}) {
     const doNotLabel = ["col", "cls"];
+    const copyValueBtn = useRef(null);
+    useEffect(() => {
+        const copyBtn = copyValueBtn.current;
+        const copyFunc = (e) => copyTextToClipboard(value);
+        if (copyBtn) {
+            copyBtn.addEventListener("click", copyFunc);
+            return () => {
+                copyBtn.removeEventListener("click", copyFunc);
+            }
+        }
+    }, [])
     return (
         <div className={"colorDetailBox"}>
             {(!doNotLabel.includes(format)) ? <div className={"detailFormatBox"}>{format}</div> : <></>}
-            <div className={"detailValueBox"}>{(Array.isArray(value)) ? value.join(',') : value}</div>
+            <div className={"detailValueBox"}><span>{(Array.isArray(value)) ? value.join(',') : value}</span>
+                {(doNotLabel.includes(format)) || <div ref={copyValueBtn} className={"copyValueBox"}></div>}
+            </div>
         </div>
     )
 }

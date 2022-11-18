@@ -52,6 +52,7 @@ li.colorBox {
       text-align: center;
       margin: 10px;
       opacity: 1;
+      width: 70%;
 
 
       div.detailFormatBox {
@@ -84,6 +85,24 @@ li.colorBox {
 
       div.detailValueBox {
         position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        //background-color: yellow;
+
+        div.copyValueBox {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          border-radius: 5px;
+          padding: 2px;
+
+          right: 15px;
+          background-color: black;
+
+          display: none;
+        }
       }
 
       div.detailValueBox:after {
@@ -145,6 +164,12 @@ li.colorBox {
 
         div.detailFormatBox:after {
           right: -9px;
+        }
+
+        div.detailValueBox {
+          div.copyValueBox {
+            display: block;
+          }
         }
       }
     }
