@@ -8,6 +8,7 @@ import {ReactComponent as SnapToBtn} from "../../Data/Icons/Buttons/snapBtn.svg"
 import {ReactComponent as CollapseBtn} from "../../Data/Icons/Buttons/collapseBtn.svg";
 import {ReactComponent as SearchBtn} from "../../Data/Icons/Buttons/searchBtn.svg";
 import {AnimatePresence, motion} from "framer-motion";
+import {CustomTooltip} from "../../AuxFunctions/CustomTooltip";
 
 function goToCol(treeElem, pane) {
     const paneColor = pane.getPaneColor();
@@ -146,9 +147,13 @@ export default function ColorTree() {
         <button className="openAll">+</button>
         <button className="closeAll">,</button>
 */}
-                <div className="snapBtnBox ctrlBtn"><SnapToBtn/></div>
+                <CustomTooltip title={"Go To Active Color"} placement={"top"}>
+                    <div className="snapBtnBox ctrlBtn"><SnapToBtn/></div>
+                </CustomTooltip>
                 {/*<div className="expandBtnBox"><ExpandBtn/></div>*/}
-                <div className="collapseBtnBox ctrlBtn"><CollapseBtn/></div>
+                <CustomTooltip title={"Collapse Colors"} placement={"top"}>
+                    <div className="collapseBtnBox ctrlBtn"><CollapseBtn/></div>
+                </CustomTooltip>
                 <div className="inputBox"><input
                     type="text"
                     className="search "
@@ -157,7 +162,9 @@ export default function ColorTree() {
                 </input>
                     <div className="cancelSearchBtnBox "></div>
                 </div>
-                <div className="searchBtnBox ctrlBtn"><SearchBtn/></div>
+                <CustomTooltip title={"Search For Color"} placement={"top"}>
+                    <div className="searchBtnBox ctrlBtn"><SearchBtn/></div>
+                </CustomTooltip>
                 {/*<button className="searchBtn">?</button>*/}
             </div>
 

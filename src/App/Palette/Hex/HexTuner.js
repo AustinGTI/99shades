@@ -25,6 +25,7 @@ import {
 import {
     ReactComponent as RedoBtn
 } from "../../../Data/Icons/Buttons/redoBtn.svg";
+import {CustomTooltip} from "../../../AuxFunctions/CustomTooltip";
 
 
 export default function HexTuner() {
@@ -167,19 +168,33 @@ export default function HexTuner() {
     return (
         <div className={"ctrlBox"} ref={ctrlBox}>
             <div className={"leftBtns"}>
-                <div id={"dupBtn"}><DupLeftBtn/></div>
-                <div id={"addBtn"}><AddBtn/></div>
+                <CustomTooltip title={"Duplicate to the Left"} placement={"bottom"}>
+                    <div id={"dupBtn"}><DupLeftBtn/></div>
+                </CustomTooltip>
+                <CustomTooltip title={"Add to the Left"}>
+                    <div id={"addBtn"}><AddBtn/></div>
+                </CustomTooltip>
                 {/*<div id={"moveBtn"}><MoveLeftBtn/></div>*/}
-                <div id={"undoBtn"}><UndoBtn/></div>
+                <CustomTooltip title={"Undo"}>
+                    <div id={"undoBtn"}><UndoBtn/></div>
+                </CustomTooltip>
             </div>
             <div className="hexBox">
                 <input type={"text"} value={color} onChange={certifyColorChange}></input>
             </div>
             <div className={"rightBtns"}>
-                <div id={"dupBtn"}><DupRightBtn/></div>
-                <div id={"addBtn"}><AddBtn/></div>
-                {/*<div id={"moveBtn"}><MoveRightBtn/></div>*/}
-                <div id={"redoBtn"}><RedoBtn/></div>
+                <CustomTooltip title={"Duplicate to the Right"}>
+                    <div id={"dupBtn"}>
+                        <DupRightBtn/>
+                    </div>
+                </CustomTooltip>
+                <CustomTooltip title={"Add to the Right"}>
+                    <div id={"addBtn"}><AddBtn/></div>
+                </CustomTooltip>
+                {/*<div id={"movebtn"}><moverightbtn/></div>*/}
+                <CustomTooltip title={"Redo"}>
+                    <div id={"redoBtn"}><RedoBtn/></div>
+                </CustomTooltip>
             </div>
         </div>
     );

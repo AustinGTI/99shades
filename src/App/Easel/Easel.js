@@ -12,6 +12,7 @@ import "./Easel.scss";
 import {hexToHSL, hexToRGB} from "../../AuxFunctions/formatColor";
 import {AnimatePresence} from "framer-motion";
 import {Reorder} from "framer-motion";
+import {CustomTooltip} from "../../AuxFunctions/CustomTooltip.js";
 
 
 function ColorPanes({appData, setter}) {
@@ -116,12 +117,17 @@ export default function Palette() {
 
             </div>
             <div className={"easelBtnBox"} ref={easelBtnBox}>
-                <div className={"hideBtn btn"}>
-                    {appData.colorDetailVisible ? <HideBtn/> : <ShowBtn/>}
-                </div>
-                <div className={"deleteBtn btn"}>
-                    <DeleteBtn/>
-                </div>
+                <CustomTooltip title={`${(appData.colorDetailVisible ? "Hide" : "Show")} Color Details`}
+                               placement={"left"}>
+                    <div className={"hideBtn btn"}>
+                        {appData.colorDetailVisible ? <HideBtn/> : <ShowBtn/>}
+                    </div>
+                </CustomTooltip>
+                <CustomTooltip title="Delete Active Pane" placement={"left"}>
+                    <div className={"deleteBtn btn"}>
+                        <DeleteBtn/>
+                    </div>
+                </CustomTooltip>
                 <div className="downloadBtn btn">
                     <DownloadBtn/>
                 </div>
