@@ -101,7 +101,28 @@ li.colorBox {
           right: 15px;
           background-color: black;
 
-          display: none;
+          //visibility: hidden;
+          opacity: 0;
+          transition: opacity 300ms ease-in-out;
+          background-color: transparent;
+
+          svg {
+            g:nth-child(1) {
+              rect {
+                fill: transparent;
+                transition: fill 200ms ease-in-out;
+              }
+            }
+
+            g:nth-child(2) {
+              rect, path {
+                fill: transparent;
+                stroke: var(--secondary-color);
+                transition: stroke 200ms ease-in-out;
+              }
+            }
+
+          }
         }
       }
 
@@ -168,7 +189,33 @@ li.colorBox {
 
         div.detailValueBox {
           div.copyValueBox {
-            display: block;
+            opacity: 1;
+          }
+
+          div.copyValueBox:hover {
+            svg {
+              g:nth-child(1) {
+                rect {
+                  fill: var(--secondary-color);
+                }
+              }
+
+              g:nth-child(2) {
+                rect, path {
+                  stroke: var(--primary-color);
+                }
+              }
+            }
+          }
+
+          div.copyValueBox:active {
+            svg {
+              g:nth-child(2) {
+                rect, path {
+                  stroke: white;
+                }
+              }
+            }
           }
         }
       }

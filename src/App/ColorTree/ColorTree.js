@@ -9,6 +9,8 @@ import {ReactComponent as CollapseBtn} from "../../Data/Icons/Buttons/collapseBt
 import {ReactComponent as SearchBtn} from "../../Data/Icons/Buttons/searchBtn.svg";
 import {AnimatePresence, motion} from "framer-motion";
 import {CustomTooltip} from "../../AuxFunctions/CustomTooltip";
+import {ReactComponent as CancelSearchBtn} from "../../Data/Icons/Buttons/cancelSearchBtn.svg";
+import {ReactComponent as CopyValueBtn} from "../../Data/Icons/Buttons/copyValueBtn.svg";
 
 function goToCol(treeElem, pane) {
     const paneColor = pane.getPaneColor();
@@ -160,7 +162,9 @@ export default function ColorTree() {
                     placeholder="Write a color..."
                 >
                 </input>
-                    <div className="cancelSearchBtnBox "></div>
+                    <div className="cancelSearchBtnBox">
+                        <CancelSearchBtn/>
+                    </div>
                 </div>
                 <CustomTooltip title={"Search For Color"} placement={"top"}>
                     <div className="searchBtnBox ctrlBtn"><SearchBtn/></div>

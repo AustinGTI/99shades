@@ -127,7 +127,6 @@ div#colorTreeCtrl {
         position: absolute;
         width: 20px;
         height: 20px;
-        background-color: red;
 
         top: 0;
         bottom: 0;
@@ -135,13 +134,40 @@ div#colorTreeCtrl {
         right: 13px;
 
         border-radius: 5px;
+        background-color: transparent;
+
+        svg {
+          g {
+            g:nth-child(2) {
+              rect {
+                fill: #555;
+              }
+            }
+          }
+        }
 
         &:hover {
-          background-color: blue;
+          svg {
+            g {
+              g:nth-child(2) {
+                rect {
+                  fill: var(--primary-active-color);
+                }
+              }
+            }
+          }
         }
 
         &:active {
-          background-color: green;
+          svg {
+            g {
+              g:nth-child(2) {
+                rect {
+                  fill: var(--secondary-active-color);
+                }
+              }
+            }
+          }
         }
       }
     }

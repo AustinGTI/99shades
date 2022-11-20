@@ -6,8 +6,11 @@ import {ReactComponent as UndoBtn} from "../../../Data/Icons/Buttons/undoBtn.svg
 import {ReactComponent as RedoBtn} from "../../../Data/Icons/Buttons/redoBtn.svg";
 import {ReactComponent as DeleteBtn} from "../../../Data/Icons/Buttons/deleteBtn.svg";
 import {ReactComponent as MoveBtn} from "../../../Data/Icons/Buttons/moveBtn.svg";
+import {ReactComponent as CopyValueBtn} from "../../../Data/Icons/Buttons/copyValueBtn.svg";
+import {ReactComponent as ConfirmCopyBtn} from "../../../Data/Icons/Buttons/confirmCopyBtn.svg";
 import {motion} from "framer-motion";
 import {getContrastColor} from "../../../AuxFunctions/filterColor";
+import {CustomTooltip} from "../../../AuxFunctions/CustomTooltip";
 
 function cleanFormats(format, value) {
     if (["rgb", "hsv", "hsl", "cmyk"].includes(format)) {
@@ -25,7 +28,10 @@ function ColorDetail({format, value}) {
     const copyValueBtn = useRef(null);
     useEffect(() => {
         const copyBtn = copyValueBtn.current;
-        const copyFunc = (e) => copyTextToClipboard(value);
+        const copyFunc = (e) => {
+            copyTextToClipboard(value);
+
+        }
         if (copyBtn) {
             copyBtn.addEventListener("click", copyFunc);
             return () => {
@@ -37,7 +43,12 @@ function ColorDetail({format, value}) {
         <div className={"colorDetailBox"}>
             {(!doNotLabel.includes(format)) ? <div className={"detailFormatBox"}>{format}</div> : <></>}
             <div className={"detailValueBox"}><span>{(Array.isArray(value)) ? value.join(',') : value}</span>
-                {(doNotLabel.includes(format)) || <div ref={copyValueBtn} className={"copyValueBox"}></div>}
+                {(doNotLabel.includes(format)) ||
+                    <CustomTooltip title="Copy Value">
+                        <div ref={copyValueBtn} className={"copyValueBox"}>
+                            <CopyValueBtn/>
+                        </div>
+                    </CustomTooltip>}
             </div>
         </div>
     )
