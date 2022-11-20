@@ -128,9 +128,9 @@ export default function Palette() {
                         <DeleteBtn/>
                     </div>
                 </CustomTooltip>
-                <div className="downloadBtn btn">
-                    <DownloadBtn/>
-                </div>
+                {/*<div className="downloadBtn btn">*/}
+                {/*    <DownloadBtn/>*/}
+                {/*</div>*/}
 
             </div>
 
