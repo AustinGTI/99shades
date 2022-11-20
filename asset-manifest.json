@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ae5aa1e1.css",
+    "main.js": "/static/js/main.7d2cb419.js",
+    "static/js/787.8c2e514e.chunk.js": "/static/js/787.8c2e514e.chunk.js",
+    "static/media/logoV2.svg": "/static/media/logoV2.541810be059fb7d61680fc382486e977.svg",
+    "static/media/duplicateRightBtn.svg": "/static/media/duplicateRightBtn.e46e963c4139d0bbe28ae9370884785f.svg",
+    "static/media/duplicateLeftBtn.svg": "/static/media/duplicateLeftBtn.f7b951f35973ca2853beb203076c57ed.svg",
+    "static/media/collapseBtn.svg": "/static/media/collapseBtn.ae20c881c111e986bf5b8635bb110fd1.svg",
+    "static/media/moveRightBtn.svg": "/static/media/moveRightBtn.86d7fcbce56dcd50386160ab5d790fbd.svg",
+    "static/media/downloadBtn.svg": "/static/media/downloadBtn.c521d14f6e2685628a330f38ec08ae0e.svg",
+    "static/media/moveLeftBtn.svg": "/static/media/moveLeftBtn.8dc236d73814c0e9585f4ebc86f1debd.svg",
+    "static/media/snapBtn.svg": "/static/media/snapBtn.63472ceca6e18bc4c0274eda36ab7e6f.svg",
+    "static/media/undoBtn.svg": "/static/media/undoBtn.b896efc4bcaaa26217d71b3d84966714.svg",
+    "static/media/redoBtn.svg": "/static/media/redoBtn.dd4dbfa9409745f1718b6a552cbcf2b3.svg",
+    "static/media/showBtn.svg": "/static/media/showBtn.4390877cd7e47b4417b262a9db2572d0.svg",
+    "static/media/copyValueBtn.svg": "/static/media/copyValueBtn.8ff0c6376befd47db4b9f1253f124d3a.svg",
+    "static/media/moveBtn.svg": "/static/media/moveBtn.70351e76eaedc28b461364e5bb3d9d4f.svg",
+    "static/media/deleteBtn.svg": "/static/media/deleteBtn.ce1622854618f1d0dd8add202f5db760.svg",
+    "static/media/addBtn.svg": "/static/media/addBtn.5a57029f387c6e265a03d486fc61b47d.svg",
+    "static/media/searchBtn.svg": "/static/media/searchBtn.f5fa4960020512b3556c5b496fa75326.svg",
+    "static/media/confirmCopyBtn.svg": "/static/media/confirmCopyBtn.719a0ee1f90108d012c8fbd768583c30.svg",
+    "static/media/hideBtn.svg": "/static/media/hideBtn.edb2213653a6529116f140c4816d197d.svg",
+    "static/media/cancelSearchBtn.svg": "/static/media/cancelSearchBtn.0d718e4672917de3e296d205794fe8e0.svg",
+    "index.html": "/index.html",
+    "static/media/slideBtn.svg": "/static/media/slideBtn.e0acba036a2827c9a815e93e0b35e5d5.svg",
+    "main.ae5aa1e1.css.map": "/static/css/main.ae5aa1e1.css.map",
+    "main.7d2cb419.js.map": "/static/js/main.7d2cb419.js.map",
+    "787.8c2e514e.chunk.js.map": "/static/js/787.8c2e514e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ae5aa1e1.css",
+    "static/js/main.7d2cb419.js"
+  ]
+}
