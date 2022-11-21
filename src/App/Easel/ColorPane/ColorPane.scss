@@ -196,6 +196,7 @@ li.colorBox {
             svg {
               g:nth-child(1) {
                 rect {
+                  stroke-width: 0;
                   fill: var(--secondary-color);
                 }
               }
