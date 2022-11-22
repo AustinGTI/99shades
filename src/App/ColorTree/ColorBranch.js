@@ -93,7 +93,6 @@ export default function ColorBranch(params) {
         const observeCallback = function (entries, observer) {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    // console.log(branchClasses, " Houston we have intersection");
                     setLeavesVisible(true);
                 } else {
                     setLeavesVisible(false);

@@ -8,12 +8,6 @@ import {
     ReactComponent as AddBtn
 } from "../../../Data/Icons/Buttons/addBtn.svg";
 import {
-    ReactComponent as MoveLeftBtn
-} from "../../../Data/Icons/Buttons/moveLeftBtn.svg";
-import {
-    ReactComponent as MoveRightBtn
-} from "../../../Data/Icons/Buttons/moveRightBtn.svg";
-import {
     ReactComponent as DupLeftBtn
 } from "../../../Data/Icons/Buttons/duplicateLeftBtn.svg";
 import {
@@ -34,7 +28,7 @@ export default function HexTuner() {
     const paneColor = pane.getPaneColor();
 
     const [color, setColor] = useState(paneColor.hex);
-    // const colorPane = getter.colorPanes.find(v => v.paneId === getter.activePaneIdx);
+
     //change colorvalue
     function certifyColorChange(e) {
         const inputVal = e.target.value;
@@ -43,7 +37,6 @@ export default function HexTuner() {
             return;
         }
 
-        //const nChar = inputVal[inputVal.length - 1].toUpperCase();
         if (/[^0123456789ABCDEF]/gi.test(inputVal.slice(1))) {
             console.log("That is not a valid hex character");
             return;
@@ -71,7 +64,6 @@ export default function HexTuner() {
             } else if (col.length < 7) {
                 col += "0".repeat(7 - col.length);
             }
-            //checking if value is consistent
             setter({
                 command: "changePaneColor",
                 color: buildNewColorFloat("hex", col, paneColor),
@@ -90,8 +82,6 @@ export default function HexTuner() {
 
 
     useEffect(() => {
-        // const [dupLeftBtn, addLeftBtn, moveLeftBtn, undoBtn] = ctrlBox.current.querySelectorAll(".leftBtns > div");
-        // const [dupRightBtn, addRightBtn, moveRightBtn, redoBtn] = ctrlBox.current.querySelectorAll(".rightBtns > div");
         const [dupLeftBtn, addLeftBtn, undoBtn] = ctrlBox.current.querySelectorAll(".leftBtns > div");
         const [dupRightBtn, addRightBtn, redoBtn] = ctrlBox.current.querySelectorAll(".rightBtns > div");
 
@@ -102,31 +92,6 @@ export default function HexTuner() {
         };
         const addPaneRight = () => {
             setter({command: "addPane", direction: 1});
-        };
-        //add Pane function
-        const movePaneLeft = () => {
-            console.log("move left");
-            let panePos = pane.panePosition;
-            if (panePos == 0) {
-                return;
-            }
-            setter({
-                command: "movePane",
-                nposition: panePos - 1,
-                id: pane.paneId,
-            });
-        };
-        const movePaneRight = () => {
-            console.log("move right");
-            let panePos = pane.panePosition;
-            if (panePos == getter.colorPanes.length - 1) {
-                return;
-            }
-            setter({
-                command: "movePane",
-                nposition: panePos + 1,
-                id: pane.paneId,
-            });
         };
         const undoPaneColor = (e) => {
             setter({command: "undoPaneColor", id: pane.paneId});
@@ -149,8 +114,6 @@ export default function HexTuner() {
         addRightBtn.addEventListener("click", addPaneRight);
         dupLeftBtn.addEventListener("click", duplicatePaneLeft);
         dupRightBtn.addEventListener("click", duplicatePaneRight);
-        //moveLeftBtn.addEventListener("click", movePaneLeft);
-        //moveRightBtn.addEventListener("click", movePaneRight);
         undoBtn.addEventListener("click", undoPaneColor);
         redoBtn.addEventListener("click", redoPaneColor);
 
@@ -159,8 +122,6 @@ export default function HexTuner() {
             addRightBtn.removeEventListener("click", addPaneRight);
             dupLeftBtn.removeEventListener("click", duplicatePaneLeft);
             dupRightBtn.removeEventListener("click", duplicatePaneRight);
-            //moveLeftBtn.removeEventListener("click", movePaneLeft);
-            //moveRightBtn.removeEventListener("click", movePaneRight);
             undoBtn.removeEventListener("click", undoPaneColor);
             redoBtn.removeEventListener("click", redoPaneColor);
         };
@@ -174,7 +135,6 @@ export default function HexTuner() {
                 <CustomTooltip title={"Add to the Left"}>
                     <div id={"addBtn"}><AddBtn/></div>
                 </CustomTooltip>
-                {/*<div id={"moveBtn"}><MoveLeftBtn/></div>*/}
                 <CustomTooltip title={"Undo"}>
                     <div id={"undoBtn"}><UndoBtn/></div>
                 </CustomTooltip>
@@ -191,7 +151,6 @@ export default function HexTuner() {
                 <CustomTooltip title={"Add to the Right"}>
                     <div id={"addBtn"}><AddBtn/></div>
                 </CustomTooltip>
-                {/*<div id={"movebtn"}><moverightbtn/></div>*/}
                 <CustomTooltip title={"Redo"}>
                     <div id={"redoBtn"}><RedoBtn/></div>
                 </CustomTooltip>

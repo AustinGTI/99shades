@@ -133,7 +133,6 @@ function setAppColorData(data, options) {
                 undefined
             );
             colordata.colorPanes.splice(dropIdx, 1);
-            console.log(colordata.activePaneIdx);
             break;
 
         //undo the pane color
@@ -176,7 +175,7 @@ function setAppColorData(data, options) {
 
                 activePane.colorInFlux = true;
                 activePane.colorStack.push({...color});
-                console.log(activePane.colorStack.length);
+                // console.log(activePane.colorStack.length);
             }
 
             activePane.fluxTimeoutId = setTimeout(
@@ -214,8 +213,8 @@ function setAppColorData(data, options) {
 
         case "reorderPanes":
             let {newPanes} = options;
-            console.log(newPanes);
-            console.log(colordata.colorPanes);
+            // console.log(newPanes);
+            // console.log(colordata.colorPanes);
             colordata.colorPanes = newPanes;
             colordata.colorPanes.forEach((v, vi) => v.panePosition = vi);
             break;

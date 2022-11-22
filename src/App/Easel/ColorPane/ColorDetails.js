@@ -1,23 +1,11 @@
 import React, {useEffect, useRef} from "react";
 import "./ColorDetails.scss";
 import useAppContext from "../../../AuxFunctions/useAppContext";
-import formatColor from "../../../AuxFunctions/formatColor";
-import {ReactComponent as UndoBtn} from "../../../Data/Icons/Buttons/undoBtn.svg";
-import {ReactComponent as RedoBtn} from "../../../Data/Icons/Buttons/redoBtn.svg";
-import {ReactComponent as DeleteBtn} from "../../../Data/Icons/Buttons/deleteBtn.svg";
-import {ReactComponent as MoveBtn} from "../../../Data/Icons/Buttons/moveBtn.svg";
 import {ReactComponent as CopyValueBtn} from "../../../Data/Icons/Buttons/copyValueBtn.svg";
-import {ReactComponent as ConfirmCopyBtn} from "../../../Data/Icons/Buttons/confirmCopyBtn.svg";
 import {motion} from "framer-motion";
 import {getContrastColor} from "../../../AuxFunctions/filterColor";
 import {CustomTooltip} from "../../../AuxFunctions/CustomTooltip";
 
-function cleanFormats(format, value) {
-    if (["rgb", "hsv", "hsl", "cmyk"].includes(format)) {
-        return `${format}(${value.join(",")})`;
-    }
-    return value;
-}
 
 function copyTextToClipboard(text) {
     navigator.clipboard.writeText(text);
@@ -60,18 +48,6 @@ export default function ColorDetails({pane, isActive}) {
     let formatKeys = Object.keys(formats).filter((v) => v !== "cls");
     let emphasis = isActive ? 40 : 20;
     let fontColor = getContrastColor("hsl", formats.hsl, emphasis);
-    let hoverColor = getContrastColor("hsl", formats.hsl, 50);
-    // formats.hsl[2] > 50
-    //   ? [
-    //       formats.hsl[0],
-    //       formats.hsl[1].toString() + "%",
-    //       (formats.hsl[2] - emphasis).toString() + "%",
-    //     ]
-    //   : [
-    //       formats.hsl[0],
-    //       formats.hsl[1].toString() + "%",
-    //       (formats.hsl[2] + emphasis).toString() + "%",
-    //     ];
     const colDetailsBox = useRef(null);
     useEffect(() => {
         const appBox = document.querySelector(".appBg > .appBox");
@@ -99,14 +75,8 @@ export default function ColorDetails({pane, isActive}) {
         <>
             <motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0, transition: {delay: 0}}}
                         transition={{delay: 0.3}} style={{width: '100%'}}>
-                {/*<div className="btn panelBtn moveBtn">
-          <MoveBtn />
-        </div>*/}
                 <div className={`colorDetailsBox ${detailVisible ? "visible" : "hidden"}`} ref={colDetailsBox}>
                     {formatKeys.map((v, vi) => (
-                        // <div className="format" key={vi}>
-                        //   <span>{cleanFormats(v, formats[v])}</span>
-                        // </div>
                         <ColorDetail key={vi} value={formats[v]} format={v}/>
                     ))}
                 </div>

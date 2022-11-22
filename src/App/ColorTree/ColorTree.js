@@ -4,28 +4,15 @@ import cols from "../../Data/Colors/tempColsv2.json";
 import ColorBranch from "./ColorBranch";
 import useAppContext from "../../AuxFunctions/useAppContext";
 import {ReactComponent as SnapToBtn} from "../../Data/Icons/Buttons/snapBtn.svg";
-// import {ReactComponent as ExpandBtn} from "../../Data/Icons/Buttons/expandBtn.svg";
 import {ReactComponent as CollapseBtn} from "../../Data/Icons/Buttons/collapseBtn.svg";
 import {ReactComponent as SearchBtn} from "../../Data/Icons/Buttons/searchBtn.svg";
-import {AnimatePresence, motion} from "framer-motion";
 import {CustomTooltip} from "../../AuxFunctions/CustomTooltip";
 import {ReactComponent as CancelSearchBtn} from "../../Data/Icons/Buttons/cancelSearchBtn.svg";
-import {ReactComponent as CopyValueBtn} from "../../Data/Icons/Buttons/copyValueBtn.svg";
 
 function goToCol(treeElem, pane) {
     const paneColor = pane.getPaneColor();
     const paneCls = paneColor.cls;
     const leaf = treeElem.querySelector(`.${paneCls.join(".")}`);
-    // const visElems = [leaf.parentElement];
-    // while (visElems[visElems.length - 1].parentElement.id !== "tree") {
-    //     visElems.push(visElems[visElems.length - 1].parentElement);
-    // }
-    // [leaf.querySelector(".branchLeaves"), ...visElems].forEach((v) => {
-    //     if (v.classList.contains("invisible")) {
-    //         v.classList.remove("invisible");
-    //         v.classList.add("visible");
-    //     }
-    // });
     leaf
         .querySelector(
             `.leaf.${paneColor.col.toLowerCase().replaceAll(" ", "_")}`
@@ -76,7 +63,6 @@ export default function ColorTree() {
     const [gt, st, pane] = useAppContext();
     useEffect(() => {
         const [snapBtn, collapseBtn, inputBox, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
-        // const [snapBtn, expandBtn, collapseBtn, searchBtn] = document.querySelectorAll("#colorTreeCtrl > div");
         const searchInput = inputBox.querySelector("input");
         const cancelSearchBtn = inputBox.querySelector("div.cancelSearchBtnBox");
         const treeElem = document.querySelector("#tree");
@@ -103,14 +89,10 @@ export default function ColorTree() {
             closeAll();
             setTree(createColorTree());
             searchInput.value = "";
-            console.log("but why am i running really?");
         }
 
         const searchHandler = (e) => {
-            console.log("or is it you");
-            console.log(e);
             if ((e.which !== 13 && e.type === "keyup")) {
-                console.log("case fail");
                 return;
             }
             let searchQuery = searchInput.value;
@@ -123,17 +105,14 @@ export default function ColorTree() {
         }
 
         snapBtn.addEventListener("click", goToColHandler);
-        // expandBtn.addEventListener("click", openAll);
         collapseBtn.addEventListener("click", closeAll);
 
         searchBtn.addEventListener("click", searchHandler);
-        console.log(searchBtn);
         searchInput.addEventListener("keyup", searchHandler);
         cancelSearchBtn.addEventListener("click", cancelSearch);
 
         return () => {
             snapBtn.removeEventListener("click", goToColHandler);
-            // expandBtn.removeEventListener("click", openAll);
             collapseBtn.removeEventListener("click", closeAll);
 
             searchBtn.removeEventListener("click", searchHandler);
@@ -144,15 +123,9 @@ export default function ColorTree() {
     return (
         <>
             <div id="colorTreeCtrl">
-                {/*
-        <button className="snapToActive">.</button>
-        <button className="openAll">+</button>
-        <button className="closeAll">,</button>
-*/}
                 <CustomTooltip title={"Go To Active Color"} placement={"top"}>
                     <div className="snapBtnBox ctrlBtn"><SnapToBtn/></div>
                 </CustomTooltip>
-                {/*<div className="expandBtnBox"><ExpandBtn/></div>*/}
                 <CustomTooltip title={"Collapse Colors"} placement={"top"}>
                     <div className="collapseBtnBox ctrlBtn"><CollapseBtn/></div>
                 </CustomTooltip>
@@ -169,10 +142,8 @@ export default function ColorTree() {
                 <CustomTooltip title={"Search For Color"} placement={"top"}>
                     <div className="searchBtnBox ctrlBtn"><SearchBtn/></div>
                 </CustomTooltip>
-                {/*<button className="searchBtn">?</button>*/}
             </div>
 
-            {/*<AnimatePresence initial={false} transition={{delayChildren: 5}}>*/}
             <div id="tree">
                 {Object.keys(tree).length ? (
                     Object.keys(tree).map((v, vi) => (
@@ -187,10 +158,22 @@ export default function ColorTree() {
                         />
                     ))
                 ) : (
-                    <div>Oops!</div>
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: 'center',
+                            textAlign: 'center',
+                            padding: '5vh 15%',
+                            width: '70%',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+
+                        }}>
+                        <span>There is no such color at the moment.</span>
+                        <span style={{paddingTop: '2vh'}}>Please try another.</span>
+                    </div>
                 )}
             </div>
-            {/*</AnimatePresence>*/}
         </>
     );
 }

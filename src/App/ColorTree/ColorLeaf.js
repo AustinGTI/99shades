@@ -14,7 +14,7 @@ export default function ColorLeaf(params) {
     useEffect(() => {
         const txtColor = getContrastColor("hex", hex, 40);
         const changeColor = (e) => {
-            console.log(hex);
+            // console.log(hex);
             setter({
                 command: "changePaneColor",
                 color: buildNewColorFloat("hex", hex, paneColor),

@@ -18,7 +18,6 @@ import {CustomTooltip} from "../../AuxFunctions/CustomTooltip.js";
 function ColorPanes({appData, setter}) {
     const reorderPanes = function (newPanes) {
         setter({command: "reorderPanes", newPanes});
-        console.log(newPanes.map(v => v.getPaneColor().col));
     }
     return <Reorder.Group className={"easelPaneBox"} values={appData.colorPanes} as="ul" axis={"x"}
                           onReorder={reorderPanes} onPan={(e, info) => console.log(info.offset.x)}>
@@ -86,30 +85,6 @@ export default function Palette() {
         document.documentElement.style.setProperty('--btn-fill-color', btnFillColor);
 
     }, [appData, appData.colorPanes.length]);
-
-    /*useEffect(() => {
-      const addLeftBtn = document.querySelector(".addLeftBtn");
-      const addRightBtn = document.querySelector(".addRightBtn");
-      const panes = document.querySelectorAll("div.colorBox");
-
-      //add Pane function
-      const addPaneLeft = () => {
-        console.log("add left");
-        setAppData({ command: "addPane", direction: 0 });
-      };
-      const addPaneRight = () => {
-        setAppData({ command: "addPane", direction: 1 });
-      };
-
-
-      //adding event listeners
-      addLeftBtn.addEventListener("click", addPaneLeft);
-      addRightBtn.addEventListener("click", addPaneRight);
-      return () => {
-        addLeftBtn.removeEventListener("click", addPaneLeft);
-        addRightBtn.removeEventListener("click", addPaneRight);
-      };
-    }, [appData, setAppData]);*/
     return (
         <div className="easelBox">
             <div className="logoBox" ref={logoBox}>
@@ -134,39 +109,6 @@ export default function Palette() {
 
             </div>
 
-            {/*<div className="addRightBtn addBtn btn">
-        <AddBtn />
-      </div>
-      <div className="addLeftBtn addBtn btn">
-        <AddBtn />
-      </div>*/}
-
-
-            {/*{appdata.colorpanes*/}
-            {/*    .sort((a, b) => a.paneposition - b.paneposition)*/}
-            {/*    .map((v, vi) => (*/}
-            {/*        <colorpane*/}
-            {/*            key={vi}*/}
-            {/*            pane={v}*/}
-            {/*            isleft={vi == 0}*/}
-            {/*            isright={vi == appdata.colorpanes.length - 1}*/}
-            {/*            isactive={appdata.activepaneidx === v.paneid}*/}
-            {/*        />*/}
-            {/*    ))}*/}
-            {/*{<AnimatePresence>*/}
-            {/*    {Array.from(Array(5).keys()).map(*/}
-            {/*        (v) => {*/}
-            {/*            const pane = appData.colorPanes.find(p => p.panePosition === v);*/}
-            {/*            return ((pane) && (pane.paneAlive) &&*/}
-            {/*                <ColorPane*/}
-            {/*                    key={v}*/}
-            {/*                    pane={pane}*/}
-            {/*                    isLeft={v == 0}*/}
-            {/*                    isRight={v == appData.colorPanes.length - 1}*/}
-            {/*                    isActive={appData.activePaneIdx === pane.paneId}*/}
-            {/*                />);*/}
-            {/*        }*/}
-            {/*    )}</AnimatePresence>*/}
             <ColorPanes appData={appData} setter={setter}/>
 
         </div>

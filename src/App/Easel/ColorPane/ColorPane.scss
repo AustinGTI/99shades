@@ -109,6 +109,7 @@ li.colorBox {
           svg {
             g:nth-child(1) {
               rect {
+                stroke-width: 0;
                 fill: transparent;
                 transition: fill 200ms ease-in-out;
               }
