@@ -1,7 +1,8 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./ColorDetails.scss";
 import useAppContext from "../../../AuxFunctions/useAppContext";
 import {ReactComponent as CopyValueBtn} from "../../../Data/Icons/Buttons/copyValueBtn.svg";
+import {ReactComponent as ConfirmCopyBtn} from "../../../Data/Icons/Buttons/confirmCopyBtn.svg";
 import {motion} from "framer-motion";
 import {getContrastColor} from "../../../AuxFunctions/filterColor";
 import {CustomTooltip} from "../../../AuxFunctions/CustomTooltip";
@@ -14,11 +15,13 @@ function copyTextToClipboard(text) {
 function ColorDetail({format, value}) {
     const doNotLabel = ["col", "cls"];
     const copyValueBtn = useRef(null);
+    const [hasCopied, setCopied] = useState(false);
     useEffect(() => {
         const copyBtn = copyValueBtn.current;
         const copyFunc = (e) => {
             copyTextToClipboard(value);
-
+            setCopied(true);
+            setTimeout(() => setCopied(false), 5000);
         }
         if (copyBtn) {
             copyBtn.addEventListener("click", copyFunc);
@@ -32,9 +35,11 @@ function ColorDetail({format, value}) {
             {(!doNotLabel.includes(format)) ? <div className={"detailFormatBox"}>{format}</div> : <></>}
             <div className={"detailValueBox"}><span>{(Array.isArray(value)) ? value.join(',') : value}</span>
                 {(doNotLabel.includes(format)) ||
-                    <CustomTooltip title="Copy Value">
+                    <CustomTooltip
+                        title={hasCopied ? `${format.toUpperCase()} Value Copied` : `Copy ${format.toUpperCase()} Value`}>
                         <div ref={copyValueBtn} className={"copyValueBox"}>
                             <CopyValueBtn/>
+                            {hasCopied ? <ConfirmCopyBtn/> : <></>}
                         </div>
                     </CustomTooltip>}
             </div>

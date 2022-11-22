@@ -92,21 +92,30 @@ li.colorBox {
         //background-color: yellow;
 
         div.copyValueBox {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+
           position: absolute;
-          width: 20px;
-          height: 20px;
+          width: 60px;
+          height: 30px;
           border-radius: 5px;
           padding: 2px;
 
-          right: 15px;
+          right: -30px;
           background-color: black;
 
           //visibility: hidden;
-          opacity: 0;
+          //opacity: 0;
           transition: opacity 300ms ease-in-out;
           background-color: transparent;
 
           svg {
+            width: 25px;
+            height: 25px;
+
+
             g:nth-child(1) {
               rect {
                 stroke-width: 0;
@@ -116,11 +125,12 @@ li.colorBox {
             }
 
             g:nth-child(2) {
-              rect, path {
+              rect, path, line, polyline {
                 fill: transparent;
                 stroke: var(--secondary-color);
                 transition: stroke 200ms ease-in-out;
               }
+
             }
 
           }
@@ -191,10 +201,8 @@ li.colorBox {
         div.detailValueBox {
           div.copyValueBox {
             opacity: 1;
-          }
 
-          div.copyValueBox:hover {
-            svg {
+            svg:first-child:hover {
               g:nth-child(1) {
                 rect {
                   stroke-width: 0;
@@ -203,17 +211,25 @@ li.colorBox {
               }
 
               g:nth-child(2) {
-                rect, path {
+                rect, path, line, polyline {
                   stroke: var(--primary-color);
                 }
+              }
+
+              circle {
+                stroke: var(--primary-color);
+                fill: var(--primary-color);
               }
             }
           }
 
+          //div.copyValueBox:hover {
+          //}
+
           div.copyValueBox:active {
             svg {
               g:nth-child(2) {
-                rect, path {
+                rect, path, line, polyline {
                   stroke: white;
                 }
               }
