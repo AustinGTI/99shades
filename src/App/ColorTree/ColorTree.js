@@ -169,7 +169,7 @@ export default function ColorTree() {
                             alignItems: 'center'
 
                         }}>
-                        <span>There is no such color at the moment.</span>
+                        <span>There is no such color at the moment..</span>
                         <span style={{paddingTop: '2vh'}}>Please try another.</span>
                     </div>
                 )}
