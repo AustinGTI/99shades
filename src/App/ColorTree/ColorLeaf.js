@@ -28,7 +28,7 @@ export default function ColorLeaf(params) {
                 leaf.current.removeEventListener("click", changeColor);
             }
         };
-    }, [paneColor, leaf]);
+    }, [title, leaf]);
     return (
         <motion.div
             initial={{height: 0, opacity: 0}}
