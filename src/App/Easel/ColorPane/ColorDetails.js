@@ -35,13 +35,14 @@ function ColorDetail({format, value}) {
             {(!doNotLabel.includes(format)) ? <div className={"detailFormatBox"}>{format}</div> : <></>}
             <div className={"detailValueBox"}><span>{(Array.isArray(value)) ? value.join(',') : value}</span>
                 {(doNotLabel.includes(format)) ||
-                    <CustomTooltip
-                        title={hasCopied ? `${format.toUpperCase()} Value Copied` : `Copy ${format.toUpperCase()} Value`}>
-                        <div ref={copyValueBtn} className={"copyValueBox"}>
+                    <div ref={copyValueBtn} className={"copyValueBox"}>
+                        <CustomTooltip
+                            title={hasCopied ? `${format.toUpperCase()} Value Copied` : `Copy ${format.toUpperCase()} Value`}
+                            placement="right">
                             <CopyValueBtn/>
-                            {hasCopied ? <ConfirmCopyBtn/> : <></>}
-                        </div>
-                    </CustomTooltip>}
+                        </CustomTooltip>
+                        {hasCopied ? <ConfirmCopyBtn/> : <></>}
+                    </div>}
             </div>
         </div>
     )
