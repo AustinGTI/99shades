@@ -29,7 +29,7 @@ function ColorDetail({format, value}) {
                 copyBtn.removeEventListener("click", copyFunc);
             }
         }
-    }, [])
+    }, [value])
     return (
         <div className={"colorDetailBox"}>
             {(!doNotLabel.includes(format)) ? <div className={"detailFormatBox"}>{format}</div> : <></>}
