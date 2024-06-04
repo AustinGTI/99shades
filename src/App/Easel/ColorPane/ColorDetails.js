@@ -15,11 +15,18 @@ function copyTextToClipboard(text) {
 function ColorDetail({format, value}) {
     const doNotLabel = ["col", "cls"];
     const copyValueBtn = useRef(null);
+    const value_ref = useRef(value)
     const [hasCopied, setCopied] = useState(false);
+
+    // when the value changes, update the ref
+    useEffect(() => {
+        value_ref.current = value
+    },[value])
+    
     useEffect(() => {
         const copyBtn = copyValueBtn.current;
         const copyFunc = (e) => {
-            copyTextToClipboard(value);
+            copyTextToClipboard(value_ref.current);
             setCopied(true);
             setTimeout(() => setCopied(false), 5000);
         }
@@ -29,7 +36,8 @@ function ColorDetail({format, value}) {
                 copyBtn.removeEventListener("click", copyFunc);
             }
         }
-    }, [value])
+    }, [])
+    
     return (
         <div className={"colorDetailBox"}>
             {(!doNotLabel.includes(format)) ? <div className={"detailFormatBox"}>{format}</div> : <></>}
